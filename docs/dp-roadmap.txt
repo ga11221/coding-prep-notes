@@ -1,0 +1,320 @@
+If it's for mastery, not interviews, then Haskell is actually a solid choice for DP specifically. The language removes the cognitive load of mutation and forces you to express the recurrence exactly as written — no off-by-one loop errors, no temp variables, no state corruption.
+But the deeper question: what does "cement the approach" mean to you?
+- A. Write the recurrence, see it compile, and trust it works? → Haskell delivers this beautifully.
+- B. Trace through every cell of the table manually until the mechanics are automatic? → Pencil and paper does this better than any language.
+- C. Be able to derive the recurrence from scratch for any problem? → This is a skill of verbal articulation, not coding.
+If A, go Haskell. If B, I'd recommend spending 15 minutes tracing tables by hand for problems you've already solved — coinChange([1,2,5], 11), canPartition([1,5,11,5]), lengthOfLIS([10,9,2,5,3,7,101,18]). The physical act of filling the grid cements the recurrence shape in a way reading code never will.
+If C, try writing each problem's state def, recurrence, and base case in English before writing any code. If you can articulate it clearly, the code writes itself
+
+Group 1 (warmup):
+Basic questions to get a feel of DP.
+
+https://leetcode.com/problems/climbing-stairs/ in linear time
+
+https://leetcode.com/problems/n-th-tribonacci-number/ in linear time
+
+https://leetcode.com/problems/perfect-squares/ (maybe)
+
+Group 2 (linear sequence, linear time, constant transition):
+Dp solution requires us to solve the sub problem on every prefix of the array. A prefix of the array is a subarray from 0 to i for some i.
+
+https://leetcode.com/problems/min-cost-climbing-stairs/ in linear time
+
+https://leetcode.com/problems/minimum-time-to-make-rope-colorful/
+
+https://leetcode.com/problems/house-robber/
+
+https://leetcode.com/problems/decode-ways/
+
+https://leetcode.com/problems/minimum-cost-for-tickets/
+
+https://leetcode.com/problems/solving-questions-with-brainpower/
+Group 3 (on grids):
+Dp table will have the same dimensions as grid, the state at cell i,j will be related to the grid at cell i,j.
+
+https://leetcode.com/problems/unique-paths/
+
+https://leetcode.com/problems/unique-paths-ii/
+
+https://leetcode.com/problems/minimum-path-sum/
+
+https://leetcode.com/problems/count-square-submatrices-with-all-ones/
+
+https://leetcode.com/problems/maximal-square/
+
+https://leetcode.com/problems/dungeon-game/
+Group 4 (two sequences, O(NM) style):
+Dp[i][j] is some value related to the problem solved on prefix of sequence 1 with length i, and prefix on sequence 2 with length j.
+
+https://leetcode.com/problems/longest-common-subsequence/
+
+https://leetcode.com/problems/uncrossed-lines/ (longest common subsequence)
+
+https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/
+
+https://leetcode.com/problems/edit-distance/
+
+https://leetcode.com/problems/distinct-subsequences/
+
+https://leetcode.com/problems/shortest-common-supersequence/
+Group 5 (Interval dp):
+Dp problem is solved on every single interval (subarray) of the array
+
+https://leetcode.com/problems/longest-palindromic-subsequence/
+
+https://leetcode.com/problems/stone-game-vii/
+
+https://leetcode.com/problems/palindromic-substrings/
+
+https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/ (hard to see interval)
+
+https://leetcode.com/problems/strange-printer/ (hard)
+
+https://leetcode.com/problems/burst-balloons/ (hard)
+Group 6 (linear sequence transition like N2 Longest Increasing Subsequence)
+Dp problem is solved on every prefix of the array. Transition is from every index j < i.
+
+https://leetcode.com/problems/count-number-of-teams/
+
+https://leetcode.com/problems/longest-increasing-subsequence/
+
+https://leetcode.com/problems/partition-array-for-maximum-sum/
+
+https://leetcode.com/problems/largest-sum-of-averages/
+
+https://leetcode.com/problems/filling-bookcase-shelves/
+Group 7 (knapsack-like)
+Dp state is similar to the classical knapsack problem.
+
+https://leetcode.com/problems/partition-equal-subset-sum/
+
+https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/
+
+https://leetcode.com/problems/combination-sum-iv/
+
+https://leetcode.com/problems/ones-and-zeroes/
+
+https://leetcode.com/problems/coin-change/
+
+https://leetcode.com/problems/coin-change-ii/
+
+https://leetcode.com/problems/target-sum/
+
+https://leetcode.com/problems/last-stone-weight-ii/
+
+https://leetcode.com/problems/profitable-schemes/ (hard)
+Group 8 (topological sort with graphs. advanced, optional)
+Solve dp on all subgraphs that are connected to each node
+
+https://leetcode.com/problems/longest-string-chain/
+
+https://leetcode.com/problems/longest-increasing-path-in-a-matrix/
+
+https://leetcode.com/problems/course-schedule-iii/
+
+Group 9 (dp on trees. advanced, optional)
+Solve dp problem on all subtrees.
+
+https://leetcode.com/problems/house-robber-iii/
+
+https://leetcode.com/problems/binary-tree-cameras/
+**** Combine = "Add this to the running max or start a new max" ****
+
+=======================================================================================================================================================
+                                                         DP PATTERN TAXONOMY
+=======================================================================================================================================================
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+COMBINATORIAL — pick elements from a set
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Take/Skip (0/1 each once)    f(i, cap) = max(f(i-1, cap), f(i-1, cap-w[i]) + v[i])                                   0/1 Knapsack, Partition, Subset Sum
+  Take/Skip with repetition    f(rem) = max over items: f(rem - w[i]) + v[i]                                            Unbounded Knapsack
+  Choose Any (order matters)   f(target) = sum over items: f(target - item)                                            Coin Change (ways as perms), Climb Stairs
+  Combinations (order doesnt)  f(i, t) = f(i+1, t) + f(i, t-nums[i]) (idx stays=reuse) or f(i+1, t-nums[i]) (0/1)       Coin Change II (combos)
+  Subset enumeration           f(i) => explore branch including i, explore branch excluding i                            Subsets, Subset II (with dupes)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INTERVAL / RANGE — subproblem is a contiguous segment
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Split at pivot               f(l,r) = max over k: f(l,k) + f(k+1,r) + cost(l,k,r)                                    Matrix Chain, Burst Balloons
+  Palindrome                   f(l,r) = (s[l]==s[r]) && f(l+1,r-1)                                                      Longest Palindromic Substring/Subseq
+  Optimal BST                  f(l,r) = min over k: f(l,k-1) + f(k+1,r) + sum(l,r)                                      Optimal BST, Min Cost Tree From Leaf
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+PREFIX / SUFFIX — subproblem is a prefix or suffix
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Linear scan                  f(i) = combine(f(i-1), input[i])                                                         Max Subarray (Kadane's), House Robber
+  Longest subsequence          f(i) = 1 + max over j<i: f(j) if nums[j] < nums[i]                                       Longest Inc Subsequence
+  String alignment             f(i,j) = min(f(i-1,j)+1, f(i,j-1)+1, f(i-1,j-1)+cost)                                    Edit Distance, LCS
+  Wildcard / Regex             f(i,j) = match s[i] against p[j] with * branching                                        Wildcard Matching, Regex Matching
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+GRID / MATRIX
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Move right/down              f(i,j) = min(f(i-1,j), f(i,j-1)) + cost[i][j]                                            Unique Paths, Min Path Sum
+  Move any direction           f(i,j,visited) = explore all unvisited neighbors                                         Word Search, Unique Paths III
+  Largest rectangle            f(i) uses heights from row i => histogram DP                                              Maximal Rectangle
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+TREE / GRAPH
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Post-order traversal         f(node) = combine(f(left), f(right)) + node.val                                          Max Path Sum, Diameter of Tree
+  Tree with state              f(node, taken) = max(f(child, not_taken), ...)                                            House Robber III
+  Graph DP over bitmask        f(mask, last) = min over next: f(mask|bit(next), next) + dist(last, next)                TSP, Hamiltonian Path
+  DP on DAG                    f(node) = sum over edges: f(next)                                                        Number of paths in DAG
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+DIGIT / NUMBER DP
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Digit DP                     f(pos, tight, leadingZero, state) — iterate digits at pos                                Count numbers w/ digit sum = K
+  Number as state              f(n) = sum over divisors or splits: f(n-d), f(i)*f(n-i)                                 Integer Break, Count ways
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+GAME / ADVERSARIAL
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Minimax                      f(l,r) = max(my_move + min(opponent_move(...)))                                          Predict the Winner, Stone Game
+  Turn-based                   f(state, player) = max over moves: f(state - move, other_player)                         Can I Win, Divisor Game
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+STATE MACHINE
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Hold/sell/cooldown           f(i, haveStock) = max(f(i-1, have), f(i-2, !have) + price)                               Stock w/ Cooldown
+  Multistate                   f(pos, state) = sum over actions: transition(pos, state, action)                         Student Attendance, Domino Tilings
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+PARSING / COMBINATORICS
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Catalan                      f(n) = sum over k: f(k-1) * f(n-k)                                                       Unique BSTs, Parentheses, Triangulations
+  Recursive descent            f(input, pos) = parse(token) then f(pos+1)...                                            Expression parsing
+  Combinatorial counting       Depends on constraint — often inclusion-exclusion via DP                                  Derangements, Stirling numbers
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+PROBABILITY / EXPECTATION
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                      Subproblem structure                                                                    Classic
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  Expected value               E(state) = sum over outcomes: P(outcome) * E(state')                                     Dice Sum, Random Walk
+  Markov chain                 P(t+1) = P(t) * TransitionMatrix                                                         Out of Boundary Paths
+
+=======================================================================================================================================================
+STATE DEFINITION QUICK REFERENCE
+=======================================================================================================================================================
+
+  Pattern                      State def (meaning of dp[...])                                    State space
+  ------------------------------------------------------------------------------------------------------------------------------------------------
+  0/1 Knapsack                 dp[i][w] = max value using items 0..i with cap w                   O(n * capacity)
+  Unbounded Knapsack           dp[w] = max value achievable with exact weight w                    O(capacity)
+  Coin Change (ways)           dp[t] = number of ways to reach target t                           O(target)
+  Coin Change II (combos)      dp[i][t] = combos using first i coins to reach t                   O(n * target)
+  Partition / Subset Sum       dp[s] = can subset reach sum s                                     O(n * target)
+  LIS                          dp[i] = len of LIS ending at i                                     O(n)
+  LCS                          dp[i][j] = len of LCS of prefixes s1[0..i], s2[0..j]               O(m * n)
+  Edit Distance                dp[i][j] = min edits to match prefix i to j                        O(m * n)
+  Unique Paths                 dp[i][j] = ways to reach (i,j) from (0,0)                           O(m * n)
+  Matrix Chain                 dp[l][r] = min cost to multiply matrices l..r                       O(n^3)
+  Burst Balloons               dp[l][r] = max coins from bursting balloons l..r-1                  O(n^3)
+  Palindrome Substring         dp[l][r] = s[l..r] is palindrome                                    O(n^2)
+  TSP                          dp[mask][v] = min distance visiting mask ending at v                O(2^n * n)
+  Digit DP                     dp[pos][tight][leadingZero][state]                                 O(pos * states * 2 * 2)
+  House Robber                 dp[i] = max loot up to house i                                     O(n)
+  Skip or take (1D)            dp[i] = max(dp[i-1], dp[i-2] + value[i])                           O(n)
+  Interval DP                  dp[l][r] = optimal value for segment l..r                          O(n^2) to O(n^3)
+  Tree DP                      dp[node][state] = optimal for subtree rooted at node              O(n * states)
+
+=======================================================================================================================================================
+RECURRENCE TEMPLATES (most common)
+=======================================================================================================================================================
+
+0/1 Knapsack (1D space-optimized):
+  for i := 0; i < n; i++ {
+      for w := capacity; w >= nums[i]; w-- {
+          dp[w] = max(dp[w], dp[w - nums[i]] + values[i])
+      }
+  }
+
+Unbounded Knapsack (forward iteration):
+  for w := 0; w <= capacity; w++ {
+      for _, item := range items {
+          if item.w <= w {
+              dp[w] = max(dp[w], dp[w - item.w] + item.v)
+          }
+      }
+  }
+
+Coin Change (ways — permutations, order matters):
+  dp[0] = 1
+  for t := 1; t <= target; t++ {
+      for _, n := range nums {
+          if n <= t { dp[t] += dp[t-n] }
+      }
+  }
+
+Coin Change II (combinations — order doesn't matter):
+  dp[0] = 1
+  for _, n := range nums {
+      for t := n; t <= target; t++ {
+          dp[t] += dp[t-n]
+      }
+  }
+
+LIS:
+  for i := 0; i < n; i++ {
+      dp[i] = 1
+      for j := 0; j < i; j++ {
+          if nums[j] < nums[i] { dp[i] = max(dp[i], dp[j] + 1) }
+      }
+  }
+
+Partition / Subset Sum:
+  dp[0] = true
+  for _, n := range nums {
+      for s := target; s >= n; s-- {
+          dp[s] = dp[s] || dp[s-n]
+      }
+  }
+
+Interval DP (generic):
+  for length := 1; length <= n; length++ {
+      for l := 0; l + length - 1 < n; l++ {
+          r := l + length - 1
+          if length == 1 { dp[l][r] = base(l, r); continue }
+          for k := l; k < r; k++ {
+              dp[l][r] = opt(dp[l][r], dp[l][k] + dp[k+1][r] + cost(l,k,r))
+          }
+      }
+  }
+
+=======================================================================================================================================================
+NOTES
+=======================================================================================================================================================
+
+- The state def tells you what a single cell means. The recurrence tells you how to fill it.
+  The state space tells you if it's feasible (10^6 cells = fine, 10^9 = too big).
+
+- If the recurrence has "for each item" inside "for each target" with target iterated backward
+  (descending), it's 0/1 (each item once). Forward = unbounded (can reuse).
+
+- If idx stays when taking (not idx+1), the pattern allows reuse (same as forward iteration).
+
+- Interval DP always iterates by length first, then left index, then pivot k.
+
+- For string problems (LCS, Edit Distance), add a blank row/col for the empty prefix and
+  initialize dp[0][col] and dp[row][0] base cases.

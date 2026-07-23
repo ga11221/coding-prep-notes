@@ -1,0 +1,1798 @@
+- Two Sum: find two numbers that add to target
+- Group Anagrams: group strings that are anagrams of each other
+	Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+	words can repeat?
+
+	Input: strs = ["eat","tea","tan","ate","nat","bat"]
+	Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+	map each word - letter -> frequency m*n
+
+	eat: e->1;a->1;t->1
+	tease: t->1;e->1;a->1;s->1;e->1
+	
+	1. sort each word n*log m and store in set
+	2. sort each word and check for set membership n*log m
+- Valid Parentheses: check if brackets are properly closed and nested
+	stack - O(n) time O(n) space
+	with O(1) space? compression
+	string as stack
+	()[]{}
+	(([ ]))
+	()([()])[]))
+	( ([( )
+- Min Stack: design stack supporting push, pop, top, getMin in O(1)
+	Doesn't necessarily have to be a slice that gets prepended, could have been appended in O(1) time ie treat end of list as head
+	Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+	Implement the MinStack class:
+
+	MinStack() initializes the stack object.
+	void push(int value) pushes the element value onto the stack.
+	void pop() removes the element on the top of the stack.
+		always called on non-empty stack
+	int top() gets the top element of the stack.
+		always called on non-empty stack
+	int getMin() retrieves the minimum element in the stack.
+		always called on non-empty stack
+
+	You must implement a solution with O(1) time complexity for each function.
+		backing sorted array would require O(log n) time for push
+		insert into bitmap - would require O(n) time for getMin
+
+		stack -> backed by singly-linked list -> append in constant time/ pop in constant time, top in constant time
+
+		will always pop larger num before popping min if min was pushed first
+
+		[10] -> [11, 10] -> [9, 11, 10] -> [8, 9, 11, 10] -> [12, 8, 9, 11, 10]
+		
+		[12, 9, 8, 11, 100, 10]
+
+		second singly-linked list where head -> smallest seen so far
+		[10] -> [8, 10] -> [8, 10]
+- Evaluate Reverse Polish Notation: evaluate arithmetic expression in postfix notation
+	stack
+- Generate Parentheses: generate all well-formed parentheses combos for n pairs
+	perm (3) -> (perm 2) ; ()perm2; perm2()
+		   @TODO generates dupes????
+		    ((perm 1)); (()perm1);(perm1());()perm1(); ()(perm1); ()()perm1
+	            ((()));(()());()(());()()()
+
+- Daily Temperatures: days until warmer temperature for each day
+	Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
+
+	***monotonic decreasing stack*** stack[bottom] > stack[top]
+	only push if curr > stack[top], pop while stack[i] < curr
+
+	Input: temperatures = [73,74,75,71,69,72,76,73]
+	Output: 	      [1, 1, 4, 2, 1, 1, 0, 0]
+			      
+	trying hashing:       [69, 71, 72, 73,  74, 75, 76]
+                               4    3   5  0,7   1   2   6
+
+                              [276, 213, 0, 360, 510,74,150,452]
+                              [0, 74,150,213,276,360,452,510]
+                               0   1  2    3  4    5 6
+                               73 -> 3
+                               74 -> 4
+			        75->5
+                               
+	???array with each elem pointing to a node in a max-heap; each node has parent, child pointers and index in temperatures where it occurs???
+
+- Car Fleet: count car fleets reaching target at different speeds
+	There are n cars at given miles away from the starting mile 0, traveling to reach the mile target.
+
+	You are given two integer arrays position and speed, both of length n, where position[i] is the starting mile of the ith car and speed[i] is the speed of the ith car in miles per hour.
+
+	A car cannot pass another car, but it can catch up and then travel next to it at the speed of the slower car.
+
+	A car fleet is a single car or a group of cars driving next to each other. The speed of the car fleet is the minimum speed of any car in the fleet.
+
+	If a car catches up to a car fleet at the mile target, it will still be considered as part of the car fleet.
+
+	Return the number of car fleets that will arrive at the destination.
+	 Input: target = 12, position = [10,8,0,5,3], speed = [2,4,1,1,3]
+	let fleets = map[int]int
+	for i := 0..n:
+		fleets[i]= position[i]+speed[i]
+	
+	return len(keys(fleets))
+
+	Output: 3
+
+	Explanation:
+
+	The cars starting at 10 (speed 2) and 8 (speed 4) become a fleet, meeting each other at 12. The fleet forms at target.
+	The car starting at 0 (speed 1) does not catch up to any other car, so it is a fleet by itself.
+	The cars starting at 5 (speed 1) and 3 (speed 3) become a fleet, meeting each other at 6. The fleet moves at speed 1 until it reaches target.
+
+- Largest Rectangle in Histogram: largest rectangle area in bar chart
+	Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
+
+	Input: heights = [2,1,5,6,2,3]
+	Output: 10
+	Explanation: The above is a histogram where width of each bar is 1.
+
+	The largest rectangle is shown in the red area, which has an area = 10 units
+	use 5 to 6 => 5*2 = 10
+
+	n^2 sliding window (ie deque)
+	smallest num * window width
+	but can't use if intermediate numbers are smaller - detect an invalid window (ie num inside window is smaller than window.start or window.end
+
+- Binary Search: find target in sorted array
+- Search a 2D Matrix: search target in row and column sorted matrix
+	You are given an m x n integer matrix matrix with the following two properties:
+
+	Each row is sorted in non-decreasing order.
+	The first integer of each row is greater than the last integer of the previous row.
+	Given an integer target, return true if target is in matrix or false otherwise.
+
+	Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+	Output: true
+
+	You must write a solution in O(log(m * n)) time complexity.
+
+	bin search on column 1 to find potential row
+	bin search on found row to find target - O(log (m) * log (n))
+
+	bin search along diagonal?
+	break down into quadrants recursively
+- Koko Eating Bananas: min eating speed to finish bananas within h hours
+	Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours.
+
+	Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour.
+
+	Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return.
+
+	Return the minimum integer k such that she can eat all the bananas within h hours.
+
+	Input: piles = [3,6,7,11], h = 8
+	Output: 4
+	sum = 27
+	with k = 4, [1, 1, 9, 11] -> [1, 1, 2, 12] -> [1, 1, 2, 3]
+
+
+	prefix sums:
+	[3,	6,	7,	11]
+         3  	9       16      27
+                6       13      24
+			 7      21
+				11
+        [27, 24, 21, 11]
+
+	bound by largest number in piles (ie 11 - would take len(piles) hours = 4)
+	if k = 1, hours = sum(piles[i])
+
+	[1,3,6,7,11], h=8
+	sum = 28
+
+	bin search over 1..max(piles[i]) for a guessed k
+	for given k: **optimize this**
+		for every piles[i] > guessed k, collect and sum over and divde by k to find hours
+		for every piles[i] <= k, subtract one from given hours h
+		O(n*log k)
+
+	[a,b,c,d], h = x
+
+	[a/k, a%k, b/k, b%k, ....]
+	[3/4, 0, 6/4, 6%4, 7/4, 7%4, 11/4, 11%4]
+
+	[0, 0, 1, 2, 1, 3, 2, 3]
+
+	[3/5, 0, 6/5, 6%5, 7/5, 7%5, 11/5, 11%5]
+	[0, 0, 1, 1, 1, 2,2 , 1]
+
+
+	27/8 = 3 R=3
+
+	Input: piles = [30,11,23,4,20], h = 5
+	Output: 30
+	sum = 84
+	84/5 = 16 R=4
+
+- Search in Rotated Sorted Array: find target in rotated sorted array
+	There is an integer array nums sorted in ascending order (with distinct values).
+
+	Prior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). 
+	For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].
+
+	Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+
+	You must write an algorithm with O(log n) runtime complexity.
+
+	Input: nums = [4,5,6,7,0,1,2], target = 0
+	Output: 4
+
+	Input: nums = [4,5,6,7,0,1,2], target = 3
+	Output: -1
+
+        [5, 6, 7, 0, 1, 2, 4]
+	midpt = 0
+	[7, 0, 1, 2, 4, 5, 6]
+	midpt = 2
+	
+	detect possible left-rotation? how? find next index smaller than nums[0] O(n)
+	not possible to detect faster than O(n)
+
+	skip rotation detection
+	revised bin search 
+
+- Find Minimum in Rotated Sorted Array: find min element in rotated sorted array
+	Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become:
+
+	[4,5,6,7,0,1,2] if it was rotated 4 times.
+	[0,1,2,4,5,6,7] if it was rotated 7 times.
+	Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].
+
+	Given the sorted rotated array nums of unique elements, return the minimum element of this array.
+
+	You must write an algorithm that runs in O(log n) time.
+
+	Input: nums = [3,4,5,1,2]
+	Output: 1
+	Explanation: The original array was [1,2,3,4,5] rotated 3 times.
+
+	Input: nums = [4,5,6,7,0,1,2]
+	Output: 0
+	Explanation: The original array was [0,1,2,4,5,6,7] and it was rotated 4 times.
+        [7,0, 1,2,4,5,6] midpt < nums[0], smallest num in left half
+	revised bin search
+
+- Time Based Key-Value Store: design store with timestamps, get value at specific time 
+@TODO
+	Design a time-based key-value data structure that can store multiple values for the same key at different time stamps and retrieve the key's value at a certain timestamp.
+
+	Implement the TimeMap class:
+
+	TimeMap() Initializes the object of the data structure.
+
+	void set(String key, String value, int timestamp) Stores the key key with the value value at the given time timestamp.
+
+	No overwrites b/c timestamp is strictly increasing
+	can have duplicate values
+	composite key of key+value+timestamp is distinct
+
+	String get(String key, int timestamp) Returns a value such that set was called previously, with timestamp_prev <= timestamp. If there are multiple such values, it returns the value associated with the largest timestamp_prev. If there are no values, it returns "".
+
+	TimeMap timeMap = new TimeMap();
+	timeMap.set("foo", "bar", 1);  // store the key "foo" and value "bar" along with timestamp = 1.
+	foo->[(bar,1)]
+	timeMap.get("foo", 1);         // return "bar"
+	timeMap.get("foo", 3);         // return "bar", since there is no value corresponding to foo at timestamp 3 and timestamp 2, then the only value is at timestamp 1 is "bar".
+	timeMap.set("foo", "bar2", 4); // store the key "foo" and value "bar2" along with timestamp = 4.
+	foo->[(bar,1), (bar2,4)]
+	timeMap.get("foo", 4);         // return "bar2"
+	timeMap.get("foo", 5);         // return "bar2"
+	 
+	foo->[(bar,1), (bar2,4, next=1), ..., (bar3, 1000, next = ...)]
+	timeMap.get("foo", 500)
+	bitmap? lots of "FIXED" (call to set uses strictly increasing timestamps and there's no delete operation to support) holes-> log(n) time in the worst case
+- Median of Two Sorted Arrays: find median of two sorted arrays in O(log(m+n))
+	Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+
+	The overall run time complexity should be O(log (m+n)).
+
+	Example 1:
+
+	Input: nums1 = [1,3], nums2 = [2] // merging/interleaving
+	Output: 2.00000
+	Explanation: merged array = [1,2,3] and median is 2.
+	Example 2:
+
+	Input: nums1 = [1,2], nums2 = [3,4] // concatenating - shortcut when nums1[end] <= nums2[0] or vice versa
+	Output: 2.50000
+	Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
+
+	Once we find the middle of the merged array, we need not continue merging
+	eg nums1.length = 5 nums2.length = 5 need to place/find merged[5] and merged[6] to get median => (merged[4]+merged[5])/2
+           or if merged.length = odd nums1.length = 5 and nums.length=6 median = merged[5]
+
+	nums1 = [2, 5, 8, 12, 19] nums2 = [1,3,6,9,14,17] merging displaces median of nums1 by 3, 5 elems on either side, maintains median position in merged array
+	merged = [1,2,3,5,6,8,9,12,14,17,19] median = merged[5] = 8
+ 	use the median from the larger of the two arrays
+	how much  is the median of nums1 displaced by? find where to insert in nums2, count elems to left of inserted median in nums2 and count elems to left of median in original array nums1 => add the two counts
+
+	nums1=[1,6] nums2=[0,1,2,2,3,5,6,8,9,12,14,17,19] median(nums2) = nums2[6] = 6
+	median(num2) displaced by 2 in merged array - move left 1 in merged array (left half would need to be fully merged - in event that need to move deeper into left half of merged array)
+
+	@TODO I'll have more to say about this in the coming days
+	instead of moving left 1 in merged array, check for preceding integer by checking both nums2 and nums1 for max(nums1[i],nums2[j]) < median(merged[k]) where i, j < k
+
+	which half to fully merge? if using the median from the larger of the arrays, should always be left half...right??? wrong! see next example
+	only the case if median(nums2) >= nums1[end]
+
+	nums1=[4,5,7,8,9] nums2=[0,1,2,2,3,5,6,8,9,12,14,17,19] median(nums2) = nums2[6] = 6
+	here median(nums2) displaced by 2 to the right, then three to the left - displaced by one to the left in total
+
+	nums1 = [2, 5, 8, 12, 19] nums2 = [0,1,2, 3,6,9,14,17] 
+	merged = [0,1,2,2,3,5,6,8,9,12,14,17,19] median = merged[6] = 6
+ 
+- Reverse Linked List: reverse singly linked list
+- Merge Two Sorted Lists: merge two sorted linked lists into one sorted list
+- Reorder List: reorder L0→Ln→L1→Ln-1→...
+- Remove Duplicates from Sorted List II
+	Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+
+	Input: head = [1,2,3,3,4,4,5]
+		      [1,2,3,3,4,4,5,5]
+		      [1,2,3,3,6,6,7]
+	Output: [1,2,5]
+
+	Input: head = [1,1,1,2,3]
+	Output: [2,3]
+ 
+	with prev = nil, curr = head:
+	keep reading next for next distinct val
+	move prev to next distinct val
+	keep reading next for next distinct val and point prev to next distinct val
+
+		---------------OR---------------
+	iterate once, detecting dupes and storing the next pointer for the last occurrence of a dupe in each group of dupes
+- Remove Nth Node From End of List: remove nth node from end in one pass
+	fast and slow pointer in O(n) time and O(1) space
+- Copy List With Random Pointer: deep copy linked list with random pointers
+	A linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or null.
+
+	Construct a deep copy of the list. The deep copy should consist of exactly n brand new nodes, where each new node has its value set to the value of its corresponding original node. Both the next and random pointer of the new nodes should point to new nodes in the copied list such that the pointers in the original list and copied list represent the same list state. None of the pointers in the new list should point to nodes in the original list.
+
+	New List should have head with same value, next and random pointers as original
+		head.next should have " " " .....
+
+
+	For example, if there are two nodes X and Y in the original list, where X.random --> Y, then for the corresponding two nodes x and y in the copied list, x.random --> y.
+
+	Return the head of the copied linked list.
+
+	The linked list is represented in the input/output as a list of n nodes. Each node is represented as a pair of [val, random_index] where:
+
+	val: an integer representing Node.val
+	random_index: the index of the node (range from 0 to n-1) that the random pointer points to, or null if it does not point to any node.
+	Your code will only be given the head of the original linked list.
+
+	if you follow head's random pointer to a node (which must be itself, null, or some node at head.next...tail), copy 
+	head = [[7,null],[13,0],[11,4],[10,2],[1,0]]
+	
+	insert original list in list, and used indexed lookup to point the randoms in copy O(n) - space O(n)-time	
+	copy list, then set random pointers in copy (O(n^2))
+
+- Add Two Numbers: add two numbers represented as reversed linked lists
+	You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+	You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+	add curr1 and curr2, set curr3 = sum
+		if sum > 9, set carry int
+	advance curr1 and curr2 and repeat 1 
+
+	Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+        [9,9,9,9,9,9,9]
+        [9,9,9,9]
+	Output: [8,9,9,9,0,0,0,1]
+ 
+- Linked List Cycle: detect if linked list has a cycle
+- Linked List Cycle II: detect if linked list has a cycle
+	Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+	There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to (0-indexed). It is -1 if there is no cycle. Note that pos is not passed as a parameter.
+
+	Do not modify the linked list.
+
+	state: pointer that advances node to node
+	end state: pointer = nil or pointer = tail (no cycle end state)
+		   O(n) - space - store nodes encountered, and check if pointer.next = any one of them
+		   O(n^2)
+
+		1 -> 2 -
+	        ^	|
+		---------
+	There is an O(1) space sol'n - O(n^2) - time
+
+- Find the Duplicate Number: find duplicate in array of n+1 nums in [1,n]
+	@TODO O(n^2) with short-circuits that take into acct array length and remaining indices to check
+	Can this be done in O(n) time and O(1) space???
+	YES, interpret as linked list and detect cycle - fast starts out 2 ahead of slow
+	[1,3,4,2,2]
+	slow = idx 0 jump to idx 1
+	fast = idx 2 jump to idx 4
+	
+	slow = idx 1 jump to idx 3
+	fast = idx 4 jump to idx 2
+
+	slow = idx 3 jump to idx 2 <- cycle found here
+	fast = idx 2 jump to idx 4
+
+	Or use bit counting.... refer to Big Pickle for now
+
+	def find_duplicate(nums):
+		duplicate = 0
+		n = len(nums) - 1
+		for bit in range(32):
+			mask = 1 << bit
+			actual = sum(1 for x in nums if x & mask) # count how many items in nums has bit set
+			expected = sum(1 for x in range(1, n+1) if x & mask) # how many items in nums should have that bit set
+			if actual > expected: # the bit is set on more items than expected
+				duplicate |= mask # save that bit (there is only one item that is duplicated one or more times)
+		return duplicate
+	1:000000.....00000  0   1
+                   	   2^1 2^0
+	3:000000.....00000  1   1
+                   	   2^1 2^0
+	[1,1, 3]
+
+	
+	Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+
+	There is only one repeated number in nums, return this repeated number.
+
+	You must solve the problem without modifying the array nums and using only constant extra space.
+
+	if the problem is framed as a search for two numbers, can't do better than O(n^2) for unsorted array
+	Input: nums = [3,1,4,2,2]
+	known max = n
+	known min = 1
+	Output: 2
+
+	[1,	x,	y,	z]
+              (1..3)  (1..3)  (1..3)
+	1 <= x <= y <= n-1(3) or x > y
+	1 <= y <= z 
+	x <= y <= z or y > z
+	1 <= z
+	Input: nums = [1,2,4,2,3]
+	Output: 2
+
+	Input: nums = [3,1,3,4,2]
+	Output: 3
+
+	Input: nums = [3,3,3,3,3]
+	Output: 3
+	
+	O(n^2) brute force
+ 
+- LRU Cache: design least recently used cache with O(1) get/put
+	LRU => FIFO first in first out
+	list -> add to end, remove from start
+	Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
+
+	Implement the LRUCache class:
+
+	LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
+	int get(int key) Return the value of the key if the key exists, otherwise return -1.
+		get does not evict, but moves key to end
+		nil out index of key, append key to end - if there are holes in queue then can't use len(backing array), must keep count or take len(backing map)
+		eventually, get will require jumping a range of nils - compaction? wouldn't be in O(1) time - indexed doubly-linked list instead of slice? No- indexing would mean you still have to traverse from head by a certain count.
+		instead, map keys directly to nodes, and each node has a prev and next - also keep track of head and tail separately, 
+	void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+		updates to vals happen in backing map only
+		queue contains only the keys
+	The functions get and put must each run in O(1) average time complexity.
+- Merge k Sorted Lists: merge k sorted linked lists into one sorted list
+	You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+
+	Merge all the linked-lists into one sorted linked-list and return it.
+
+	lists = [[1,4,5],[1,3,4],[2,6]]
+	output = [1,1,2,3,4,4,5,6]
+
+	lists = [[1,4,5],[2,3,4]]
+
+	lists = [[1,4,5], [2]]
+
+	faster than O(k*n)
+	merge lists 2 at a time? 3 at a time? ...  k/x (where x is arbitrarily chosen) at a time?
+	bitmap with buckets - use O(k*n) space 
+	going for O(Nmax)!!?? time and O(1) space
+	must traverse all items of all arrays
+	must merge while not losing next ptrs
+
+	head1 < head2?
+		yes - advance head1
+			head1.next < head2
+				no - prev.next = head2
+		no - 
+	head1.next < head2.next
+
+- Reverse Nodes in k-Group: reverse nodes in groups of k
+	Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.
+
+	k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
+
+	You may not alter the values in the list's nodes, only nodes themselves may be changed.
+
+	[1,2,3,4,5], k = 2
+	[2,1,4,3,5]
+
+	[1,2,3,4,5], k = 3
+	[3,2,1,4,5]
+
+       Kstart  Kend
+         |       |
+	[1,  2,  3,  4,  5,  6], k = 3
+		call1:	(Kstart = 1, Kend = 3)   reverse Kstart to Kend
+						 point Kstart to Kstart of returned call
+				|			^
+				v			|
+		call2:	(Kstart = 4, Kend = 6)   reverse Kstart to Kend  
+						 point Kstart to Kstart of returned call
+						 return orig Kstart
+                                |			^
+				v			|
+		call3:	(Kstart = nil, Kend = _) return orig Kstart = nil 
+	
+	[3,2,1,6,5,4]
+	every k nodes should be reversed, with k0.next = k1, k1.next = k2, ..., etc	   n/k groups
+	k(n/k).next = (k * (n/k))th node
+
+	group first into k0->k1->k2...
+	then reverse k0, k1, k2...
+	
+	end state: last k group is reversed and points to nil or points to (k*(n/k))th node
+
+	list is unchanged if k = 1????
+
+	n % k = 0 or n % k != 0
+
+	when n = k?
+ 
+- Invert Binary Tree: invert/mirror binary tree
+	Given the root of a binary tree, invert the tree, and return its root.
+	The inversion of tree T with root r - I(r) = I(r.Left) + I(r.Right)
+	Inversion of I(r.Left) = I(r.Left.Left) + I(r.Left.Right)
+	Inversion of leaf = leaf
+
+	if node == nil 
+		return nil
+	left = invert(node.L)
+	right = invert(node.R)
+	node.right = left
+	node.left = right
+	return node
+			2
+                      /   \
+                     4     3
+                    / \   /  \
+		   8   5  6   7
+
+- Maximum Depth of Binary Tree: max depth from root to farthest leaf
+                                      0 (0) n=0
+                                   /     \
+                                  3(1) 	 4(2) n=1   2(n-1)+i; i: 1..2^n
+                                /     \  /    \
+                             3(3) 4(4)  5(5)  7(6) n=2
+
+		     1
+		    /	   
+	          2
+	 	/   \
+	       4     5
+	        \
+		 6
+	maxDepth(1) = 1+ max(maxDepth(2),maxDepth(nil))
+	maxDepth(2) = 1+ max(maxDepth(4),maxDepth(5))
+
+	keep a global max
+	maxLeft = maxDepth(left) or zero if left == nil
+	maxRight = maxDepth(right) or zero if right == nil
+	1+max(maxDepth(left), maxDepth(right))
+	maxDepth(1) = 1+max(maxDepth(2), maxDepth(nil)) -> 1+ max(maxDepth(2),0)
+	maxDepth(2) = 1+max(maxDepth(4), maxDepth(5))
+	maxDepth(4) = 
+		
+- Diameter of Binary Tree: longest path between any two nodes
+	Given the root of a binary tree, return the length of the diameter of the tree.
+
+	The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
+
+	The length of a path between two nodes is represented by the number of edges between them.
+
+	Input: root = [1,2,3,4,5]
+	Output: 3
+	Explanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].
+
+	Longest path that passes through root is the maxDepth(root.left) + maxDepth(root.right)
+	
+	longestPath(root) = (1+maxDepth(root.left)) + (1+maxDepth(root.right))
+
+
+	if node.left == nil -> maxDepth(node.left) = 0
+	maxDepth(node) = max(1+maxDepth(node.left), (1+maxDepth(node.right)))
+	
+	maxDepth(4) = max(0, 1+maxDepth(6))
+	maxPath(4) = 0+1+maxDepth(6)
+
+	maxDepth(2) = max(1+maxDepth(4), 1+maxDepth(5))-> max(1+1, 1) -> 2
+	maxPath(2) = 2 + 1
+
+	maxDepth(root.left) = 1 + max(maxDepth(root.left.left), maxDepth(root.left.right))
+	maxDepth(root.right) = 1 + max(maxDepth(root.right.left), maxDepth(root.right.right))
+	
+	if node == nil || node.left == nil and node.right == nil return 0
+	maxDepth(2) -> max(maxDepth(4), maxDepth(5)) + 1 -> max(1, 
+				   maxDepth(4) -> max(maxDepth(nil), maxDepth(6)) + 1 -> max(0, 0) + 1 -> 1
+							maxDepth(nil) -> 0
+							maxDepth(6) -> max(maxDepth(nil), maxDepth(nil)) 
+				   maxDepth(5) -> max(maxDepth(nil), maxDepth(nil))
+	maxLeft := 0
+	maxRight := 0
+	if node.left == nil && node.right == nil maxLeft = 0; maxRight = 0
+	if node.left == nil maxLeft = 0; maxRight = 1+maxDepth(node.right) // 4: returns here
+	if node.right == nil maxRight = 0; maxLeft = 1+maxDepth(node.left) // 1: returns here
+	else 
+		maxLeft = 1+maxDepth(node.left)// 2: returns here for node.left = 4
+		maxRight = 1+maxDepth(node.right) // 2:returns here for node.right = 5
+	pathLength = maxRight + maxLeft
+	if pathLength > globalMax; globalMax = pathLength
+	return max(maxLeft, maxRight)
+
+	 // node = 1; maxRight = 0 maxLeft = 1+maxDepth(2)
+	 // node = 2; maxLeft = 1+maxDepth(4); maxRight = 1+maxDepth(5)
+	 // node = 4; maxLeft = 0; maxRight = 1+maxDepth(6)
+	 // node = 6 return 0
+	 // node = 4 maxLeft = 0; maxRight= 1+0 = 1; pathLength = maxRight+maxLeft= 1+0=1; globalMax = 1; return max(maxLeft, maxRight) -> return max(0,1) -> return 1
+	 // node = 2 maxLeft = 1+maxDepth(4) = 1+1=2; maxRight = 1+maxDepth(5)
+	 // node = 5; return 0
+	 // node = 2 maxLeft = 2; maxRight = 1+ (0) = 1; pathLength = 2+1=3; 3>globalMax(1) -> globalMax = 3; return max(L, R) -> return max(2, 1) -> return 2
+	 // node = 1; maxRight = 0 maxLeft = 1+maxDepth(2) -> 1+ 2 = 3; pathLength = 0+3 = 3; globalMax is unchanged;
+		     1
+		    /	   
+	          2
+	 	/   \
+	       4     5
+	        \
+		 6
+	assumptions that led me astray: would be keeping path count in args, and maintaining path length/global max in args as stack
+
+	Longest path that passes through root.left is maxDepth(root.left.left) + maxDepth(root.right.right)
+
+	????DFS - except you increment count on ascent, not descent - track max as you count???? 
+	????Greatest Common Parent b/t two leaves????
+	Must try every leaf
+	log2 n + 1 levels
+	at most 2^(log2 n + 1) leaves
+	floor(log2 n + 1) * 2^(log2 n + 1)
+	path endpoints have to be leaves of same subtree
+
+	start counting when you ascend from a leaf, stop counting when you reach a leaf
+	1->2 f({1}) - new node, new descent - insert 1
+	2->4 f({2,1}) - new node, new descent - add 1 to existing, insert 1
+	4->2 f({2,1}) - ascent, remove last path
+	2->5 f({2,1}) - existing node, new descent - add 1 to last entry
+	5->2 f({2}) - ascent, do nothing
+ 	2->1 f({2,2}) - ascent, do nothing
+	1->3 f({3,3,1}) - existing node, new descent - add 1 
+	3->1 f({3,3, 1})
+
+	1 -> 4 (2)
+	1 -> 5 (2)
+	1 -> 3 (1)
+
+
+	1 -> 4 (2)
+	1 -> 6 (3)
+
+- K Closest Points to Origin: find k closest points to origin
+- Kth Largest Element in an Array: find kth largest in unsorted array
+	Given an integer array nums and an integer k, return the kth largest element in the array.
+
+	Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+	Can you solve it without sorting?
+	
+	Input: nums = [3,2,1,5,6,4], k = 2
+	Output: 5
+
+	nums = [3,2,3,1,2,4,5,5,6], k = 4	
+	Output: 4
+	//deque - push to top if larger or find insert index (log k) if smaller than top and deque size < k, pop from end if deque size > k
+	k-sized bitmap with buckets (to account for dupes) - linear in space/time complexity
+
+- Task Scheduler: min time to schedule tasks with cooldown between same tasks
+	You are given an array of CPU tasks, each labeled with a letter from A to Z, and a number n. Each CPU interval can be idle or allow the completion of one task. Tasks can be completed in any order, but there's a constraint: there has to be a gap of at least n intervals between two tasks with the same label.
+
+	Return the minimum number of CPU intervals required to complete all tasks.
+
+	Example 1:
+
+	Input: tasks = ["A","A","A","B","B","B"], n = 2
+
+
+	Input: tasks = ["A","A","A"], n = 1
+			A->nil->A->nil->A
+
+
+	Output: 8
+
+	Explanation: A possible sequence is: A -> B -> idle -> A -> B -> idle -> A -> B.
+
+	Input: tasks = ["A","A","A","B","B","B"], n = 3
+		how many nils to place in deque? f(number of distinct tasks, n)
+		A->B->idle->idle->A->B...
+
+		{A->?, B->?}
+		[A] {A->} -> [B,A] {A->, B->}
+		sequence is: A->B->
+		does A occur in the last n=3 cycles? yes, in map
+			A->B->nil
+			[nil, B, A] FIFO of size n 
+		does A occur in the last n=3 cycles? yes, in map
+			A->B->nil->nil
+			[nil, nil, B] {B->} check map, NOT FIFO queue for task availability
+		does A occur in the last n=3 cycles? no, not in map
+			A->B->nil->nil->A
+			[A, nil, nil] {A->}
+		does not guarantee shortest sequence - queue in order of most->least occuring in tasks array?
+                 __     __
+		|(A, 3)   | -> [A] ->
+		|(B, 3)   |
+		|   nil   |
+                 __     __
+		|(B, 3)   |
+		|   nil   |
+		|(A, 2)   | -> [A,B] ->
+                 __     __
+		|   nil   |
+		|(A, 2)   |
+		|(B, 2)   | -> [A,B, nil] ->
+                 __     __
+		|(A, 2)   |
+		|(B, 2)   | -> [A,B, nil, A] ->
+		|   nil   |
+                 __     __
+		|(B, 2)   |
+		|   nil   |
+		|(A, 1)   | -> [A,B, nil, A, B] ->
+                 __     __
+		|   nil   |
+		|(A, 1)   | -> [A,B, nil, A, B,nil] ->
+		|(B, 1)   |
+		
+
+	map A->3
+	    B->3
+
+	O(n^2) in time O(n) in space
+	[A] ++ schedule(scheduled={A->1}, avail={A->2, B->3}, n=2)
+			[A,B] ++ schedule(scheduled={A->2,B->1}, avail={A->2, B->2}, n=2)
+					for key:= range avail:
+						if scheduled[key] > n
+							schedule it and reset scheduled count to 1 for key in scheduled map
+					else schedule nothing
+					delete from avail map when count reaches 0
+					terminate when no keys left in avail map
+				[A,B,nil] ++ schedule(scheduled={A->3, B->2}, avail={A->2, B->2}, n=2)
+					[A,B,nil,A] ++ schedule(scheduled={A->1,B->3}, avail={A->1, B->2}, n=2)
+								...
+			
+	After completing task A, you must wait two intervals before doing A again. The same applies to task B. In the 3rd interval, neither A nor B can be done, so you idle. By the 4th interval, you can do A again as 2 intervals have passed.
+
+	Example 2:
+
+	Input: tasks = ["A","C","A","B","D","B"], n = 1
+	Explanation: A possible sequence is: A -> B -> C -> D -> A -> B.
+
+	With a cooling interval of 1, you can repeat a task after just one other task.
+			
+
+	Input: tasks = ["A","C","A","A"], n = 1
+			n = 3
+			next = [x, y, z, A]
+			schedule - [x,y,z,A]
+			is C in schedule[-3:]?
+			A ->
+			[A] {A->any}
+			A->C
+			[C, A] {A->any, C->any}	
+      
+			[D, C, B, A, A] n = 4
+			D->C->B->A->nil->nil->nil->nil->A output = 9
+			A->D->C->B->nil->A output = 6
+
+			[A, B, C, D]
+
+		(A,3) -> [A] -> (C, 1) -> [A,C] -> (A, 2)
+		(C,1)	 	(A, 2)			
+
+	Output: 6
+
+
+- Design Twitter: design twitter with news feed, follow, unfollow
+	Design a simplified version of Twitter where users can post tweets, follow/unfollow another user, and is able to see the 10 most recent tweets in the user's news feed.
+
+	Implement the Twitter class:
+
+	Twitter() Initializes your twitter object.
+	void postTweet(int userId, int tweetId) Composes a new tweet with ID tweetId by the user userId. Each call to this function will be made with a unique tweetId.
+	List<Integer> getNewsFeed(int userId) Retrieves the 10 most recent tweet IDs in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user themself. Tweets must be ordered from most recent to least recent.
+
+	"most recent" => LIFO (stack) or add to head and remove from head
+
+	void follow(int followerId, int followeeId) The user with ID followerId started following the user with ID followeeId.
+
+	u1 - follows -> u2
+        data structure that stores tweetId by user/followees
+			  need to be able to remove tweetId by unfollowed followees while maintaining tweetId LIFO order
+
+	void unfollow(int followerId, int followeeId) The user with ID followerId started unfollowing the user with ID followeeId.
+
+	Twitter twitter = new Twitter();
+
+	twitter.postTweet(1, 5); // User 1 posts a new tweet (id = 5).
+		create entry for user 1 if doesn't exist O(1) (if using map)
+		prepend tweet 5 O(1)
+		tweets:         {
+					1 -> [5]
+				}
+
+	twitter.getNewsFeed(1);  // User 1's news feed should return a list with 1 tweet id -> [5]. return [5]
+		tweets:		{
+					1-> [5]		
+				}
+
+	twitter.follow(1, 2);    // User 1 follows user 2.
+		followers:	{
+					1->[2] // insert in sort order/or into bitmap(?)
+				}
+
+	twitter.postTweet(2, 6); // User 2 posts a new tweet (id = 6).
+		O(number of users)
+
+		prepend 6 to tweets[2] and for all followers where 2 is in followers[id]? or keep track of 6 as tweet from user 2? while maintaining LIFO order? global tweet store? would require looking up followers on every getNewsFeed call
+		follower lookup (if map O(keys*avg num of followers))
+		tweets: 	{
+					1->[1][ , 5],
+                                         ->[2][6, ]
+					   what if 1 unfollows 2, then refollows? would we need to maintain global ordering? yes
+					2->[6]
+				}	
+		global ordering: [1][ ,  ,  , 5] getNewsFeed -> O(n*number of followers + 1)
+                   		 [2][ , 7, 6,  ] 
+                   		 [3][8,  ,  ,  ] 
+						for getNewsFeed -> traverse by column not row, ie descend down first column of follower tweets before moving on to second- looking only for first 10 non-nil tweets
+		
+	twitter.getNewsFeed(1);  // User 1's news feed should return a list with 2 tweet ids -> [6, 5]. Tweet id 6 should precede tweet id 5 because it is posted after tweet id 5.
+
+	twitter.unfollow(1, 2);  // User 1 unfollows user 2.
+		followers:      {
+					1->[]
+				}
+		find all ids in tweets[2] occuring in tweets[1], and remove O(n^2) ie find intersection of tweets[1] and tweets[2] and fill in gaps ie compact (intermittently?) array right to left (or leave empty and iterate over first 10 non-empty for getNewsFeed)
+		tweets: 	{
+					1->[5],
+					2->[6]
+				}
+
+	twitter.getNewsFeed(1);  // User 1's news feed should return a list with 1 tweet id -> [5], since user 1 is no longer following user 2.
+ 
+- Find Median from Data Stream: maintain median as numbers stream in
+- Subsets: generate all possible subsets of array
+- Combination Sum: find all combos that sum to target with unlimited reuse
+- Permutations: generate all permutations of array
+- Subsets II: generate all subsets with duplicates handled
+- Combination Sum II: find all combos that sum to target, each element used once
+	Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+
+	Each number in candidates may only be used once in the combination.
+
+	Note: The solution set must not contain duplicate combinations.
+	
+	Input: candidates = [10,1,2,7,6,1,5], target = 8
+	Output: 
+	[
+		[1,1,6],
+		[1,2,5],
+		[1,7],
+		[2,6]
+	]
+        candidates = [1,1,2,2,2,2,2,2,5,6,7], target=8
+				^
+				  2
+				/   \
+			      /       \
+			    /           \
+			   2             5
+			  / \           / \
+			 /   \         /   \
+			1     2            6
+ 		       /       \            \
+		       1       2             7
+                                \
+				2
+                                \
+				2
+    [[2]]->[[2,2],[2]]->[[2,2], [2,1],[1]
+
+	 midpt = 2
+          [1,1,2,2,2,2,2,2] [5,6,7]
+			2 (t=6)
+                       /  \
+	      (t=7)   1    6  (t=3)
+                     /    / \
+        	    1    5   7
+
+      [[2]] -> [[[2], [2,1]],[1]] -> [[2],[2,1],[1], [1,1]] -> 
+        [[2,6],[1,1,6],[2,1,5],[7,1]]
+        candidates = [1,1,2,3,5,6,7], target=8
+			3 (t=5)
+                       /  \
+	      (t=7)   1    6  (t=2)
+                     / \  /  \
+        	    1  2  5   7
+	1->7
+	2->6
+	7->1
+	6->2
+	5->3
+	for candidates i < target:
+		map[i] = candidates[i]
+
+	sum = sum(candidates[i],candidates[i:end])
+ 
+- Word Search: check if word exists in character grid (adjacent moves)
+	Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+
+	The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+	Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+	Output: true 
+
+	find all occurences of A in board at (i, j) - add (i,j) to seen
+	for each occurence:
+		store 2-4 adjacent letter  
+	for each adjacent letter:
+		check if equal to next letter in word and if not in seen - add (i,j) to seen
+		if not equal, pop last (i,j) and try next letter in adjacency list
+
+	O(m*n) to find all occurences of first letter - O(n^2) to find match- for each matching letter there are 2-4 paths to check
+	
+- Palindrome Partitioning: partition string into palindrome substrings
+	Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+
+	Example 1:
+
+	Input: s = "aab"
+	O(n^2) - but there's a better way...@TODO
+	palindrome s[i]==s[j] for all j
+	1. right-expanding window starting at i=0 - save where palindrome occurs (i, j)
+		1a. repeat 1 for i = j+1 
+	2. once end of string reached, backtrack to 1. and continue expanding j for next palindrome or end of string s
+	3. add trivial partition of each letter
+	Output: [["a","a","b"],["aa","b"]]
+
+	Example 2:
+
+	Input: s = "a"
+	Output: [["a"]]
+
+- Letter Combinations of a Phone Number: all letter combos from phone digits
+- N-Queens: place n queens on nxn board without attacks
+- Number of Islands: count connected 1s in binary grid
+- Clone Graph: deep copy undirected connected graph
+	Given a reference of a node in a connected undirected graph.
+
+	Return a deep copy (clone) of the graph.
+
+	Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors.
+
+	class Node {
+	    public int val;
+	    public List<Node> neighbors;
+	}
+	 
+
+	Test case format:
+
+	For simplicity, each node's value is the same as the node's index (1-indexed). For example, the first node with val == 1, the second node with val == 2, and so on. The graph is represented in the test case using an adjacency list.
+
+	An adjacency list is a collection of unordered lists used to represent a finite graph. Each list describes the set of neighbors of a node in the graph.
+
+	The given node will always be the first node with val = 1. You must return the copy of the given node as a reference to the cloned graph.
+
+	Input: adjList = [[2,4],[1,3],[2,4],[1,3]]
+	Output: [[2,4],[1,3],[2,4],[1,3]]
+	Explanation: There are 4 nodes in the graph.
+	1st node (val = 1)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).
+	2nd node (val = 2)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).
+	3rd node (val = 3)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).
+	4th node (val = 4)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).
+
+- Max Area of Island: max area of connected 1s in binary grid
+- Pacific Atlantic Water Flow: cells that flow to both oceans
+- Surrounded Regions: capture Os surrounded by Xs
+- Rotting Oranges: min minutes for all oranges to rot
+	You are given an m x n grid where each cell can have one of three values:
+
+	0 representing an empty cell,
+	1 representing a fresh orange, or
+	2 representing a rotten orange.
+	Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.
+
+	Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
+
+	Input: grid = [[2,1,1],[1,1,0],[0,1,1]]
+	Output: 4
+
+	[2, 1, 1] 	[2, 2, 1]	[2, 2, 2]	[2, 2, 2] 	[2, 2, 2]
+	[1, 1, 0] -> 	[2, 1, 0] -> 	[2, 2, 0] -> 	[2, 2, 0] -> 	[2, 2, 0]
+	[0, 0, 1]	[0, 1, 1]	[0, 1, 1]	[0, 2, 1]	[0, 2, 2]
+
+	[2, 2, 2] 	[2, 1, 1]   	[2, 2, 1]
+	[2, 1, 1]  	[1, 1, 0]	[1, 1, 0]
+	[2, 1, 1]	[0, 1, 1]	[0, 1, 1]
+	neighbor/adjacency vectors that "points" right or down, but never left or up
+	build ds where each [i][j] contains "pointers" to adjacent 1's for all [i][j] = 2 or 1
+	if there is a cell with a 1 that doesn't have adjacency vectors, then it can never be incremented (orange never rots)
+	for all [i][j] = 2 having "pointers", follow pointers and increment adjacent 1's 
+
+ 	for all [i][j] incremented to 2 in last step, build new ds as before
+
+	[2, 1, 1] This matrix has a 1 in m[2,0] that is unreachable (never rots)
+	[0, 1, 1]
+	[1, 0, 1]
+- Walls and Gates: fill distance to nearest gate in grid
+- Course Schedule: detect cycle in prerequisite graph
+- Course Schedule II: return order to take courses with prerequisites
+- Redundant Connection: find edge that creates cycle in graph
+- Number of Connected Components in an Undirected Graph: count connected components
+- Graph Valid Tree: check if graph is valid tree
+- Word Ladder: shortest path to transform start word to end word
+	Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+	Output: 5
+	Explanation: One shortest transformation sequence is "hit" -> "hot" -> "dot" -> "dog" -> cog", which is 5 words long.	
+
+	1, 2, 4, 8, 16
+	"h    i     t"
+	 8    9	    21    
+
+	 8 =  001000
+	 9 =  001001
+	 21 = 010101
+	      011101
+
+	"h    o     t"    [.....,1,....1,......1]
+	 8    15    21          i=8   i=15   i=21
+	 8 =  001000
+	 15 = 001111
+	 21 = 010101
+              011111
+
+	"d    o     t"    [..1,..,0,....1,......1]
+	 4    15    21
+	 4 =  000100
+	 15 = 001111
+	 21 = 010101
+              011111
+
+	convert each word to char freq map O(n^2)
+	compare maps to find words that differ by one letter O(n^2)
+	populate undirected graph and find shortest path (DFS) from beginWord to endWord O(V) - every word is a vertex so O(V) = O(n)
+- Reconstruct Itinerary: find itinerary using tickets exactly once
+- Min Cost to Connect All Points: minimum spanning tree cost on 2D points
+- Network Delay Time: min time for signal to reach all nodes
+- Swim in Rising Water: min time to swim from top-left to bottom-right
+- Alien Dictionary: order of letters in alien language
+- Cheapest Flights Within K Stops: cheapest price with at most k stops
+- Climbing Stairs: distinct ways to climb n stairs taking 1 or 2 steps
+- Min Cost Climbing Stairs: min cost to reach top paying for stepped-on stairs
+cost =  [10,	15,	20]
+	  30,   15, 	20
+cost =	[1,	100,	1,	1,	1,	100,	1,	1,	100,	1]
+         0,   	  0,    1,      2
+	    	  1,    100,
+	    	        101,
+
+	C(0)      = 0
+	C(1)      = 0
+	min(C(2)) = min(cost[0], cost[1])
+	min(C(3)) = min(cost[0] + cost[1], cost[0] + cost[2], cost[0]+cost[1]+cost[2],cost[1]+cost[2], cost[1])
+		 cost[0]+cost[1] cmp cost[0]+cost[2]
+		 cost[1] <= cost[1]+cost[2]
+
+	alternatively, 1st pass computes lowest cost to get from cost[i] to end
+	s
+
+- House Robber: max sum from non-adjacent houses
+- House Robber II: max sum from non-adjacent houses in a circle
+- Longest Palindromic Substring: longest palindrome substring
+- Palindromic Substrings: count all palindrome substrings
+- Decode Ways: count ways to decode digit string to letters
+- Coin Change: min coins to make amount with unlimited denominations
+	You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+	Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+	You may assume that you have an infinite number of each kind of coin.
+
+	Input: coins = [1,2,5], amount = 11
+	Output: 3
+	
+	add up largest denomination until >= amount, let that be S
+	if S > amount, remove one of largest and try with next largest
+	if new S > amount, remove next largest and try next denomination 
+
+
+	Input: coins = [1,2,4], amount = 10
+	Output: 3
+
+	Input: coins = [1,4], amount = 10
+	Output: 4
+
+	@TODO: memoize? memoize what? the denomination count and it's sum?
+	Input: coins = [1,2,3], amount = 10
+
+- Unique Binary Search Trees II
+	Given an integer n, return all the structurally unique BST's (binary search trees), which has exactly n nodes of unique values from 1 to n. Return the answer in any order.
+
+	Input: n = 3
+	Output: [[1,null,2,null,3],[1,null,3,2],[2,1,3],[3,1,null,null,2],[3,2,null,1]]
+	[1,2,3]
+	with 1 as root, insert 2, then 3
+	with 1 as root, insert 3, then 2
+	with 2 as root, insert 1, then 3 - 2->3->1 would be a dupe
+		- only one number larger than 2 (3) and one smaller (1)
+		- when only two numbers left to insert, if one is smaller and the other is larger than the numeber just inserted (third to last), then there can only be one unique tree
+	with 3 as root, insert 2 then 1
+	with 3 as root, insert 1 then 2
+
+	[1,2,3,4]
+	2 as root -> 2 possible variations
+
+	pick an index i to be root
+	how many permutations for index = 0..i-1 ?
+	how many permutations for index = i+1..n-1?
+
+	can the trees be generated w/o generating perms first?
+
+	perms([1,2,3,...n]) = perms([1]) + perms([2,3,...n])
+					 = perms([2]) + perms([3,4,5...n]) etc
+- Maximum Product Subarray: max product subarray (handles negatives)
+- Partition String
+	Given a string s, partition it into unique segments according to the following procedure:
+
+	Start building a segment beginning at index 0.
+	Continue extending the current segment character by character until the current segment has not been seen before.
+	Once the segment is unique, add it to your list of segments, mark it as seen, and begin a new segment from the next index.
+	Repeat until you reach the end of s.
+	Return an array of strings segments, where segments[i] is the ith segment created.
+- Word Break: check if string can be segmented from dictionary
+	Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+	Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+	Input: s = "leetcode", wordDict = ["leet","code"]
+	Output: true
+	Explanation: Return true because "leetcode" can be segmented as "leet code".
+
+	Example 2:
+
+	Input: s = "applepenapple", wordDict = ["apple","pen"]
+	Output: true
+	Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+	Note that you are allowed to reuse a dictionary word.
+
+	Example 3:
+
+	Input: s = "catsandog", wordDict = ["cats","dog","san","sand","and","cat"]
+	Output: false
+
+	1. find 1st largest match from i=0 to j 
+	2. lookup largest word occuring in wordDictMap starting with s[j+1] whose len <= len(s) - j+1
+		if not found, return to 1 and find next largest substring of s[i:j] starting with letter s[i]
+		if found, @TODO ... 
+
+
+
+	??must inspect each letter at least once - search problem??
+
+	resize and move window such that it matches at most one member of wordDict
+
+	**greedy/recursive** find largest possible matching string - ie keep left end of window fixed and contract window from right end of input until finding a match - we should proceed contracting the window further only if it's known that there is a member w2 of wordDict that is a substring of the current match w1
+	need map of strings -> substringsOccuringInWordDict
+	populating substring map:
+		sort by word length asc first...
+			
+		[san, and, dog, cat, cats, sand]
+
+	s = catsandog
+	cats --------->  cat
+	 |	|         |
+	 |   backtrack	  |
+	and -->an, a    sand (but "sand" ends where "and" did and b/t 'd' and END of s there is no matching member in wordDict - ie detect we're near end of s and looking for last match)
+	 |	|
+	 |   backtrack (isAtEnd)
+	og ------
+
+	store wordDict as map of words to list of any substrings occuring in wordDict and where they occur in the given word ie 
+	cats -> [(cat, 0, len(cat))]
+	dog -> []
+	sand -> [(and, 1, 3)] <- use these to compute resizing of window
+
+	1: for i,j = 0, len(s) -1; j>i; :
+		if s[i:j] in wordDict:
+			if j-i = len(s)
+				return true
+			else:
+			   move i to j+1 and move j to end - goto 1 
+		else:
+			j--
+		 
+	should also map words to their containing words
+ 	and -> sand
+	what substring in cats ++ and = sand?
+
+- Longest Increasing Subsequence: longest strictly increasing subsequence
+	Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+	Example 1:
+
+	Input: nums = [10,9,2,5,3,7,101,18]
+			(0, 10) -> [10]    (0, 10) -> [[10]]           => (0, 101) -> [[10, 101]]
+			(1, 9) -> [9]	   (1,9) -> [[9]]              => (1,101)-> [[9, 101]]
+	(2, 2) -> [2] =>(2, 3) -> [2,3] => (2, 7) -> [[2,3,7], [2,5,7]]=> (2,101) -> [[2,3,7,101], [2,5,7,101]]
+			(2, 5) -> [2,5] =>  merge (2,3) and (2,5)
+			(4, 3) -> [3]      (4,3) -> [[3,7]]              => (4,101) -> [[3,7,101]]
+		nums = [10,9,2,5,3,7,101,18, 19]
+
+		nums = [10, 13, 11, 14]
+		nums = [10, 12, 9, 11, 14]
+		nums = [10, 12, 11, 14]
+		nums = [100, 12, 11, 14]
+		nums = [100, 114, 11, 115]
+	Output: 4
+
+	track the start of a sequence and the current max
+	for each new number, if it's larger than the max for any and all saved sequences, insert new sequence with the number appended to the value of the old key with the new max
+	if it's smaller than the last number, start a new sequence (insert new (start, max) -> [nums[i]]
+		nums = [100, 114, 11, 115]
+	(0, 100) -> [100]
+  
+	(0, 114)->[100,114]
+
+	(2, 11) ->[11]
+
+	(0, 115)->[100,114,115]
+	
+	
+	
+	Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+	
+	1. starting at the first number, scan left for the next number larger than the first, if found increment count and look for the next num larger than this new max or until the end of the slice
+	2. repeat step 1. this time starting at the second number, 9 -
+	3. repeat step 1 starting at third
+
+	Input: nums = [10,9,2,5,3,7,101,18]
+       state - track longest subsequence start index and last number seen
+       init - state = [[10,1],[9,1], [2,1],[5,1], [3,1],[7,1],[101, 1], [18,1]] - Longest subsequence at every index is 1 with the last number in the subsequence being nums[i]
+		or [][]state
+	at i = 1, if nums[i] > state[i-1][0] state[i-1][1]++
+	...
+	at i = 3, state[3][1]++
+       in second tuple, store numbers encountered in order smaller than this num[i]
+       state=[[10,1],[9,1], [2,1],[5,[2]], [3,[2]],[7,[2,3]],[101, [2,3,7]], [18,1]]
+
+- Partition Equal Subset Sum: can array be partitioned into equal sum subsets
+	Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
+
+	Example 1:
+
+	Input: nums = [1,5,11,5]
+	1,5,11 | 5
+	1,5    | 11, 5
+	1      | 11, 5, 5
+        11     | 1,5,5
+	1, 11  | 5, 5
+
+        1|5
+	1|5      11|5
+	Output: true
+	Explanation: The array can be partitioned as [1, 5, 5] and [11].
+
+	Input: nums = [1,5,4,5,5]
+
+	Example 2:
+
+	Input: nums = [1,,,1,]
+place largest number on one side of partition | look for 1 or more numbers, starting with the next largest, totaling left partition 
+remove those numbers from the array, and repeat step 1 on remaining elements in array, if there is one element left, then can't be partitioned
+                      [1,1,1,1,1,2,2,3,5,20,21]
+                      [1,,1,1,1,2,]
+         1 | 2
+       1+1 | 2
+	1+1|2 , 1|3
+        1+1|2 , 1|3, 5|2
+        1+1|2, 1+1|3, 5|2
+      ----- added all numbers from nums here ------
+        1+1|2, 1+1|2, 5|3
+        1+1|2, 1+1|0, 5|3+2
+	1+1|2, 1|1, 5|5
+	move 2 from 1st partition to second partition and 
+	nums = [1,2,3,5]
+	Output: false
+	Explanation: The array cannot be partitioned into equal sum subsets.
+ 
+- Unique Paths: distinct paths from top-left to bottom-right moving down/right
+- Longest Common Subsequence: longest common subsequence of two strings
+- Best Time to Buy and Sell Stock with Cooldown: max profit with cooldown after selling
+- Coin Change II: number of combos to make amount with unlimited coins
+- Target Sum: number of ways to assign +/- to reach target
+	You are given an integer array nums and an integer target.
+
+	You want to build an expression out of nums by adding one of the symbols '+' and '-' before each integer in nums and then concatenate all the integers.
+
+	For example, if nums = [2, 1], you can add a '+' before 2 and a '-' before 1 and concatenate them to build the expression "+2-1".
+	Return the number of different expressions that you can build, which evaluates to target.
+
+	Input: nums = [1,1,1,1,1], target = 3
+	Output: 5
+	Explanation: There are 5 ways to assign symbols to make the sum of nums be target 3.
+	-1 + 1 + 1 + 1 + 1 = 3
+	+1 - 1 + 1 + 1 + 1 = 3
+	+1 + 1 - 1 + 1 + 1 = 3
+	+1 + 1 + 1 - 1 + 1 = 3
+	+1 + 1 + 1 + 1 - 1 = 3
+
+	Input: nums = [1,1,1,1,1], target = 3
+	add 4 1's and subtract the fifth
+	five different places to insert a -1
+
+xxx	add all members for sum S, then look for one or more you can subtract from S to get target -> won't work for [2,1] and target = 1
+
+	must use iterative approach + greedy (?) - greedy doesn't apply - we're looking for combos
+	or combinatorics -> recursive (ie try negated and positive for every number)
+		stopped	15 mins
+ 
+- Interleaving String: check if s3 is interleaving of s1 and s2
+	Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
+
+	An interleaving of two strings s and t is a configuration where s and t are divided into n and m substrings respectively, such that:
+
+	s = s1 + s2 + ... + sn
+	t = t1 + t2 + ... + tm
+	|n - m| <= 1
+	The interleaving is s1 + t1 + s2 + t2 + s3 + t3 + ... or t1 + s1 + t2 + s2 + t3 + s3 + ...
+	Note: a + b is the concatenation of strings a and b.
+
+	Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+	Output: true
+	Explanation: One way to obtain s3 is:
+	Split s1 into s1 = "aa" + "bc" + "c", and s2 into s2 = "dbbc" + "a".
+	Interleaving the two splits, we get "aa" + "dbbc" + "bc" + "a" + "c" = "aadbbcbcac".
+	Since s3 can be obtained by interleaving s1 and s2, we return true.
+
+	greedy substr match + backtrackng? or tabulate?
+	1. find largest substr s1[0:i] in s1 that matches s3; 0 <= i < len(s1)
+		if i == -1: search s2
+	2. find largest substr s2[0:j] in s2 that matches s3[i+1:j]; 0 <= j < len(s2)
+		if j == -1, backtrack to step 1 and decrement i
+			repeat until i == -1 => return false
+                if j >= 0; repeat step 1 advancing i by j
+- Longest Increasing Path in a Matrix: longest increasing path in grid
+- Distinct Subsequences: count distinct subsequences of s equal to t
+	Given two strings s and t, return the number of distinct subsequences of s which equals t.
+	build map of substrings - query map
+		Input: s = "tffasdfaasdfble", t = "table"
+			    ^^   ^^   ^^^
+                        t->0
+                        a->3,7,8
+			b->12
+			bl->12
+			l->13
+                        ble->12
+			l -> 13
+			le -> 13
+                        e->14
+		       s = "tabletable"
+                                ""
+                             /   |    \
+                           t 	 l    t
+                           a 	 e    a
+                           b 	      b
+                           l 	      l
+                           e 	      e
+1. find all possible substrings contained in t
+					""
+				/     |   |     \
+			    t (0)    a(5) a(6)   b(10)
+			     /        	          \
+			a(1)         	          l(11)
+					           \
+						  e(12)
+			
+		Input: s = "rabbbit", t = "rabbit"
+		Output: 3
+
+		Input: s = "rabbasdfbiasdft", t = "rabbit"
+                            ^^^^     ^    ^
+                            ^^^     ^^    ^
+                            ^^ ^    ^^    ^
+		r abbit
+		r a bbit
+		r a b bit
+		r a bb it
+		r a bbi t
+		ra bbit
+		rab bit
+		rabbi t
+		rab bat
+		rab bait
+
+- Edit Distance: min operations to convert word1 to word2
+	Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
+
+	You have the following three operations permitted on a word:
+
+	Insert a character
+	Delete a character
+	Replace a character
+
+	w1=intention w2=execution
+
+	w1=television w2=portal
+	    10           6 = 16
+	keeping t and l in w1, replacing/deleting/inserting as necessary - save at least two operations
+        Delete all the letters in word1 ops = len(word1)
+        Insert all the letters of word2 ops = len(word2)
+        Total = len(word1)+len(word2)
+	This can't be the minimum b/c a delete + insert can be replaced with a REPLACE op - so len(word1)+len(word2) is an upper bound
+	Deleting a letter can be unnecessary if it shares the same (relative/absolute???) position in both words???	
+	
+
+	deletes can be done first b/c there is no reorder op???
+	but you can replace an extra char instead of deleting it and save an extra delete op? but that would be evident if a remove was followed by an add
+
+	Input: word1 = "horse", word2 = "lros"
+	1. remove h and add l to same index -> replace -> 1. lorse
+	2. reorder/swap o and r -> 
+		2. replace o with r  
+		3. insert o -> lrose
+	3. remove e
+	4 ops
+
+	Input: word1 = "horse", word2 = "lros"
+	1. remove h and add l to same index -> replace -> 1. lorse
+	2. remove o and add r -> replace -> 2. lrrse
+	3. remove r and add o -> replace -> 3. lrose
+	4. remove e -> 4. lros
+
+	Input: word1 = "hourse", word2 = "lros"
+	1. remove h and add l -> replace -> 1. lourse
+	2. remove o and add r -> replace -> 2. lrurse
+	3. remove u and add o -> replace -> 3. lrorse
+	4. remove r -> 4. lrose
+	5. remove e -> 5. lros
+
+	Input: word1 = "hourse", word2 = "lros"
+	1. remove h and add l -> replace -> 1. lourse
+	2. swap o and r -> 
+		2. replace o with r  
+		3. insert o -> lruose
+	4. remove u
+	5. remove e
+
+	remove h
+	move r -> rorse
+		remove + move = replace h with r
+	remove second r
+	remove e
+
+	Input: word1 = "horse", word2 = "ros"
+	Output: 3
+	Explanation: 
+	horse -> rorse (replace 'h' with 'r')
+	rorse -> rose (remove 'r')
+	rose -> ros (remove 'e')
+
+	Input: word1 = "intention", word2 = "execution"
+	Output: 5
+
+	1. remove i and add e -> replace 1. entention
+	2. remove n and add x -> replace 2. extention
+	3. remove t and add e -> replace 3. exeention
+	4. remove second e and add c -> replace 4. execntion
+	... 7+ ops going one char at a time
+
+	1. replace i with e -> entention - extra i, one-less e in word1
+	2. replace n with x -> extention - 
+	3. remove t -> exention ** why remove t and not replace??? b/c char after t matches word2 char
+	4. replace n with c -> exection
+	5. insert u -> execution
+
+	Input: word1 = "inteeeention", word2 = "execution"
+
+	1. remove n and add x -> replace 1. ixteeeention
+	2. remove new first n and add u -> replace ixteeeeution
+	3. replace first i with e -> exteeeeution
+	4. delete first t -> exeeeeution
+	5. replace last e with c -> exeeecution
+
+	1. remove i and add e -> replace 1. enteeeention
+	2. remove n and add x -> replace 2. exteeeention
+	3. remove t -> exeeeention
+	4. replace third e with a c -> execeention
+	5. replace new third e with a u -> execuention
+	6. remove new third e -> execuntion
+	7. remove first n -> execution
+
+	Explanation: 
+	intention -> inention (remove 't')
+	inention -> enention (replace 'i' with 'e')
+	enention -> exention (replace 'n' with 'x')
+	exention -> exection (replace 'n' with 'c')
+	exection -> execution (insert 'u')
+
+	1. frequency count of each letter in word1 and word2
+	2. remove/add letters to match freq count in word2
+		2a. remove + add can be a replace
+	3. reorder ??? = 2+ (?) ops
+		3a. remove + move = replace
+	4. replace decreases frequency of a given letter - would require a follow-up insert
+		replace updates frequencies of both letters
+	5. swap = 2 x replaces
+
+- Burst Balloons: max coins from bursting balloons
+	You are given n balloons, indexed from 0 to n - 1. Each balloon is painted with a number on it represented by an array nums. You are asked to burst all the balloons.
+
+	If you burst the ith balloon, you will get nums[i - 1] * nums[i] * nums[i + 1] coins. If i - 1 or i + 1 goes out of bounds of the array, then treat it as if there is a balloon with a 1 painted on it.
+
+	Return the maximum coins you can collect by bursting the balloons wisely.
+	
+	Burst zeros last????
+
+	not accounting for zeros:
+		when 4 or more balloons, burst smallest to largest until left with three
+
+		when 3 left, burst center balloon
+
+		.... todo
+
+	input =	[3,1,5,8]
+	output = 167
+
+	[3,1,......,1,5,8]
+				       [1,3,8,1]
+	nums = [3,1,5,8] --> [3,5,8] --> [3,8] --> [8] --> []
+	coins =  3*1*5    +   3*5*8   +  1*3*8  + 1*8*1 = 167
+                  15           120         24       8
+	
+	input =	[1,5] -> [5]
+	output = 1*1*5 + 1*5*1 = 10
+
+	input =	[98, 41, 5, 8, 100, 89, 99] -> 2297341
+	output = [98, 41, 5, 8, 100, 89, 99] -> [98, 41, 8, 100, 89, 99] ->  [98, 41, 100, 89, 99] -> [99, 100, 89, 99] -> [98, 100,  99] -> [98,99]   -> [99]
+			41*5*8				41*8*100                    98*41*100      ->      100*89*99 ->      98*100*99    -> [1*98*99]     99
+
+ 
+- Regular Expression Matching: implement regex with . and * matching
+	Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+
+	'.' Matches any single character.
+	'*' Matches zero or more of the preceding element.
+	Return a boolean indicating whether the matching covers the entire input string (not partial).
+
+	s = "aa", p = "a"
+	output = false
+
+	s = "aa", p = "a*"
+	true	
+
+	s = "ab", p = ".*"
+	true
+
+	end state = s and p pointers are at end+1  (if using iteration)
+                    --- OR ----
+                    s = "" (if using stack)
+	greedy matches (would miss matches) - greedy won't work
+	pre-process query/pattern???
+	s = "aaabaaab" p = "c*a*a*a*a*a*a*.aaba*a*a*a*a" => c*a*.aaba* or c*.aaba* or a*.aaba* or .aaba* (...combinatorial explosion)
+                      p = "aab"
+		      p = "caab"
+		      p = "c...caab"
+	    aaab      "c*a*a*a*a*a*a*a*a*a*a*a"
+
+	s = "asaaaaaadlkfaaaaaajlkjasddfj" p = "a*saa*adlkfaaa*j.*dd*"
+	match "around" the fixed chars in p
+        collapse repeating wildcards into 1 -> a*a*a*... => a*
+	also non-repeating wildcards can be collapsed into empty string -> a*b*c* => ""
+
+- Maximum Subarray: max sum of contiguous subarray
+	Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+	Example 1:
+
+	Input: nums = [-2,1,-3,4,-1,2,1,-5,4] = sum of all nums = 1
+               if -2 is skipped, sum = sum + 2 = 3
+               if 1+(-3) is skipped, sum = sum +2 = 5
+	       if -5+4 are skipped from right side, sum = sum + 1= 6
+                      
+	1. find sum of nums - goal is to find any negative outliers to remove that can increase the sum
+	2. b/c we're looking for a subarray (contiguous elements) we move in from both ends, removing 1 or more numbers that when summed are negative
+	3. stop when left and right pointers cross
+
+	Output: 6
+	Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+
+        global max = 1 when i starts new subarray at index 3
+	update global max = 6 when i is at 7
+	nums = [-2,1,-3,4,-1,2,1,-5,4]
+		        4,-1,2,1    4
+
+
+		[-2,1,-3] = -4
+ 	greedy: what's the greedy choice? add nums[i] to running sum or start new subarray at nums[i] or skip nums[i]
+		subarray = [-2] sum = -2	
+		1 > -2 start new subarray at nums[1]
+
+	[5,4,-1,7,8] = 23
+
+	[5,4,-100,-1, -1,  7,8] = -78
+
+- Jump Game: can you reach last index from first
+- Jump Game II: min jumps to reach last index
+- Gas Station: starting gas station to complete circuit
+- Hand of Straights: can array be grouped into consecutive groups of size W
+- Merge Triplets to Form Target Triplet: check if target can be formed by merging triplets
+- Partition Labels: partition string so each char appears in at most one part
+	You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part. For example, the string "ababcc" can be partitioned into ["abab", "cc"], but partitions such as ["aba", "bcc"] or ["ab", "ab", "cc"] are invalid.
+
+	Note that the partition is done so that after concatenating all the parts in order, the resultant string should be s.
+
+	Return a list of integers representing the size of these parts.
+
+	Example 1:
+
+	Input: s = "ababcbacadefegdehijhklij"
+	Output: [9,7,8]
+	Explanation:
+	The partition is "ababcbaca", "defegde", "hijhklij".
+	This is a partition so that each letter appears in at most one part.
+	A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits s into less parts.
+
+	map chars to start and end positions (i, j) in s
+	as new characters are encountered add in map with starting pos i
+
+- Valid Parenthesis String: check if string with (, ), * is valid
+- Insert Interval: insert interval into sorted non-overlapping intervals
+- Merge Intervals: merge all overlapping intervals
+	Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+	Example 1:
+
+	Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+	    represent as (start, interval_width) tuple: (1, 2), (2, 4)...
+	Output: [[1,6],[8,10],[15,18]]
+	Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
+
+	for intervals sorted by start of interval and end interval (ie [2,5] before [2,6]):
+	[    ]
+           [    ]
+	s1 < s2 and s2 < e1 and e1 < e2 (mergeable) => (s1, e2)
+	if all enclosed intervals are removed first, then above comparison simplifies to: s1 <= s2 and s2 <= e1
+        [     ]
+                 [      ]
+	s1 < s2 and e1 < s2 => or, simply e1 <= s2
+        [           ]
+           [      ]
+	s1 < s2 and e2 < e1 (mergeable) => (s1, e2) (enclosed interval is dropped/deleted)
+
+	w/o sorting first, brute-force: O(n^2) to compare each interval w/every other interval
+
+	can merge enclosing intervals first:
+		key on interval width
+		for each interval I of width w:
+			find all intervals with width v <= w:
+				find all intervals j where (sj - sI) + v <= ej
+
+- Non-Overlapping Intervals: min intervals to remove to make rest non-overlapping
+- Meeting Rooms: check if person can attend all meetings
+- Meeting Rooms II: min meeting rooms required
+- Minimum Interval in Each Query: smallest interval covering each query point
+- Rotate Image: rotate nxn matrix 90 degrees clockwise
+- Spiral Matrix: traverse matrix in spiral order
+- Set Matrix Zeroes: set entire row/col to zero if element is zero
+   Use O(1) space
+   
+   Row-wise descent (ascent can work too as long as you zero cells in the top or bottom part of the column that have already been visited), set zeros for row, and send back up columns that need zeroing
+   [1,	1,    1,   1,   1,   1]
+   [1,	1,    1,   1,   1,   1]
+   [1,	0,    1,   1,   1,   1]
+   [1,	1,    1,   0,   1,   1]
+   [1,	1,    1,   1,   1,   1]
+ 
+- Happy Number: check if number eventually reaches 1 by summing squared digits
+	 n = 2
+     4 -> 16 -> 1^2+36 = 37 -> 9+49 -> 58 (25+64) -> 89 (64+81) -> 145 (1+16+25)->42 -> 20 -> 4
+	n=3
+     9 -> 81->65->61->37->58->89->145->42->20->4->16->37
+     add sum of square of digits to set to detect cycle
+      n= 9999999999999
+       81+81+81+81+81+81+81+81+81+81+81+81+81=1053
+- Plus One: increment large integer represented as array
+- Pow(x, n): compute x raised to power n
+   3^2 = 9
+   00011 << ? = 1001
+   5 ^ 2 = 25
+   32, 16, 8, 4, 2, 1
+   00101^2 = 011001
+
+- Multiply Strings: multiply two numbers as strings without converting to int
+- Detect Squares: design data structure to count axis-aligned squares
+	You are given a stream of points on the X-Y plane. Design an algorithm that:
+
+	Adds new points from the stream into a data structure. Duplicate points are allowed and should be treated as different points.
+	Given a query point, counts the number of ways to choose three points from the data structure such that the three points and the query point form an axis-aligned square with positive area.
+	An axis-aligned square is a square whose edges are all the same length and are either parallel or perpendicular to the x-axis and y-axis.
+
+	Implement the DetectSquares class:
+
+	DetectSquares() Initializes the object with an empty data structure.
+	void add(int[] point) Adds a new point point = [x, y] to the data structure.
+	int count(int[] point) Counts the number of ways to form axis-aligned squares with point point = [x, y] as described above.
+	 
+	Pre-process incoming stream of coordinates (ie group together those forming an edge, or those on a valid diagonal => 1-1-rad2) - group so that query point can be a constant lookup - looking for second point that shares x or y with first or is on diagonal of valid square, or is a duplicate of the first (duplicates are allowed)
+
+- Single Number: element appearing once (others appear twice)
+	[4, 1, 2, 1, 2]
+        [4, 1, 2, 1, 2 | 4]
+        [4, 1, 2, 1, 2 | 4, 1]
+        [4, 1, 2, 1, 2 | 4, 1, 2]
+        [4, 1, 2, 1, 2 | 4, X, 2]
+	[4, 1, 2, 1, 2 | 4, X, X]
+
+        [8, 9, 7, 3, 9, 5, 7, 8, 5]
+
+	Use XOR
+- Number of 1 Bits: count set bits in integer
+- Counting Bits: count 1 bits for numbers 0 to n
+- Reverse Bits: reverse bits of 32-bit integer
+- Missing Number: find missing number in 0..n array
+- Sum of Two Integers: add two integers without +/-
+- Sum of Sortable Integers
+	You are given an integer array nums of length n.
+
+	An integer k is called sortable if k divides n and you can sort nums in non-decreasing order by sequentially performing the following operations:
+
+	Partition nums into consecutive subarrays of length k.
+	Cyclically rotate each subarray independently any number of times to the left or to the right.
+	Return an integer denoting the sum of all possible sortable integers k.
+
+	Example 1:
+
+	Input: nums = [3,1,2]
+
+	Output: 3
+
+	Explanation:
+
+	For n = 3, possible divisors are 1 and 3.
+	For k = 1: each subarray has one element. No rotation can sort the array.
+	For k = 3: the single subarray [3, 1, 2] can be rotated once to produce [1, 2, 3], which is sorted.
+	Only k = 3 is sortable. Hence, the answer is 3.
+
+	**applying n rotations returns nums to its original order**
+
+	nums = [7, 1, 2, 3, 4, 5,...]
+	        find max k not equal to n where each of the n/k is sortable, and determine if there is a number in group A that's larger than all nums in group B where B >A or if last member of sorted group A is smaller than first member of group B 
+		for that max subarray length K,  all other k less than it are sortable 
+	nums = [1, 2, 7, 3....]
+               [1,2], [7,3]
+                [1,2,7,3]
+			-> [2,7,3,1]->[7,3,1,2]->[3,1,2,7]->[1,2,7,3]
+         nums = [7, 2, 3, 1, 10, 50, 42, 23 ]
+                [7,2,3], [1,10,50]
+		[2,3,7], [1,10,50] largest member of subarrayi > smallest member of subarrayi+1 - not sortable
+		[10, 50, 42, 23]
+                [10, 50], [42, 23]
+                 len(nums) = 8
+		divisors = 1, 2, 4, 8
+                k=2: [7,2], [3,1] .... member of first partition is larger than all members of second partition, hence no amount of rotations can sort nums
+                k=4  [7,2,3,1], [10, 50, 42, 23] no amount of rotations can sort 1st partition 
+                k=8 b/c no amount of rotations can sort in k=4 case, same applies here???
+	        1. detect when a member of one subarray is larger than all members of any subarray that follows it
+		2. detect when subarray is not sortable	
+		3. detect if largest member of (sortable) subarrayi > smallest member of (sortable) subarrayi+1 (not sortable)
+
+
+- Reverse Integer: reverse 32-bit integer with overflow check
+
+Balanced BST from unsorted [1,1,2,2,2,2,2,2,5,6,7] (sorted then left-mid root):
+

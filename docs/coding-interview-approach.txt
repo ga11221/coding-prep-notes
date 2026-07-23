@@ -1,0 +1,429 @@
+TABLE OF CONTENTS:
+  1.  PROBLEM-SOLVING FRAMEWORK ............. 23
+  2.  PROBLEM ANALYSIS STEPS ................ 42
+  3.  ITERATIVE REFINEMENT .................. 49
+  4.  RAPID PATTERN SELECTION ............... 58
+  5.  WHEN TO COMBINE DATA STRUCTURES ....... 93
+  6.  CUSTOM STATE HASHING .................. 114
+  7.  PARTITIONING ALGORITHMS ............... 139
+  8.  FAILURE FUNCTIONS ..................... 183
+  9.  QUERY PREPROCESSING ................... 209
+  10. BIT TWIDDLING ......................... 227
+  11. PROVING TERMINATION ................... 239
+  12. TREE / GRAPH TAXONOMY ................. 255
+  13. DISCRETE MATH ......................... 265
+  14. HIGH-YIELD PRACTICE ................... 272
+  15. GREEDY VS OPTIMAL ..................... 285
+  16. BRUTE FORCE VS STRUCTURAL ALT ......... 291
+  17. WHEN OPTIMIZED BRUTE IS ENOUGH ........ 312
+  18. AMORTIZATION .......................... 324
+  19. TSP DP EXAMPLE ........................ 338
+  20. PRUNING APPROACHES .................... 358
+  21. COUNTING SORT ......................... 380
+
+PROBLEM-SOLVING FRAMEWORK:
+
+1. **Clarify** — Restate the problem. Ask about input size, constraints, edge cases (empty, null, duplicates).
+2. **Brute-force** — State the naive approach, analyze time/space. Prove it works.
+3. **Optimize** — Work toward efficient solution out loud. Identify patterns. Use examples to reason.
+4. **Pseudocode** — Outline approach before writing code. Confirm with interviewer.
+5. **Write code** — Clean, correct, idiomatic. Meaningful variable names.
+6. **Test** — Run through example, then edge cases (empty, single, large, overflow).
+7. **Analyze** — State final time & space complexity.
+
+Key tips:
+- Talk through thinking constantly — verbalize even simple steps. Never code silently.
+- If stuck: try a smaller example or draw it out.
+- Preprocess the query (pattern) to avoid redundant work — applicable to any sequential matching task.
+- Devise by observation: at each step ask "is this achievable in the next step?" If not, current state is a dead end — backtrack or prune.
+- Determine if any invariant (especially loop) can be established. Then ask "how to achieve" — plain English first, then formalize.
+- Always draw tree for recursive solutions — each descent = recursive call, each ascent = return. Use to reason about base cases and pruning.
+- For optimization problems, work through exhaustive list of examples (like Edit Distance).
+
+PROBLEM ANALYSIS STEPS:
+1. Without applying transformations, what is the end state in terms of the input?
+2. Reason about state in plain language — what is changing, what is constant, invariants. DO NOT jump to code.
+3. What state should be introduced? What are the invariants?
+4. What is the unit of change?
+5. How do we recognize the end state? Can be more than one.
+
+ITERATIVE REFINEMENT:
+1. Start with simplest/smallest input, come up with approach.
+2. Iteratively vary input to include more variants — duplicates? wildcards?
+3. Can you find inputs that break the approach from step 1?
+4. Can inputs be categorized (e.g. strings with wildcards vs without)?
+5. Consider performance at bounds.
+6. Transform input to account for all categories?
+7. If not, given DS and problem requirements, what's the best approach? (hashing, sorting, sliding window, two pointers, recursion/backtracking/failure functions, DP, graph traversal, etc.)
+
+RAPID PATTERN SELECTION:
+
+| Category                              | When to use                                                                     | Typical approach                                                     |
+|---------------------------------------|---------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| Current/global max/min                | Finding best result across transformations (max subarray, longest substring)    | Kadane's, sliding window, tracking running best                      |
+| Contiguous subarray/substring         | Need to find window satisfying condition (target sum, unique chars)             | Sliding window (fixed/variable) — O(n²) → O(n)                       |
+| Reverse/rotate in-place               | Reversing array, words in string, rotation                                     | Two-pointer swap from ends toward center                             |
+| Count within bounded range            | Counting chars, small ints — anagram, counting sort                            | Bitmap / bucket array                                                 |
+| Sort first + then process             | Simplifies pair search, interval merge, duplicate detection                    | Sort + two pointers / sweep line                                     |
+| Working backwards                     | End state is known, need sequence of transformations                           | Reverse from desired state                                            |
+| Fast lookup / frequency tracking      | Need O(1) access or frequency (two sum, anagram)                               | HashMap / HashSet                                                     |
+| Ordered processing (LIFO/FIFO)        | Valid parentheses, histogram, BFS, level-order                                 | Stack / Queue / Deque                                                 |
+| Overlapping subproblems               | Fibonacci, coin change, LIS, LCS, edit distance                                | DP — tabulation (bottom-up) or memoization (top-down)                 |
+| Explore all combos/permutations       | Subsets, permutations, combination sum                                         | Backtracking with pruning                                             |
+| Range sum queries                     | Multiple queries for subarray sums                                             | Prefix/suffix sum — O(1) per query after O(n) prep                    |
+| 2D grid traversal                     | Number of islands, word search, matrix rotation                                | DFS/BFS with direction vectors [(0,1),(1,0),(-1,0),(0,-1)]           |
+| Graph — explicit state machine        | Connected components, shortest path, cycle detection                           | BFS (shortest path, level-order), DFS (all paths, cycles)             |
+| Local choices → global optimum        | Activity selection, MST, Huffman, Dijkstra                                     | Greedy — requires optimal substructure + greedy choice property      |
+| Search sorted space                   | Find in rotated array, first bad version                                       | Binary search — O(log n)                                              |
+| Partition by predicate               | Segregate, kth smallest, sort colors                                           | Quickselect, DNF 3-way partition                                     |
+
+Greedy vs DP: greedy is a restricted form of DP — one pass instead of exploring subproblems. Greedy cannot undo choices. Use DP when locally optimal choices don't guarantee global optimum (overlapping subproblems that interact).
+
+Rare but high-yield:
+- Union-Find (DSU) — connected components, redundant connection, number of islands. Path compression + union by rank → nearly O(1).
+- Dijkstra's — shortest path weighted graph. Priority queue.
+- Trie — prefix matching, autocomplete, word search.
+- Topological sort — dependency ordering (course schedule, alien dictionary). Kahn's (BFS) or DFS.
+- Monotonic stack/queue — next greater/smaller element, histogram, sliding window max.
+- Floyd's cycle detection — linked list cycle, find duplicate number.
+- Manacher's — longest palindromic substring O(n).
+- Boyer-Moore majority vote — element appearing > n/2 times.
+- Reservoir sampling — random sample from stream of unknown length.
+- Quickselect — kth smallest/largest O(n) avg. Partition only side containing k.
+
+WHEN TO COMBINE DATA STRUCTURES:
+
+One DS can't satisfy all operations at the required complexity:
+
+| Pattern                             | What you need                                         | Combination                                                      |
+|-------------------------------------|-------------------------------------------------------|-----------------------------------------------------------------|
+| Fast lookup + ordered traversal     | O(1) get + O(log n) range queries                     | HashMap + TreeSet                                                |
+| Frequency tracking + top-k          | Track counts + retrieve top-k anytime                  | HashMap + Heap                                                   |
+| Sliding window + distinct count     | Window moves + unique element tracking                 | Deque + HashMap                                                  |
+| Graph + path constraints            | BFS/DFS + state-dependent pruning                     | Queue + HashSet (visited with state)                             |
+| Autocomplete + ranking              | Prefix matching + frequency ordering                  | Trie + Heap per node                                             |
+| Dynamic median                      | Insert + get median fast                              | Two heaps (max + min)                                            |
+| LRU cache                           | O(1) get + O(1) put with eviction order               | HashMap + Doubly-linked list                                     |
+| Insert/delete/getRandom O(1)        | O(1) all three                                        | HashMap + Array                                                  |
+| Range updates + point queries       | Bulk range increments + single value reads            | Difference Array + Prefix Sum                                    |
+| Multiple constraint ordering        | Sort by X, maintain heap order by Y                   | Sort + Heap (process in priority order within sorted batches)    |
+
+How to spot: brute force does O(n) or O(log n) per operation fine but not both. If you need insert, delete, and getMax O(1) — one structure holds data, another tracks max. The second structure is almost always a map (fast lookup), heap (max/min), tree (ordered), or stack/queue (ordered access).
+
+Use graphs when encoding state transitions, not just adjacency. If problem is about "what can I do next" and "what have I done", it's a graph traversal.
+
+CUSTOM STATE HASHING:
+
+Encoding multi-dimensional/composite state for memoization or visited sets:
+
+| Encoding          | Method                                                    | Example                             |
+|-------------------|-----------------------------------------------------------|-------------------------------------|
+| Tuple             | (r, c, k_remaining)                                       | Python native, simple               |
+| Bitmask           | visited_mask (int bit per element)                        | TSP, "visited all nodes"            |
+| Canonical string  | sort remaining chars → "abc"                              | Stickers to Spell Word              |
+| Integer packing   | (row << 16) | (col << 8) | k                                 | Space-efficient, fast               |
+| Frozenset         | unordered hashable set                                    | When order doesn't matter           |
+
+Hard problem examples:
+- Shortest Path Visiting All Nodes (847): (curr_node, visited_mask) — 12-bit bitmask
+- Stickers to Spell Word (691): remaining target chars as sorted string
+- Race Car (818): (position, speed) tuple
+- Sliding Puzzle (773): board config as string "123450"
+- Robot Room Cleaner (489): (x, y, direction) + visited set of (x,y)
+- Shortest Path with Obstacle Elimination (1293): (r, c, k_left) int-packed
+- Find Shortest Superstring (943): (last_idx, used_mask) bitmask
+- Tiling Rectangle (1240): skyline heights tuple
+- Freedom Trail (514): (ring_pos, key_idx) tuple
+
+When you need it: DP state isn't just (i, j) — it involves a set of remaining items, board config, or position + accumulated state. Bitmasks most common: when input ≤ 20, represent "which items used" as a single int.
+
+PARTITIONING ALGORITHMS:
+
+| Algorithm   | How it works                                                          | Result                                                  | When to use                                                           |
+|-------------|-----------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------------------------------|
+| Lomuto      | i tracks < pivot boundary, j scans. Swap when arr[j] < pivot.         | Pivot in final pos, < on left, ≥ on right               | Simple. Poor for many duplicates. Teaching.                            |
+| Hoare       | Two pointers from left + right, swap when both on wrong side.         | Pivot not at boundary. Returns split where left ≤ pivot, right ≥ pivot. | 3x fewer swaps than Lomuto. Practical use. |
+| DNF (3-way) | Three pointers: low, mid, high. arr[mid]: < → swap low/mid, = → mid++, > → swap mid/high. | Three regions: < pivot, = pivot, > pivot | Many duplicates. Quicksort optimization for repeated values. |
+
+Lomuto:
+  partition(arr, lo, hi):
+    pivot = arr[hi]; i = lo
+    for j = lo to hi-1:
+      if arr[j] < pivot: swap arr[i], arr[j]; i++
+    swap arr[i], arr[hi]; return i
+
+Hoare:
+  partition(arr, lo, hi):
+    pivot = arr[lo + (hi-lo)/2]; i = lo - 1; j = hi + 1
+    while true:
+      do i++ while arr[i] < pivot
+      do j-- while arr[j] > pivot
+      if i >= j: return j
+      swap arr[i], arr[j]
+
+DNF (3-way):
+  partition(arr, lo, hi):
+    pivot = arr[lo + (hi-lo)/2]; low = lo; mid = lo; high = hi
+    while mid <= high:
+      if arr[mid] < pivot: swap arr[low], arr[mid]; low++; mid++
+      else if arr[mid] == pivot: mid++
+      else: swap arr[mid], arr[high]; high--
+    return (low, high)
+
+For Sort Colors (hardcoded 0/1/2): replace comparisons — arr[mid] == 0, arr[mid] == 1, arr[mid] == 2. Same pointer logic, no pivot variable.
+
+| Algorithm   | Partition          | Complexity             | Notes                                                |
+|-------------|--------------------|------------------------|------------------------------------------------------|
+| Quickselect | Lomuto or Hoare    | O(n) avg, O(n²) worst  | Find kth. Partition only side containing k.          |
+| Quicksort   | Hoare (std lib), DNF | O(n log n) avg       | Recursively partition both sides.                   |
+| Sort Colors | DNF (0,1,2)        | O(n)                   | Classic 3-way partition.                            |
+| Segregate   | Lomuto variant     | O(n)                   | Partition by predicate.                             |
+
+Decision: need O(n) worst → median-of-medians (theoretical only). Many duplicates → DNF. Teaching → Lomuto. Practical → Hoare.
+
+FAILURE FUNCTIONS:
+
+A function mapping state (matched prefix length) to fallback state when next character doesn't match. Encodes pattern self-similarity.
+
+For pattern P and state j (P[0..j-1] matched): failure(j) = longest proper suffix of P[0..j-1] that is also a prefix of P = lps[j-1] (KMP's LPS array).
+
+As DFA edge:
+  state = next(state, c):
+    while state > 0 AND P[state] != c: state = failure(state)
+    if P[state] == c: state++
+    return state
+
+Core matching loop of KMP, Aho-Corasick, and many pattern-matching automata.
+
+| Algorithm     | Failure function                                                             | What it fails to                                            |
+|---------------|------------------------------------------------------------------------------|--------------------------------------------------------------|
+| KMP           | lps[j] with secondary opt (skip re-check same char)                         | A shorter prefix                                             |
+| Morris-Pratt  | mpNext[j] = lps length                                                      | Another prefix                                               |
+| Aho-Corasick  | goto + failure[state] for trie node                                         | Longest proper suffix that is also a trie node                |
+| Boyer-Moore   | badChar + goodSuffix tables (not failure fn — skip distance, not fallback)  | N/A                                                          |
+| Z-algorithm   | Z[i] = substring matching prefix                                            | Closely related, not pure failure function                   |
+
+Key property: failure functions eliminate backtracking in text pointer. Text pointer only goes forward — O(1) per character regardless of pattern complexity.
+
+Aho-Corasick extends to multiple patterns: KMP is Aho-Corasick for a single pattern (LPS is the failure function for a linear, non-branching trie). Aho-Corasick failure connects trie branches sharing suffixes — O(n + total pattern length) matching against thousands of patterns. Used in Snort/Suricata, virus scanners, bioinformatics.
+
+QUERY PREPROCESSING (Pattern-centric):
+
+| Technique               | What it precomputes                                                | Where used                                                 |
+|-------------------------|--------------------------------------------------------------------|-------------------------------------------------------------|
+| Failure function (LPS)  | Fallback state per prefix length                                  | KMP, Aho-Corasick                                           |
+| Boyer-Moore tables      | badChar shift (rightmost) + goodSuffix shift (match suffix in prefix) | Fastest practical single-pattern matcher                  |
+| Rabin-Karp rolling hash | Pattern hash + base powers                                        | Plagiarism detection, multi-pattern via hash set            |
+| Regex compilation       | NFA → DFA via subset construction                                 | re.compile(), regex crate                                  |
+| Shift-OR / Shift-AND    | Bitmask per character: which positions match                      | Exact match with don't-cares, small patterns                |
+| Suffix automaton        | Minimal DFA for all substrings                                    | Repeated substring queries, BWA                             |
+| BLAST seeding           | Word index (k-mer hash table)                                     | Bioinformatics sequence alignment                           |
+| Sorting                 | Sort query array                                                  | Two-pointer (2-sum, 3-sum), binary search                   |
+| Prefix sum on query     | Prefix sums                                                       | Rare on query side — usually on data                        |
+
+Key: query preprocessing is O(m) once to accelerate O(n) matching. Amortized if pattern reused or n >> m. Contrast with text preprocessing (suffix trees, inverted indexes) which indexes data to answer many different queries.
+
+KMP history: Knuth-Morris-Pratt (1977, developed 1970). All three independently discovered. Morris built text editor at Brown, noticed O(n*m) was suboptimal. Pratt was a high school student at Stanford, independently derived it in an afternoon. Knuth formalized, connected to automata theory. The LPS (failure function) was the key conceptual leap.
+
+BIT TWIDDLING:
+
+When input size or value range is small enough to fit entire state space into a single int (≤ 64 bits):
+- Duplicates / missing numbers — array values bounded by length (§287, §268)
+- Subset enumeration — N ≤ 20 (1 << N fits 32-bit, 2²⁰ = 1,048,576)
+- Visited states — few distinct items (≤ 12 nodes for TSP path mask)
+- Character presence — 26 lowercase letters fit in single int bitmask
+- Toggle / XOR tricks — x ^ x = 0, x & (-x) for lowest set bit
+- Color/frequency constraints — small enumerated types (RGB, 4 suits, 8 directions)
+
+Not viable: input values unbounded (arbitrary ints, strings), N > 64, state space non-binary.
+
+PROVING TERMINATION:
+
+Standard approach: variant function — a measure from program state to a well-ordered set (usually N) that:
+1. Strictly decreases on every iteration/recursive call
+2. Bounded below (N bounded by 0)
+
+No infinite descending chains in N → algorithm must stop.
+
+Example — binary search: lo, hi := 0, len(arr)-1. Variant = hi - lo + 1. Each iteration shrinks interval.
+
+When one N isn't enough — lexicographic tuples: Euclidean GCD (a, b) → (b, a mod b). Variant = (a+b, a) lexicographically.
+
+Recursive — structural induction: sort([]) base case. sort(x:xs) recurses on xs (len n-1). IH: terminates for all length < n.
+
+Hard cases: no obvious scalar measure (distributed protocols, AI search), measure doesn't strictly decrease, concurrency/interleaving. Use well-founded relations, temporal logic, rely-guarantee.
+
+TREE / GRAPH TAXONOMY (quick reference):
+
+Binary: Full (0 or 2 children), Complete (filled L→R, last level), Perfect (all internal 2 children, leaves same depth), BST (L < parent < R).
+Self-balancing BST: AVL (height diff ≤ 1), Red-Black (color property, log n guaranteed), Splay (recent access near root), Treap (BST + heap priority).
+Multi-way: B-Tree (blocks for disk), B+Tree (data only in leaves), TST (trie + BST hybrid).
+Spatial: Segment Tree (range queries), Fenwick/BIT (prefix sums), Quadtree/Octree (2D/3D partitioning), R-Tree (spatial bounding boxes), KD-Tree (k-d point search).
+String: Trie (prefix tree), Radix Tree (compressed trie), Suffix Tree (all suffixes for fast match), Suffix Array (sorted suffixes).
+Heap: Binary Heap (priority queue), Fibonacci Heap (amortized fast decrease-key).
+Graph: Adjacency List (sparse), Adjacency Matrix (dense), DAG (directed, acyclic — topological order).
+
+DISCRETE MATH:
+- Combinations nCk = n! / (k!(n-k)!). Use DP or precomputed factorials.
+- Mod inverse: a⁻¹ mod m. Extended Euclidean Algorithm. Fermat's Little Theorem if m prime.
+- Sieve of Eratosthenes: find all primes up to N. O(N log log N).
+- GCD: Euclidean algorithm gcd(a,b) = gcd(b, a % b).
+- Modular arithmetic for large numbers avoid overflow.
+
+HIGH-YIELD PRACTICE:
+
+Rapid categorization drill: given a problem, answer only: brute-force complexity, input constraints, likely category (greedy/DP/graph/binary search/sliding window). No coding. Cover NeetCode category tag, guess before revealing.
+
+Pattern flashcards (Anki):
+- "Need min/max subarray" → Kadane's, sliding window, prefix sum
+- "Shortest path unweighted" → BFS
+- "Count ways / optimize decision" → DP (knapsack, LCS)
+- "First/last occurrence, search rotated" → Binary search variants
+- Keep one pattern per card, no code. Review 5-10 min daily. Add cards as you miss patterns.
+
+After ~50 problems, pattern recognition becomes automatic.
+
+Greedy vs Optimal:
+- Greedy: local best, commit, never reconsider. Cheap, may be wrong.
+- Optimal: best possible globally. May need DP, backtracking.
+- Asking "what's a non-optimal solution?" helps find lower/upper bounds.
+- Greedy works when optimal substructure + greedy choice property both hold (matroid: MST, Huffman, canonical coin change). Fails without (0/1 knapsack, non-canonical coin denominations, TSP).
+
+16. BRUTE FORCE VS STRUCTURAL ALTERNATIVES:
+
+Brute force = try every candidate, check each. Provably correct, provably optimal, impractically slow.
+
+Two paths to a better solution:
+  Path 1 — Optimize the brute force (incremental): eliminate redundancy while keeping the same approach. (Two-sum: hash map eliminates inner scan, O(n²) → O(n).)
+  Path 2 — Transform the problem (structural): solve a different problem that yields the same answer. (Missing number: XOR or sum formula bypass enumeration entirely.)
+
+How to find Path 2:
+  1. Look for invariants — sum, XOR, parity, count preserved regardless of input
+  2. Change representation — sort, convert to graph, encode as bitmask
+  3. Invert the difficulty — instead of finding the needle, remove all the hay
+  4. Complement/dual — harder to find X than to find NOT X? (Vertex Cover ↔ Independent Set)
+  5. Structural recognition — does this match a known problem? (Cycle detection, topological sort)
+
+"Opposite problem" framing — compute what you don't want and subtract from total:
+  - Find duplicates: much easier to find singletons (XOR cancels pairs), then total − singletons = duplicates
+  - Find missing number: sum expected range, sum actual array, difference is missing
+  - Count inversions: count sorted pairs, subtract from total pairs
+  - XOR trick: even-count elements cancel to 0, odd-count survives (find odd-occurrence element)
+
+17. WHEN OPTIMIZED BRUTE-FORCE IS ENOUGH:
+
+  | Scenario                                | Brute Force        | Alternative               | Why alternative works                          |
+  |-----------------------------------------|--------------------|---------------------------|------------------------------------------------|
+  | 1. Exponential, N moderate              | Subset sum O(2ⁿ)   | Meet-in-the-middle O(2^(n/2)) | 2¹⁵=33K vs 2³⁰=1B for n=30                |
+  | 2. Existence not enumeration            | All subarrays O(n²)| Prefix sum + hash set O(n)| Transform enumerate → check prefix diff        |
+  | 3. Exploitable structure                | Two-sum pairs O(n²)| Sort + two-pointer O(n log n) | Sorted input lets you prune geometrically |
+  | 4. Sub-linear per operation             | Next greater O(n²) | Monotonic stack O(n)      | Amortized O(1) per element                     |
+  | 5. Known pattern match                  | Find duplicate O(n log n) | Floyd's cycle O(n), O(1) space | Values-as-pointers → cycle detection      |
+
+  Interview heuristic: first state brute force (proves you can solve it). Ask: does this reduce to a known pattern? If yes, use the pattern. If no, optimize the brute force and stop. Don't invent clever unless brute force is clearly too slow.
+
+18. AMORTIZATION:
+
+  Use when a data structure does occasional expensive work that pays for future cheap ops. Cost spreads evenly across all operations.
+
+  | Pattern                          | Amortized Cost | Brute       | Why amortization works                     |
+  |----------------------------------|---------------|-------------|--------------------------------------------|
+  | Monotonic stack                  | O(n) total    | O(n²)       | Each element pushed/popped exactly once     |
+  | Union-Find (path compression)    | O(α(n)) per   | O(n) per    | Tree flattens over time                     |
+  | Dynamic array append             | O(1) per      | O(n) on resize | Doubling: O(n) resize log n times        |
+  | Binary counter increment         | O(1) per      | O(log n)    | k flips O(k) but next k cheap               |
+  | Splay tree                       | O(log n) per  | O(n) worst  | Frequent nodes move to root                 |
+
+  When NOT to use: guaranteed latency per operation needed (trading, auctions), single-shot query (no sequence to spread cost over).
+
+19. TSP — EXPONENTIAL ALTERNATIVE EXAMPLE:
+
+  Held-Karp DP (bitmask): O(n² · 2ⁿ) vs brute O(n!).
+
+  def tsp(cost):
+      n = len(cost)
+      @lru_cache(None)
+      def dp(mask, last):
+          if mask == (1 << n) - 1:
+              return cost[last][0]
+          best = inf
+          for nxt in range(n):
+              if not (mask >> nxt) & 1:
+                  best = min(best, cost[last][nxt] + dp(mask | (1 << nxt), nxt))
+          return best
+      return dp(1, 0)
+
+  For n=20: 2²⁰=1M masks × 20 last-cities = 20M states × 20 inner = 400M. Tractable in Go/C++, tight in Python.
+  Structural insight: enumerate subsets (2ⁿ) instead of permutations (n!) — reuse sub-results via memoization.
+
+20. PRUNING APPROACHES:
+
+  | Technique              | How it works                                                    | Example                                                  |
+  |------------------------|----------------------------------------------------------------|----------------------------------------------------------|
+  | Branch and bound       | Track best so far; prune partial that can't beat it            | TSP: current path > best-known tour → stop               |
+  | Upper/lower bounds     | Estimate best outcome from state; if < best, prune             | 0/1 knapsack: remaining cap × best density < best → stop |
+  | Heuristic ordering     | Try most promising branch first → tight bound faster           | Sudoku: fill cell with fewest candidates first            |
+  | Symmetry breaking      | Eliminate equivalent states                                    | Graph coloring: fix color order to skip permutations      |
+  | Memoization            | Cache visited states — don't re-explore                        | DP: each (mask, last) computed once                       |
+  | Forward checking       | On choice, eliminate incompatible future choices immediately    | N-Queens: remove column/diagonals after placing queen     |
+  | Constraint propagation | Propagate consequences until no more deductions                | Sudoku: if cell has one possible value, fill immediately  |
+  | Dominance pruning      | If state A strictly better than B (same position, lower cost), discard B | Dijkstra: higher-cost revisit → stop              |
+  | Randomized restart     | If search stalls, randomize and restart with different heuristic| SAT solvers                                                |
+  | Limits (IDDFS)         | Depth/time/node limit — accept best found so far               | Chess engines: depth 30 in 2 min                          |
+
+  Safe pruning (bounds, dominance, memoization, constraint propagation) never eliminates optimal solution. Heuristic pruning (best-first, restart, limits) may miss it but finds good one fast.
+
+21. COUNTING SORT:
+
+  Non-comparison sort. O(n + k) where k = value range. Stable variant iterates
+  backwards. Only practical when k is manageable (k << n² — otherwise radix
+  sort).
+
+  counting_sort(arr):
+      if len(arr) == 0: return []
+
+      min_val = min(arr)
+      max_val = max(arr)
+      k = max_val - min_val + 1
+
+      count = [0] * k
+      output = [0] * len(arr)
+
+      // Step 1 — frequency per distinct value
+      for i = 0 to len(arr)-1:
+          count[arr[i] - min_val]++
+
+      // Step 2 — prefix sum yields insertion positions (1-indexed)
+      for i = 1 to k-1:
+          count[i] += count[i-1]
+
+      // Step 3 — build output. Reverse traversal = stable.
+      for i = len(arr)-1 down to 0:
+          val = arr[i]
+          pos = count[val - min_val] - 1
+          output[pos] = val
+          count[val - min_val]--
+
+      return output
+
+  Step 2 can be skipped if you only need the sorted count of each key
+  (e.g. frequency-based reconstruction iterates value directly).
+
+  | Variant        | Modification                               | Use case                        |
+  |----------------|---------------------------------------------|----------------------------------|
+  | Vanilla        | Steps 1 → 3, extra output array             | General sort, k moderate        |
+  | In-place       | Step 2 only, overwrite arr from count       | Keys are 0..k-1, no stabililty  |
+  | Frequency-only | Stop after step 1, iterate count directly   | Histogram, bucket counts        |
+  | Key-indexed    | Step 2 → write 1 pass (no reverse)          | Unstable, forward-only          |
+
+  When to reach for it:
+    - Input values are small integers (scores, ages, ASCII chars, colors)
+    - Sorting chars/bytes: k = 256, O(n) trivially
+    - Part of radix sort digit pass (counting sort per digit)
+    - Frequency + ranking (top-k, majority element preprocessing)
+
+  When NOT to use:
+    - k >> n: huge range wastes space and extra loop time
+    - Floating point or unbounded integers: range is infinite
+    - Negative values: handled by min-offset (arr[i] - min_val) but adds
+      complexity — radix sort with sign bit handling usually cleaner

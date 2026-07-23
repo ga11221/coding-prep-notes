@@ -1,0 +1,163 @@
+T = "abc dezx" after matching 3 chars, j= 3 lps[3-1]= 0 => skip the first 3 chars
+P = "abc e"
+LPS = [0,0,0,0]
+
+KMP (KNUTH-MORRIS-PRATT) STRING MATCHING — PSEUDOCODE
+
+Find all occurrences of pattern P (length m) in text T (length n) in O(n + m) time.
+
+Key insight: when a mismatch occurs at position j in P, we already know the
+first j-1 characters matched. Instead of shifting P by 1 and re-checking from
+scratch, we use the LPS (Longest proper Prefix which is also Suffix) array to
+skip characters we already know match.
+
+----------------------------------------------------
+
+PHASE 1 — COMPUTE LPS ARRAY:
+
+  lps[i] = length of the longest proper prefix of P[0..i] that is also
+           a suffix of P[0..i]. (Proper prefix != the whole string.)
+
+  Example:
+    T = "abab cababaca"
+    P = "  ab ab aca"
+    /*
+	typically, in O(n^2) approach, check P against T from start of T until a mismatch is found, then repeat checking P against T, this time starting from the second char of T:
+
+	i, j := 0, 0
+        counter := 0
+	for i < len(T) {
+            counter++
+            i = counter
+            j = 0
+            for j < len(P) {
+	       if T[i] != T[j] {
+	         break;
+               }
+               i++
+               j++
+            }
+	}	
+	KMP says, if abab is a prefix-suffix of length 2 (ie prefix=ab suffix=ab and len(prefix/suffix) = 2) and we've matched that against T, then we can start re-checking at index 2 of T AND P instead of index 1
+     */
+    // after matching j chars, the next j-lps[j-1] characters of the text don't need to be re-checked
+    // j = 4, T[4] = c, P[4] = a, lps[4-1] = lps[3] = 2
+    // after matching 4 chars, the next 2 (j-lps[j-1] => 4-2) chars of T (T[2]=a,T[3]=b) don't need to be re-checked b/c the LPS guarantees they already match the pattern prefix
+    lps = [0, 0, 1, 2, 3, 0, 1]
+      i=0: "a" -> proper prefixes: "" -> 0
+      i=1: "ab" -> proper prefixes: "a" -> suffixes: "b" -> 0
+      i=2: "aba" -> "a" == "a" -> 1
+      i=3: "abab" -> "ab" == "ab" -> 2
+      i=4: "ababa" -> "aba" == "aba" -> 3
+      i=5: "ababac" -> no match -> 0
+      i=6: "ababaca" -> "a" == "a" -> 1
+
+  Pseudocode:
+
+    lps = array of size m, initialized to 0
+    len = 0   // length of previous longest prefix-suffix // only incremented on match // prefix-suffix is substring that is both prefix and suffix of string S
+    i = 1 // incremented on match or until first match found
+
+    // P = "ababaca"
+    // len starts behind i. They move together on every match, and i only moves ahead on mismatches after the first match
+    while i < m: // advance from index 1 to the end, only stopping when there is a mismatch after finding at least one match
+      if P[i] == P[len]: // P[1] (b) == P[0] (a) false // P[2] (a) == P[0] (a) true // P[3] (b) == P[1] (b)
+        len++         // len = 1 // len = 2
+        lps[i] = len // lps[2] = 1 // lps[3] = 2
+        i++ // i = 3 // i = 4
+      else:
+        if len != 0: // len = 0 only at start of prefix-suffix search and while no matches found
+          len = lps[len - 1]    // fall back to previous prefix
+        else:
+          lps[i] = 0 // lps[1]=0
+          i++
+
+  Why len = lps[len-1] works:
+    We have a mismatch at len after matching len characters.
+    The longest prefix that could also match P[i..] must be a prefix
+    of the current prefix P[0..len-1] that is also a suffix.
+    That's exactly what lps[len-1] stores.
+
+----------------------------------------------------
+
+PHASE 2 — SEARCH:
+
+  i = 0   // index in T
+  j = 0   // index in P
+
+  
+  //  T = "ab"
+  //  P = "ab"
+  while i < n: // n is length of T (the text to search)
+    if P[j] == T[i]: //move pointers in T and P ahead in unison if they match 
+      i++
+      j++
+
+    if j == m: // m is the length of P (the pattern to search for)
+      // Found match at position i - j
+      record match at (i - j)
+      j = lps[j - 1]    // continue searching for overlapping matches // lps[1-1] = lps[0] for P="a" = 0 => j=0
+
+    else if i < n && P[j] != T[i]:
+      // Mismatch after j characters matched
+      if j != 0:
+        j = lps[j - 1]   // skip using LPS -- don't recheck known prefix
+      else:
+        i++               // no characters matched, advance T
+
+----------------------------------------------------
+
+COMPLEXITY:
+
+  O(n + m) time, O(m) space.
+
+  Why O(n):
+    - i only moves forward in T (n increments total)
+    - j moves forward when matching, moves back via lps when mismatching
+    - Each lps fallback reduces j, but j can decrease at most as many
+      times as it increased (amortized O(n))
+
+----------------------------------------------------
+
+EXAMPLE TRACE — T = "abxabcababc", P = "ababc"
+
+  P = "ababc"
+  lps = [0, 0, 1, 2, 0]
+
+  i=0 j=0: P[0]=a == T[0]=a -> i=1 j=1
+  i=1 j=1: P[1]=b == T[1]=b -> i=2 j=2
+  i=2 j=2: P[2]=a != T[2]=x -> j = lps[1] = 0
+  i=2 j=0: P[0]=a != T[2]=x -> i=3
+
+  i=3 j=0: P[0]=a == T[3]=a -> i=4 j=1
+  i=4 j=1: P[1]=b == T[4]=b -> i=5 j=2
+  i=5 j=2: P[2]=a == T[5]=c -> NO... wait, T[5]=a -> i=6 j=3
+  i=6 j=3: P[3]=b == T[6]=b -> i=7 j=4
+  i=7 j=4: P[4]=c != T[7]=c -> actually wait, T[7]=a -> mismatch
+           j = lps[3] = 2
+  i=7 j=2: P[2]=a == T[7]=a -> i=8 j=3
+  i=8 j=3: P[3]=b == T[8]=b -> i=9 j=4
+  i=9 j=4: P[4]=c == T[9]=c -> i=10 j=5
+           j == m -> match at position 10-5 = 5
+           j = lps[4] = 0
+
+  Matches found: position 5
+
+----------------------------------------------------
+
+WHY NOT NAIVE?
+
+  Naive:
+    for each i in 0..n-m:
+      for j in 0..m:
+        if T[i+j] != P[j]: break
+    O(n*m)
+
+  KMP:
+    O(n) regardless of pattern or text content.
+    No backtracking in T -- streaming-friendly (read T once).
+
+  Good for:
+    - Large texts / repeated queries with same pattern
+    - Streaming/scanner contexts (i only advances)
+    - Where worst-case must be linear (no catastrophic backtracking)

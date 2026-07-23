@@ -1,0 +1,393 @@
+================================================================================
+RECURSIVE FUNCTION PATTERNS — Accumulator vs Return-Value
+================================================================================
+
+TABLE OF CONTENTS
+  1. Accumulator vs Return-Value — intro .............................. line 17
+  2. Comparison Table ................................................ line 40
+  3. Combinatorial Recursion Templates ............................... line 62
+  4. Formula Derivations ............................................ line 103
+  5. The Choose-Positions Pattern (same-char insertions) ............ line 142
+  6. Example: Subsets (both forms) .................................. line 190
+  7. Example: Permutations (return-value) ........................... line 224
+  8. When to Use Each Form .......................................... line 246
+  9. Key Principles ................................................. line 272
+
+================================================================================
+The two forms are always equivalent. The accumulator threads state DOWN the call
+stack (tail position), the return value threads it BACK UP (composition).
+
+  Accumulator:     f(acc, remaining) → carry running result down, return at base
+  Return-value:    f(remaining) → solve suffix, compose with current on way up
+
+Rewrite rule:
+  - The accumulator parameter becomes the RETURN VALUE of the base case.
+  - f(acc + arr[i], i+1) becomes arr[i] + f(i+1)
+  - The result flows up instead of down.
+
+Analogy with loops:
+  Accumulator  = for loop mutation:  var acc = 0; for i := 0; i < n; i++ { acc += arr[i] }
+  Return-value = pure composition:   sum(arr) = arr[0] + sum(arr[1:])
+
+The DP connection:
+  Every bottom-up DP table IS a return-value formulation — dp[i] is a cached
+  return of f(i). You cannot write a DP recurrence with an accumulator, because
+  the recurrence IS the return-value form. The accumulator obscures the recurrence.
+
+================================================================================
+ACCUMULATOR vs RETURN-VALUE
+================================================================================
+
+  Property               Accumulator                      Return-value
+  ─────────────────────────────────────────────────────────────────────────────
+  Direction              State down the stack             Composition up the stack
+  Recurrence visible?    Hidden behind mutation           Explicit in the code
+  Memoizable?            No — path changes every call     Yes — if input is the same,
+                                                              result is the same
+  Construction cost     One allocation per leaf           Allocation at every level
+                          (copy path at base)
+  Mental model          "Carry partial result,            "Solve smaller problem,
+                          record at end"                    combine with current"
+  Natural for:           Building structures              Counting, summing, booleans
+                           (lists of lists)               (associative operations)
+
+Rule of thumb:
+  If your recursive function takes an accumulator and returns the same type,
+  ask: "can I make the accumulator the return value instead?" If yes, you get
+  a recurrence that's easier to reason about and potentially memoizable.
+
+================================================================================
+COMBINATORIAL RECURSION TEMPLATES
+================================================================================
+
+                             ┌─ Repetition allowed? ──┐
+                             │                         │
+                            Yes                        No
+                             │                         │
+                       ┌─────┴─────┐           ┌───────┴────────┐
+                       │             │         │                  │
+                  Order matters?  Order doesn't   Order matters?   Order doesn't
+                       │             │          (permutations)     (combinations)
+                       │             │               │                  │
+                    sequences      multisets       P(n,k)             C(n,k)
+                  (n^k or        (C(n+k-1,k))    (n!/(n-k)!)       (n!/(n-k)!)
+                   variations)
+
+  Pattern                     Recurrence                                      Return
+  ────────────────────────────────────────────────────────────────────────────────────
+  Combinations                f(i, k) = skip(i+1,k) ∪ take(i+1,k-1)           [][]T
+  (pick k, no order, no rep)
+
+  Permutations                f(rem) = for each n: prepend n to                [][]T
+  (pick k, order matters,            f(rem \ {n})
+   no repeat)
+
+  Sequences                   f(k) = for each n in alphabet:                    [][]T
+  (pick k, order matters,            prepend n to f(k-1)
+   repeat allowed)
+
+  Combinations w/ repetition  f(i, k) = for count from 0..k:                   [][]T
+  (pick k, no order, repeat)          include element i count times,
+                                       recurse on i+1
+
+  Subsets                     f(i) = skip(i+1) ∪ take(i+1) with ith element    [][]T
+  (any size, no order, no rep)
+
+Combinatorial DP COLLAPSE (when you only need the count, not the sequences):
+
+  combinations:               C(n,k) = C(n-1,k) + C(n-1,k-1)
+  permutations:               P(n,k) = n * P(n-1,k-1)
+  sequences:                  S(n,k) = n * S(n,k-1)
+  subsets:                    2^n
+
+FORMULA DERIVATIONS (how the closed forms come from the recurrences):
+
+  Examples use coin flips: n = number of coins (or coin types), k = number
+  of flips/picks.
+
+  Sequences V(n,k) — flip a fair coin k times, record each outcome:
+    Coin version:  a coin has n=2 faces (H, T). Flip it k times.
+                   How many possible sequences of outcomes?
+    Recurrence:    V(n,k) = n * V(n, k-1)
+    Base:          V(n,0) = 1   (one way to record zero flips: nothing)
+    Reasoning:     Position 1 (first flip): n choices. Position 2: n choices.
+                   Independent choices — multiply.
+    Unfold:        n * n * n * ... * n  (k times)
+    Closed:        V(n,k) = n^k
+    Concrete:      2^3 = 8 sequences for 3 flips of a fair coin:
+                   HHH HHT HTH HTT THH THT TTH TTT
+    Plain English: Number of ways to flip a coin k times.
+
+  Combinations C(n,k) — flip a coin n times, count sequences with exactly k heads:
+    Coin version:  flip a coin n times. How many ways to get exactly k heads?
+    Recurrence:    C(n,k) = C(n-1,k) + C(n-1,k-1)
+    Base:          C(n,0) = C(n,n) = 1
+    Reasoning:     Look at the first flip. Either it's TAILS (need k heads
+                   from remaining n-1 flips) or it's HEADS (need k-1 heads
+                   from remaining n-1 flips). Sum of the two.
+    Unfold:        n! / (k! * (n-k)!)
+    Closed:        C(n,k) = n! / (k! * (n-k)!)
+    Concrete:      C(3,2) = 3 sequences with exactly 2 heads in 3 flips:
+                   HHT HTH THH
+    Plain English: Number of ways to get k heads in n flips.
+                   Also: number of ways to choose k positions for the heads
+                   out of n total flips.
+
+  Permutations P(n,k) — line up k distinct coins in order from n:
+    Coin version:  you have n distinct coins (penny, nickel, dime, ...).
+                   Pick k of them and arrange them in a row on the table.
+                   Order matters — penny-nickel-dime is different from
+                   nickel-penny-dime.
+    Recurrence:    P(n,k) = n * P(n-1, k-1)
+    Base:          P(n,0) = 1   (one way to arrange nothing)
+    Reasoning:     Pick the first coin in the lineup: n choices. Then
+                   pick k-1 more from the remaining n-1 coins.
+    Unfold:        n * (n-1) * (n-2) * ... * (n-k+1)
+    Closed:        P(n,k) = n! / (n-k)!
+    Concrete:      P(4,2) = 4 * 3 = 12 ways to line up 2 distinct coins
+                   from a set of 4.
+    Plain English: Number of ways to pick k distinct coins from n and
+                   arrange them in order.
+
+  Combinations with repetition C'(n,k) — pick k coins from n denominations,
+    order irrelevant, each denomination can be picked multiple times:
+    Coin version:  you have n coin denominations (penny, nickel, dime,
+                   quarter). Grab a handful of k coins from the jar.
+                   You can grab multiple coins of the same denomination.
+                   Order doesn't matter — 2 pennies + 1 nickel is the
+                   same handful regardless of which hand you hold them in.
+    Recurrence:    C'(n,k) = C'(n-1,k) + C'(n,k-1)
+    Base:          C'(0,k) = 0, C'(n,0) = 1
+    Reasoning:     Consider pennies. Either you take NO pennies (then pick
+                   k from the remaining n-1 denominations) or you take
+                   AT LEAST ONE penny (set one aside, then pick k-1 more
+                   from all n denominations including pennies again).
+    Stars-and-bars: allocate k identical items (coin slots) into n bins
+                   (denominations).
+    Closed:        C'(n,k) = C(n+k-1, k) = (n+k-1)! / (k! * (n-1)!)
+    Concrete:      C'(4,3) = C(6,3) = 20 ways to grab 3 coins from 4
+                   denominations.
+
+  Subsets — flip n distinct coins, which ones land heads?
+    Coin version:  flip n distinct coins (labeled 1 through n). Each lands
+                   either heads or tails. Every subset of coins can be the
+                   "heads set." How many possible heads sets?
+    Recurrence:    S(n) = 2 * S(n-1)
+    Base:          S(0) = 1   (the empty set)
+    Reasoning:     For coin n, either it's in the heads set or it's not.
+                   Each choice doubles the count from the n-1 case.
+    Unfold:        2 * 2 * 2 * ... * 2  (n times)
+    Closed:        S(n) = 2^n
+    Concrete:      2^3 = 8 heads sets for 3 distinct coins:
+                   {} {1} {2} {3} {1,2} {1,3} {2,3} {1,2,3}
+    Plain English: Number of subsets of n elements.
+
+================================================================================
+THE CHOOSE-POSITIONS PATTERN (same-char insertions)
+================================================================================
+
+When inserting k copies of a recurring char into a string of length n, the
+final string is determined ENTIRELY by which positions the original characters
+occupy. Original chars keep their relative order. Recurring chars fill the rest.
+
+  Distinct outcomes: C(n+k, n) — choose n positions out of n+k for originals
+
+Clean recurrence: at each output position, choose filler or next original:
+
+  func placements(filler rune, orig []rune, totalLen int) []string {
+      var res []string
+      var buf []rune
+      var gen func(pos, origIdx int)
+      gen = func(pos, origIdx int) {
+          if pos == totalLen {
+              res = append(res, string(buf))
+              return
+          }
+          // remaining positions all filler if all originals placed
+          if origIdx == len(orig) {
+              rem := make([]rune, totalLen-pos)
+              for i := range rem { rem[i] = filler }
+              buf = append(buf, rem...)
+              gen(totalLen, origIdx)
+              buf = buf[:len(buf)-(totalLen-pos)]
+              return
+          }
+          // option 1: place filler
+          buf = append(buf, filler)
+          gen(pos+1, origIdx)
+          buf = buf[:len(buf)-1]
+
+          // option 2: place next original
+          buf = append(buf, orig[origIdx])
+          gen(pos+1, origIdx+1)
+          buf = buf[:len(buf)-1]
+      }
+      buf = make([]rune, 0, totalLen)
+      gen(0, 0)
+      return res
+  }
+
+This is the COMBINATIONS template in disguise — 2 branches per position,
+C(n+k, n) total leaves, no duplicates.
+
+================================================================================
+EXAMPLE: Subsets (return-value vs accumulator)
+================================================================================
+
+Accumulator — thread path down, copy at leaf:
+  func subsets(nums []int, i int, path []int) [][]int {
+      if i == len(nums) {
+          cp := make([]int, len(path))
+          copy(cp, path)
+          return [][]int{cp}
+      }
+      var res [][]int
+      res = append(res, subsets(nums, i+1, path)...)               // skip
+      res = append(res, subsets(nums, i+1, append(path, nums[i]))...) // take
+      return res
+  }
+
+Return-value — solve suffix, double on way up:
+  func subsets(nums []int) [][]int {
+      if len(nums) == 0 {
+          return [][]int{{}}
+      }
+      rest := subsets(nums[1:])
+      var res [][]int
+      for _, r := range rest {
+          res = append(res, r)                             // exclude nums[0]
+          cp := make([]int, len(r)+1)
+          copy(cp, r)
+          cp[len(r)] = nums[0]
+          res = append(res, cp)                            // include nums[0]
+      }
+      return res
+  }
+
+================================================================================
+EXAMPLE: Permutations (return-value, clean)
+================================================================================
+
+  func permute(nums []int) [][]int {
+      if len(nums) == 0 {
+          return [][]int{{}}
+      }
+      var res [][]int
+      for i, n := range nums {
+          rest := append(append([]int{}, nums[:i]...), nums[i+1:]...)
+          for _, p := range permute(rest) {
+              res = append(res, append([]int{n}, p...))
+          }
+      }
+      return res
+  }
+
+rest := append(append([]int{}, nums[:i]...), nums[i+1:]...)
+  => copy of nums excluding index i
+  => equivalent to: make + two appends, just inlined
+
+================================================================================
+WHEN TO USE EACH FORM
+================================================================================
+
+  Use ACCUMULATOR when:
+    - Building structures (lists of lists, strings)
+    - The operation at each level is expensive to recompute (avoid copying up)
+    - Only one path is valid at a time (backtracking with a shared buffer)
+    - The combine step is not associative (e.g., building a sentence word by word)
+
+  Use RETURN-VALUE when:
+    - Counting, summing, boolean logic, or any associative combine
+    - You want to memoize (cache depends on input, not path)
+    - The recurrence is easier to see this way
+    - The combine step is O(1) (e.g., max, +, &&)
+
+  Use POSITION-BASED (neither) when:
+    - The output is determined by choosing positions for fixed elements
+    - The inserted elements are identical
+    - You want to avoid duplicates by construction
+
+  The "collapsing" insight for DP:
+    If you're building a list of sequences and the caller only uses length,
+    min, max, sum, existence, or count — COLLAPSE the return type.
+    The recurrence stays the same shape; just the return gets smaller.
+
+================================================================================
+KEY PRINCIPLES
+================================================================================
+
+  1. Contiguity → Combine, not Pick/Skip.
+     Kadane's is combine because subarray MUST end at i. Partition subset sum
+     is pick/skip because elements can be freely selected.
+
+  2. Combine ≠ no skipping.
+     nums[i] is mandatory, but you can choose to carry forward or start fresh
+     (max(dp[i-1], 0) + nums[i]). The "choice" is what to carry, not whether
+     to include nums[i].
+
+  3. Same-char insertion reduces from permutations to combinations.
+     If the inserted element is identical every time, order of insertion
+     doesn't matter. C(n+k, n) distinct outcomes, not factorial.
+
+  4. Accumulator obscures recurrence.
+     The DP recurrence IS the return-value form. Start there.
+
+================================================================================
+RECURSION SKILL DEVELOPMENT
+================================================================================
+
+WRITING THE RECURRENCE BEFORE TOUCHING CODE
+
+Every recursive problem has a mathematical recurrence. Write it first:
+
+  1. What's the base case?
+  2. What's the recursive case?
+  3. What state does the function need?
+  4. What's the return type?
+
+The recurrence IS the return-value form (see Key Principles #4). Writing it
+before coding forces you to understand the problem structure, not just implement
+a solution. Speed improves with exposure — the bottleneck is pattern recognition,
+not derivation mechanics.
+
+RECURSION PROBLEM BANK (practice separately from LC rotation)
+
+Linear recursion — single recursive call per invocation, i+1 builds on i:
+  - Climbing stairs (Fibonacci variant)
+  - House robber (pick/skip)
+  - Min cost climbing stairs
+
+Tree recursion — multiple recursive calls per invocation, branching factor > 1:
+  - Maximum depth of binary tree
+  - Path sum
+  - Lowest common ancestor
+  - Diameter of binary tree
+
+Divide and conquer — split into independent subproblems, solve recursively, combine results:
+  - Merge sort (trace the splits)
+  - Binary search variants
+  - Maximum subarray (Kadane's recursive form)
+
+Backtracking — try a choice, recurse, undo choice if it doesn't work:
+  - Subsets (both accumulator and return-value)
+  - Permutations
+  - Combination sum
+  - N-queens
+  - Sudoku solver
+
+Mutual recursion — two or more functions call each other in a cycle:
+  - Expression parsing (infix → postfix)
+  - State machines
+  - XML/JSON depth counting
+
+PRACTICE ANALYZING EXISTING RECURSIVE CODE
+
+Read recursive solutions and trace them manually. Don't just understand —
+predict the next call, the return value, the state at each level. This builds
+the intuition for what recursion does at runtime.
+
+  Exercise: for a given recursive function, trace:
+    - Call stack depth at each step
+    - What the accumulator carries (or what gets composed on return)
+    - The branching factor at each level
+    - Total number of leaves (= number of distinct outputs)

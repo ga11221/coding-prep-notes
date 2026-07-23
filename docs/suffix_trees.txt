@@ -1,0 +1,256 @@
+UKKONEN'S SUFFIX TREE ALGORITHM — PSEUDOCODE
+
+Construct a suffix tree for string S of length n in O(n) time.
+
+Key innovation: build the tree incrementally one character at a time,
+processing all suffixes implicitly. The suffix tree for S[0..i] is
+extended to become the tree for S[0..i+1].
+
+----------------------------------------------------
+
+TERMINOLOGY:
+
+  root:       the root node
+  node:       internal node (root is also a node)
+  edge:       labeled with a substring [l, r) of S (half-open interval)
+  leaf:       a node representing a suffix ending position
+
+  suffix link: from node v to node f(v), where f(v) = the node
+               representing the longest proper suffix of v's path label.
+
+  activeNode:   current node in the algorithm
+  activeEdge:   edge index from activeNode (0 = none)
+  activeLength: how far along activeEdge we are (0 = at activeNode)
+
+  remainder:    the number of suffixes that need to be explicitly added
+                in the current phase
+
+  globalEnd:    a single pointer used by all leaf edges -- enables
+                O(1) leaf extension: increment the pointed-to int.
+
+----------------------------------------------------
+
+INITIALIZATION:
+
+  root = newNode()
+  root.suffixLink = root   // convention: root links to itself
+
+  activeNode   = root
+  activeEdge   = -1   (none)
+  activeLength = 0
+  remainder    = 0
+
+  globalEnd    = 0    // shared mutable int, all leaves use it
+
+----------------------------------------------------
+
+MAIN LOOP -- process each character position i from 0 to n-1:
+
+  for i = 0; i < n; i++:
+    globalEnd = i + 1    // increment globalEnd -- all leaf edges extend automatically
+    remainder++
+    lastCreatedNode = null   // for suffix link assignment
+
+    // Extend all active suffixes (remainder of them) until remainder == 0
+    while remainder > 0:
+
+      // --- Phase: walk down to the active point ---
+      if activeLength == 0:
+        // Check if there's an outgoing edge from activeNode starting with S[i]
+        if edge = findEdge(activeNode, S[i]):
+          // Character matches -- we don't create a new node yet
+          activeEdge   = edge
+          activeLength = 1
+          break   // Rule 3 (implicit extension) or Rule 1 (suffix already exists)
+        else:
+          // No matching edge -- Rule 2: create new leaf
+          leaf = newNode()
+          leaf.edge = [i, globalEnd]   // edge label = S[i] to end
+          addEdge(activeNode, S[i], leaf)
+          if lastCreatedNode != null:
+            lastCreatedNode.suffixLink = activeNode
+            lastCreatedNode = null
+          remainder--
+      else:
+        // We're at activeEdge, activeLength deep into it
+        edgeNode = getEdgeNode(activeNode, activeEdge)
+        edge = edgeNode.edge
+        splitPos = edge.start + activeLength
+
+        if S[splitPos] == S[i]:
+          // Character matches at this position -- Rule 3
+          activeLength++
+          if lastCreatedNode != null:
+            lastCreatedNode.suffixLink = activeNode
+            lastCreatedNode = null
+          break
+
+        else:
+          // Character differs -- need to split edge (Rule 2 variant)
+          // Create a new internal node at the split point
+          splitNode = newNode()
+          splitNode.edge = [edge.start, splitPos]   // first part of edge
+
+          // Original edge becomes the second half
+          edge.start = splitPos
+
+          // Create new leaf for the current extension
+          leaf = newNode()
+          leaf.edge = [i, globalEnd]
+
+          // Reconnect edges to splitNode
+          replaceEdge(activeNode, activeEdge, splitNode)
+          addEdge(splitNode, S[splitPos], edgeNode)
+          addEdge(splitNode, S[i], leaf)
+
+          // Set suffix link from splitNode
+          splitNode.suffixLink = root   // default, may be overwritten
+          if lastCreatedNode != null:
+            lastCreatedNode.suffixLink = splitNode
+          lastCreatedNode = splitNode
+
+          remainder--
+
+      // --- After processing one suffix, move to the next ---
+      if activeNode == root and activeLength > 0:
+        // At root: decrement activeEdge/length to walk down for next suffix
+        if activeLength == 1:
+          activeEdge = -1
+          activeLength = 0
+        else:
+          // Move to the next suffix of the current prefix
+          // Instead of rewinding from root each time, use suffix link shortcut
+          activeEdge   = activeNode.edges[activeEdge + 1]  // basically skip first char
+          activeLength--
+
+      else if activeNode != root:
+        // Follow suffix link to continue with next suffix
+        if activeNode.suffixLink != null:
+          activeNode = activeNode.suffixLink
+        else:
+          activeNode = root   // fallback
+
+      // After following suffix link, walk down to adjust activeLength
+      // (the skip/count trick -- essential for O(n))
+      walkDown(activeNode, activeEdge, activeLength, i)
+
+----------------------------------------------------
+
+WALK DOWN (skip/count trick):
+
+  // Starting from activeNode with activeEdge and activeLength, walk
+  // down edges to position ourselves correctly after following a suffix link.
+
+  walkDown(node, edge, length, currentPos):
+    if length == 0:
+      return (node, -1, 0)   // at node, no edge
+
+    edgeLen = getEdgeLength(node, edge)
+    while length > edgeLen:
+      length -= edgeLen
+      node = getEdgeNode(node, edge)
+      edge = findEdge(node, S[currentPos - length])
+      edgeLen = getEdgeLength(node, edge)
+
+    // Now length <= edgeLen -- we're inside this edge
+    return (node, edge, length)
+
+----------------------------------------------------
+
+SUFFIX LINK CREATION:
+
+  // During a split (Rule 2), the newly created internal node needs
+  // a suffix link. We use the lastCreatedNode variable to chain:
+  // 
+  //   lastCreatedNode -> newSplitNode
+  //   then later: newSplitNode -> nextSplitNode
+  //
+  // The first created node in a phase gets suffixLink = root.
+  // Subsequent nodes point to the node created by the previous split.
+  //
+  // After the last split, lastCreatedNode.suffixLink is set when
+  // the next split happens, or at the end of the phase.
+
+  // Root's suffix link points to root.
+  // All other nodes that never get assigned a suffix link default to root.
+
+----------------------------------------------------
+
+RULES SUMMARY:
+
+  Rule 1 (already exists):  S[activeEdge][activeLength] == S[i]
+    -> Do nothing, the path already exists. break out of while loop.
+
+  Rule 2 (create new):  S[activeEdge][activeLength] != S[i]
+    a) At activeNode with activeLength == 0: create new leaf edge.
+    b) On an internal edge: split at activeLength, create internal node + leaf.
+
+  Rule 3 (extend leaf):  activeLength > 0 and activeEdge already points to a leaf
+    -> Do nothing -- leaf edges are implicitly extended via globalEnd.
+
+----------------------------------------------------
+
+COMPLEXITY:
+
+  O(n) time, O(n) space.
+
+  Why O(n):
+    - Each phase (i from 0 to n-1) runs its while loop.
+    - But remainder only decreases, never increases across phases.
+    - Each iteration of the while loop either:
+      a) Decrements remainder (by applying Rule 2 or completing a suffix extension)
+      b) Breaks because of Rule 3/Rule 1 (activeLength increased)
+    - The walkDown function traverses edges but each character is
+      visited at most twice over the entire algorithm (amortized analysis).
+
+    n phases * amortized O(1) per phase = O(n)
+
+----------------------------------------------------
+
+EXAMPLE -- building suffix tree for "abcabx"
+
+  S = "abcabx"  (n = 6)
+  Terminator: x (unique character)
+
+  Phase 0 (i=0, char='a'):
+    remainder=1
+    Rule 2: create root -> leaf edge "a"
+
+  Phase 1 (i=1, char='b'):
+    remainder=2
+    Extend "a": check root's edges for 'b' -> not found -> Rule 2: root -> "b"
+    Extend "": remainder=1 -> root edges from 'a': check edge label chr(1)='b' -> matches edge[1] -> activeEdge='a', activeLength=1
+
+  Phase 2 (i=2, char='c'):
+    remainder=2
+    Active point: on edge "ab" at position 1 (char 'b')
+    Check S[splitPos=2]='c' vs S[i=2]='c' -> match -> activeLength=2, break
+    remainder still 2
+
+  ... continues building implicitly.
+
+----------------------------------------------------
+
+COMMON PITFALLS:
+
+  1. Forgetting to set suffixLink on new internal nodes.
+     Without proper suffix links, phase iteration degenerates to O(n^2).
+
+  2. Using absolute edge labels instead of [start, globalEnd) for leaves.
+     Leaf edges MUST use a shared mutable globalEnd so that adding
+     one character implicitly extends ALL leaf edges in O(1).
+
+  3. Not handling root's suffix link (root -> root) correctly.
+     walkDown after following root's suffix link can cause infinite loops.
+
+  4. Off-by-one on edge label intervals.
+     Ukkonen uses half-open [l, r): character at r is not included.
+     Edge length = r - l.
+
+  5. Not applying the skip/count trick in walkDown.
+     After following a suffix link, simply decrementing activeLength
+     and starting from root leads to O(n^2) time.
+
+  6. Forgetting that remainder counts suffixes from the CURRENT phase,
+     not from the start of the string. Each extension processes one
+     suffix of S[0..i], starting from the longest (the full prefix).

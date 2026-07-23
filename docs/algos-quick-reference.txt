@@ -1,0 +1,27 @@
+Sprague-Grundy - Game theory ***
+Memoized recursion - searching state space
+Two-pointer (with k-skip tolerance)/fixed or sliding window/deque - sequence comparisons
+DP (with carry/state - evaluate surplus) - op at i might influence op at i+1
+	1. State definition - meaning of one cell
+	2. State space - total set of possible states - if dp table is m x n, state space is O(m*n) - determines if DP is feasible (ie how large is m*n?)
+	3. Base case
+	4. Recurrence
+	5. Answer in some cell of dp (usually first or last)
+    Always start with recursive def/impl first — see recursion_patterns.txt for
+    accumulator vs return-value forms, combinatorial templates, and the
+    choose-positions pattern for same-char insertions.
+	1. Write recurrence recursively with f(state) - maps directly to the problem's decision tree. Skip vs match base case. No thought about loops or order.
+	2. Identify state space - what are the params? If just i, then O(n)	
+	3. Convert to DP - the recursive f(i) becomes dp[i], base case becomes initial value, and call order tells you the iteration direction - if f(i,r) = f(i+1,...) then recurrence depends on later values being computed first - direction is right to left
+Prefix/Suffix sum - range queries - what's total of elements from l to r
+Multi-state Kadane - find optimal subarray - maxEndingHere = max(arr[i], maxEndingHere + arr[i])
+Greedy (w/prelim sort when no constraints)
+Greedy (w/heap when constrained)
+BFS (unweighted) vs Dijkstra (weighted possibly with additional state) ***
+Manhattan distance transform ***
+Kahn's topological sort (BFS-based, in-degree) - can detect cycles ***
+DFS with post-order topological sort ***
+Interval stabbing
+Frequency maps (hashmaps, more generally)
+Floor/ceil
+Patience sorting ***

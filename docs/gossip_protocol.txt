@@ -1,0 +1,141 @@
+GOSSIP PROTOCOL — SWIM (Scalable Weakly-consistent Infection-style Membership)
+
+Used by: Consul (memberlist), Serf, Cassandra, Redis Sentinel, AWS DynamoDB (ring gossip).
+
+State per node:
+  incarnation:  int           // local counter, incremented per status change
+  status:       Alive | Suspect | Dead
+  members:      map[nodeId -> (status, incarnation, addr, lastAckTime)]
+
+  // SWIM-specific
+  seqno:        int           // monotonic counter for this node's update messages
+  recent:       []Update      // recently received updates, broadcast to others
+
+Parameters:
+  T:            interval between gossip rounds (default 1s)
+  K:            nodes to gossip per round (default 3, log2(N))
+  F:            failure detection suspicion multiplier (default 5)
+  P:            indirect probe count (default 3)
+
+----------------------------------------------------
+
+GOSSIP ROUND — Run every T per node:
+
+  1. SELECT target:
+       target = random member (excluding self). If none, skip round.
+
+  2. EXCHANGE:
+       send Ping(target, self.addr, self.seqno, self.recent) to target
+       if ack received within timeout (T/2):
+         merge(target's updates into self.members)
+         // target is alive
+       else:
+         // Target may be dead — use indirect probing
+         select K indirect nodes (from members, excluding self and target)
+         send PingReq(target, self) to each indirect node
+         wait for indirect responses
+         if any indirect node reports target alive (ack via relay):
+           // target is alive but may have network issues to self
+           mark target as alive
+         else:
+           // target is suspected dead
+           update target's status to Suspect with new incarnation
+           broadcast suspicion: add suspicion update to self.recent
+
+  3. DISSEMINATION (gossip fan-out):
+       for each member m in random subset of size K (excluding self):
+         send Sync(self.addr, self.seqno, self.recent) to m
+         merge m's response into self.members
+
+----------------------------------------------------
+
+SWIM membership updates:
+
+  Each membership change is a tuple: (nodeId, status, incarnation, addr)
+
+  Rules:
+    - A node accepts an update only if the update's incarnation > local incarnation
+      for that nodeId.
+    - If incarnation == local and update is Suspect but local is Alive:
+      local node increments its incarnation, broadcasts Alive.
+      This resolves false suspicions: "I'm not dead, I have a newer incarnation."
+    - Dead updates are accepted if incarnation >= local incarnation (once dead,
+      a node only revives via rejoin with new incarnation).
+
+  Incarnation tiebreaker:
+    - incarnation alone determines order. Higher incarnation wins.
+    - On same incarnation, status precedence: Alive > Suspect > Dead
+      (but this is rare — incarnation is incremented on each status transition).
+
+----------------------------------------------------
+
+SUSPICION — Delay before declaring node dead:
+
+  When K indirect probes fail:
+    target's status -> Suspect(newIncarnation)
+    start suspicion timer = F * (T + average RTT)
+    if timer expires without hearing from target:
+      target's status -> Dead
+      broadcast Dead update
+    if target responds or we hear Alive with higher incarnation:
+      cancel timer, update to Alive
+
+  Benefit: avoids flapping from transient packet loss.
+  A single dropped message → Suspect, not Dead → no immediate removal.
+
+----------------------------------------------------
+
+ANTI-ENTROPY — Full state reconciliation:
+
+  Periodically (every ~10 gossip rounds) or on join:
+    send FullSync(self.members) to a random node
+    receiver:
+      for each (nodeId, status, incarnation, addr) in received members:
+        if incarnation > local[nodeId].incarnation:
+          update local
+        else if incarnation < local[nodeId].incarnation:
+          add local[nodeId] to response
+    sender:
+      process response updates
+
+  Used to heal partitions where incremental gossip dropped messages.
+  O(N^2) if done frequently — done rarely.
+
+----------------------------------------------------
+
+NODE JOIN:
+
+  New node contacts any seed node (or configuration-discovered initial nodes):
+    send Join(self.addr, incarnation=0) to seed
+    seed responds with current member list + highest incarnation
+    seed also gossips the new node to others indirectly via next round
+
+  Existing nodes accept the join:
+    new node appears in their member list with status = Alive, incarnation = 1
+    gossiped via normal dissemination within ~1-2 rounds
+
+----------------------------------------------------
+
+NODE LEAVE (graceful):
+
+  On shutdown:
+    send Leave(self.addr, incarnation++) to K random nodes
+    these nodes broadcast Dead update
+    process stops immediately after (no ack required — best effort)
+
+----------------------------------------------------
+
+COMPARISON TO RAFT HEARTBEATS:
+
+  | Aspect              | Gossip (SWIM)                              | Raft heartbeats                        |
+  |---------------------|--------------------------------------------|----------------------------------------|
+  | Purpose             | Membership + failure detection             | Leader presence + log replication      |
+  | Traffic             | O(N) per round (K peers)                   | O(N) per round (N followers)           |
+  | Latency detection   | ~T * log2(N) rounds (epidemic converge)    | ~T (one round timeout)                 |
+  | Failure mode        | Suspect -> timeout -> Dead                 | Term timeout -> new election           |
+  | Scalability         | Thousands of nodes                         | Hundreds (leader bottlenecks)          |
+  | False positive rate | Lower (indirect probes + suspicion)        | Higher (single heartbeat path)         |
+
+  Complementary: Raft for consensus (log replication, leader election).
+                 Gossip for membership (who's in the cluster, who's alive).
+  Often used together: Consul (gossip for serf membership + Raft via etcd).

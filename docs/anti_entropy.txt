@@ -1,0 +1,72 @@
+ANTI-ENTROPY MECHANISMS
+
+Anti-entropy: proactively fixing divergent state between replicas (vs reactive read repair or passive waiting for new writes).
+
+Mechanisms:
+
+| Mechanism                | How it works                                                              | Where used                                        |
+|--------------------------|---------------------------------------------------------------------------|---------------------------------------------------|
+| Merkle tree (hash tree)  | Replicas exchange root hashes of key ranges. Hash match = in sync. Binary search tree to find exact divergent keys. | Cassandra, DynamoDB, Riak |
+| Bitmap reconciliation    | Each replica maintains bloom filter/bitset of keys. Exchange bitsets, request missing keys. | Early Cassandra, custom CRDT stores |
+| Full checksum + range    | Periodically compute checksums over data ranges. Exchange, request divergent ranges. | PG logical replication, ES segment sync |
+| Log shipping (delta)     | Replica requests WAL/oplog entries since last known position. Applies missing deltas. | Postgres WAL, MySQL binlog, Kafka follower fetch |
+| Read repair              | On read, query all replicas, compare versions. If mismatch -> repair stale replica(s) before returning. | Cassandra (read_repair_chance), DynamoDB |
+| Hinted handoff           | If write target is down, coordinator stores write as hint. Replayed on recovery. Covers short windows only. | Cassandra, Riak |
+| Gossip + version vectors | Replicas exchange version vectors for key ranges. Detect stale entries, pull newer versions. | Riak, Cassandra (data repair) |
+
+Full vs incremental:
+
+|                | Full anti-entropy                              | Incremental                                 |
+|----------------|------------------------------------------------|---------------------------------------------|
+| What           | Scan entire dataset, compare with peer         | Exchange deltas since last sync             |
+| Traffic        | O(data size)                                   | O(delta size)                               |
+| Time           | Hours for TB-scale                             | Seconds to minutes                          |
+| When           | Initial sync, post-partition repair, deep repair | Continuous maintenance                      |
+| Example        | nodetool repair -full                          | nodetool repair (default) in Cassandra      |
+
+Cassandra anti-entropy in detail:
+
+  Each table split into N vnodes (default 256 per node).
+  Each vnode has a Merkle tree:
+
+  For each vnode range:
+    hash each row key + column value -> leaf hash
+    build binary tree (leaves = row hashes, internal nodes = hash of children)
+    root = hash of all rows in vnode
+
+  Repair flow:
+    1. Coordinator requests Merkle tree from each replica for the range.
+    2. Compare root hashes:
+       Match -> in sync, skip.
+       Mismatch -> query child subtrees recursively until leaf level.
+    3. At leaf: coordinator fetches actual rows from each replica.
+    4. Compare version vectors -> pick newest version(s).
+    5. Write newest version to all replicas (pull + push repair).
+
+  Cost: Merkle tree computation reads all SSTables in range. Hours for large datasets.
+  This is why incremental repair (track which SSTables previously repaired) was added.
+
+Anti-entropy vs proactive replication:
+
+|                | Anti-entropy                                        | Proactive replication                    |
+|----------------|-----------------------------------------------------|------------------------------------------|
+| Trigger        | Timer (periodic), read repair (on demand), partition heal | Every write                             |
+| Scope          | Full dataset or range                               | Single write                             |
+| Cost           | High per-scan, amortized over time                  | Low per-write, constant                  |
+| Catch          | Everything eventually                               | Misses stale data never read             |
+| Use            | Reconciliation layer, safety net                    | Primary replication path                 |
+
+Decision points:
+  - Merkle tree: scales to billions of keys per node, costs CPU per rebuild. Use when data grows unbounded (Cassandra).
+  - Bitmap/bloom: smaller key sets (< 100M). Use when key count is bounded.
+  - Full checksum: simplest but scans all data. Use for small datasets or infrequent deep repair.
+  - Delta-based (log shipping): what primary replication already does. Still need full sync baseline for missed deltas after long partitions.
+
+Practical design:
+
+  Most systems combine:
+    1. Log shipping during normal operation (WAL, binlog, Kafka offset)
+    2. Periodic Merkle tree sync as safety net
+    3. Read repair for immediate consistency on hot data
+
+  Anti-entropy is the insurance policy -- rarely triggered, expensive, but catches everything.
