@@ -122,3 +122,13 @@ Permutation — f(a, b) = { '(' + f(a-1, b) if a > 0 } U { ')' + f(a, b-1) if b 
 
 **Feedback:** Correct. Key points: (1) Loop starts at i+1, not i — j=i is noop. (2) Branching factor: n-i at level i (decreases as i increases). (3) Total leaves: n! — product of (n-1)(n-2)...1. (4) Copy only at base case — O(n) per permutation, O(n) space. (5) Swap-back is mechanism, not math — each branch sees correct state for its j. Recurrence captures the WHAT (all permutations), swap-back is the HOW (implementation detail). Tree for [1,2,3]: 3 branches at root (j=1,2), 2 at next level, 1 at deepest → 3! = 6 leaves.
 
+---
+
+## Q11: Generate Parentheses
+
+**Question:** Given n pairs of parentheses, generate all combinations of well-formed parentheses. Write the recurrence, identify the pattern, state what choices you make at each level, and explain how you prune invalid branches.
+
+**User answer:** Pattern: permutation. P(a, b) = ["(" + c | c in P(a-1,b) if a > 0] ++ [")" + c | c in P(a,b-1) if a<b and b>0]. P(0,0) = "".
+
+**Feedback:** Correct. Key points: (1) Pattern: permutation — order matters, no repeats, each position is a choice. (2) State: (a, b) = remaining open, remaining close. At n=3, start at (3,3). (3) Constraint b > a: means unmatched open parens exist to close — same logic as Q3 (valid parentheses). (4) Pruning: invalid branches (close when no unmatched opens) never explored — not backtracking, just guard conditions in the recurrence. (5) Branching factor: varies — 2 branches when a > 0 and b > a, 1 branch when one side exhausted, 0 at base case. (6) Total leaves: Catalan number C(n) = C(2n,n)/(n+1). For n=3: C(6,3)/4 = 20/4 = 5 — matches example output. Subtle: same recurrence as Q3 (valid parentheses), but Q3 started with a=b=n and counted combinations, while this generates strings. Math identical — only difference is what you return at base case (count vs. constructed string).
+
