@@ -16,10 +16,10 @@ Interview prep references:
 - **rapid-fire-log.md** -- 10 recursion Q&As with detailed feedback (climbing stairs, subsets, valid parentheses, merge sort/binary search complexity, Karatsuba, binary search recurrence, combination sum, permutations)
 
 ### ddia/
-- **notes.md** -- Quiz notes for Designing Data-Intensive Applications: Ch 3 (Storage and Retrieval: LSM vs B-trees), Ch 4 (Encoding and Evolution: backward/forward compatibility), Ch 7 (Transactions: ACID, isolation levels, write skew, SSI vs 2PL), Ch 11 (Stream Processing: windows, watermarks, exactly-once semantics). Includes cumulative quiz.
+- **notes.md** -- Quiz notes for Designing Data-Intensive Applications: Ch 3 (Storage and Retrieval: LSM vs B-trees), Ch 4 (Encoding and Evolution: backward/forward compatibility), Ch 7 (Transactions: ACID, isolation levels, write skew, SSI vs 2PL), Ch 11 (Stream Processing: windows, watermarks, exactly-once semantics). Includes cumulative quizzes (Round 1 and Round 2).
 
 ### leetcode/
-61 LeetCode solutions in Go, organized by NeetCode category:
+62 LeetCode solutions in Go, organized by NeetCode category:
 
 | Category | Problems |
 |----------|----------|
@@ -32,7 +32,7 @@ Interview prep references:
 | dynamic-programming | LC70, LC139, LC279, LC300, LC377, LC416, LC1137 |
 | intervals | LC56, LC57, LC986 |
 | backtracking | LC46, LC77 |
-| stack | LC32, LC155 |
+| stack | LC32, LC155, LC739 |
 | heap | LC239, LC341, LC703 |
 | design | LC232, LC981, LC1114, LC1656, LC2266 |
 | math | LC1, LC5, LC6, LC9, LC13, LC14, LC27, LC29, LC71, LC94, LC97, LC120, LC976, LC1014, LC1572, LC1790 |

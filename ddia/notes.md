@@ -208,3 +208,55 @@
 **Answer:** Old clients reading V2 messages will ignore the field on unmarshalling even if it's required. On marshalling, old code will break unless required field has a default configured.
 
 **Feedback:** Correct on both counts. Key insight: "required" is a schema-level constraint, not wire-level — wire format is just field numbers and bytes, old clients skip unknowns regardless. Breakage is on write side: old code generates V2 without new required field → schema validation fails at marshal. Best practice: never use `required` (Protobuf creators have called it a mistake). Use `optional` with sensible defaults. If must add required: two-phase rollout — deploy code populating default first, then mark required in schema.
+
+---
+
+# Cumulative Quiz Round 2 — Ch 3, 4, 7, 11 (Jul 24)
+
+### Q1: Write-heavy event log with LSM-tree — compaction spikes causing latency. What's happening and mitigation?
+
+**Answer:** As append-only SSTable files grow during bursts of record inserts, compaction is triggered in the background to merge SSTables and delete out-of-date records. Tune compaction params and compaction scheduling.
+
+**Feedback:** Correct mechanism. The spikes are I/O contention — compaction reads/writes compete with foreground traffic. Underspecified on *what* spikes and *what* to tune. Concrete mitigations: (1) leveled compaction spreads work into smaller, more frequent merges vs size-tiered which batches into large expensive ones, (2) rate-limit compaction I/O (RocksDB `rate_limiter`), (3) dedicated compaction threads with CPU/IO budgets, (4) split hot/cold data — recent hot data stays in fewer SSTables, cold data compacts offline. "Tune compaction params" is the right idea but interviewers want to hear *which* params and *why*.
+
+### Q2: Protobuf over gRPC — Service A adds new field, Service B hasn't deployed. What happens on the wire?
+
+**Answer:** New fields should typically be marked optional or have defaults if required. Old code unmarshals using the previous schema w/o the new field, it simply drops the new field.
+
+**Feedback:** Correct. Protobuf encodes by field number, not name — Service B's generated code has no entry for the new field number, so it skips those bytes. This is wire format design, not a convention. Optional + sensible defaults is the right call.
+
+### Q3: Financial system — two transfers, concurrent reads must see consistent total. Which ACID properties and isolation level?
+
+**Answer:** Account transfers involve mutating disjoint data (ie separate records - without a materializing conflicts table, Snapshot Serializable Isolation is required to detect potential cycles and rollback all but one transaction. All four acid properties are at play - atomicity: any transaction that could create a rw-rw cycle is rolled back as if it never ran, and any transaction that completes updates all necessary records as though it was a single operation; consistency: like a ledger, the transfer transaction maintains the validity and consistency of amounts that are added to one record and then deducted from another; Isolation: each transaction appears to run as though it is the only one executing at the moment - the activity of other transactions don't interfere due to provided snapshots and commit-time clean up; Durability: with the WAL, even during node failure the data for all accounts can be restored to their consistent state.
+
+**Feedback:** Strong. Correctly identified SSI for disjoint records and all four properties. One nuance: "concurrent reads see a consistent total" targets **read skew** — two reads each see valid snapshots but the combination is inconsistent. Snapshot isolation alone doesn't prevent this. SSI catches it via dependency tracking. Calling it out by name ("read skew") would score points.
+
+### Q4: Kafka topic, events out of order. What goes wrong windowing by processing time instead of event time?
+
+**Answer:** Processing time is logged by the broker not the application - processing time has no semantic value to the application.
+
+**Feedback:** Correct principle but undersells the concrete problem. Spell out the failure mode: a page view at 12:00:59 arriving at broker at 12:01:02 lands in the 12:01 window instead of 12:00. Results: (1) events in wrong windows, (2) aggregations incomplete (12:00 window missing data), (3) late-arriving events silently dropped or polluting next window. Fix is event-time windows + watermarks. Interviewers want failure mode, not just principle.
+
+### Q5: B-tree vs LSM — read-heavy workload with occasional large batch writes (nightly ETL). Which wins and why?
+
+**Answer:** Large batch writes, even at off-peak hours, can trigger heavy compaction for a LSM datastore - additionally, reads can be slower, especially for older data in older SSTables; a well indexed B-tree can be more performant for reads, even if they consist mostly of random I/O, large batch writes can trigger write amplification in the worst case - but should be negligible during off-peak hours
+
+**Feedback:** Solid analysis. Correctly identified LSM compaction risk on batch writes, read degradation on older SSTables, and B-tree's read advantage. Write amplification during off-peak is correctly dismissed. But didn't explicitly state "B-tree wins." In an interview: say it clearly. B-tree wins — predictable O(log n) reads, ~3-4 disk reads for millions of keys. Write amplification from nightly ETL is acceptable when reads dominate.
+
+### Q6: Exactly-once semantics in Kafka vs at-least-once with idempotent consumers — difference and when to pick which?
+
+**Answer:** Kafka ensures during node failures that one consumer from a consumer-group can resume a stream, as the broker maintains offsets for each consumer/consumer group. Other vendors may retry un-acked events - in the event that a consumer had processed an event but failed before sending an ack, the consumer uses an idempotency key to determine if it has already processed the event - guaranteeing exactly-once semantics
+
+**Feedback:** Correctly described Kafka's offset mechanism and idempotent consumers, but blended the two instead of separating them. Exactly-once is a system-level guarantee (broker commits offsets atomically with output writes). Idempotent consumers are a consumer-side workaround (dedup via key before processing). Pick exactly-once when broker supports it (Kafka). Pick at-least-once + idempotent when using queues without exactly-once guarantees (RabbitMQ, SQS) or when output isn't transactional with the broker.
+
+### Q7: Migrating Protobuf V1 to V2 with a renamed field — compatibility concerns and safest rollout order?
+
+**Answer:** Protobuf uses field numbers to match fields, a rename shouldn't be an issue
+
+**Feedback:** Correct on wire format — field numbers handle it. But underspecified. Compatibility concerns beyond wire: (1) generated code changes variable names — compile-time breakage, (2) documentation/searches referencing old name stale, (3) downstream systems caching schema by name (not number) break. Safest rollout: (1) deploy dual-write (both old and new name), (2) update readers to tolerate either, (3) stop writing old name, (4) remove from schema. Never rename and deploy simultaneously.
+
+### Q8: Stream processor handles 100K events/sec, downstream writes 20K/sec. What happens without intervention, and two strategies?
+
+**Answer:** Stream processor buffers events - buffer overflows to disk. Downstream can apply back pressure
+
+**Feedback:** Correct on buffer overflow and back pressure. But question asks for TWO strategies. Second options: (1) drop messages — accept data loss, (2) scale downstream — add consumers/partitions, (3) rate-limit ingestion — slow producer to match capacity. Back pressure is usually right tradeoff, but interviewers want to hear alternatives and when each is acceptable.
