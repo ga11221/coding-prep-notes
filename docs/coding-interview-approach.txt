@@ -13,12 +13,12 @@ TABLE OF CONTENTS:
   12. TREE / GRAPH TAXONOMY ................. 255
   13. DISCRETE MATH ......................... 265
   14. HIGH-YIELD PRACTICE ................... 272
-  15. GREEDY VS OPTIMAL ..................... 285
-  16. BRUTE FORCE VS STRUCTURAL ALT ......... 291
-  17. WHEN OPTIMIZED BRUTE IS ENOUGH ........ 312
-  18. AMORTIZATION .......................... 324
-  19. TSP DP EXAMPLE ........................ 338
-  20. PRUNING APPROACHES .................... 358
+  15. GREEDY VS OPTIMAL ..................... 290
+  16. BRUTE FORCE VS STRUCTURAL ALT ......... 296
+  17. WHEN OPTIMIZED BRUTE IS ENOUGH ........ 317
+  18. AMORTIZATION .......................... 329
+  19. TSP DP EXAMPLE ........................ 343
+  20. PRUNING APPROACHES .................... 363
   21. COUNTING SORT ......................... 380
 
 PROBLEM-SOLVING FRAMEWORK:
@@ -288,6 +288,10 @@ Greedy vs Optimal:
 - Optimal: best possible globally. May need DP, backtracking.
 - Asking "what's a non-optimal solution?" helps find lower/upper bounds.
 - Greedy works when optimal substructure + greedy choice property both hold (matroid: MST, Huffman, canonical coin change). Fails without (0/1 knapsack, non-canonical coin denominations, TSP).
+- Matroid — two properties that guarantee greedy is optimal:
+  1. Hereditary: if a set of choices is valid, any subset of it is also valid. (If edges {A,B,C} form a valid forest, so do {A,B}, {A,C}, {B,C}, etc.)
+  2. Exchange: if two valid sets have different sizes, you can swap an element from the larger into the smaller and still have a valid set. (Two forests with 3 and 5 edges — you can always add an edge from the bigger one to the smaller without creating a cycle.)
+  If both hold, greedy picking the cheapest/best element at each step gives the globally optimal answer.
 
 16. BRUTE FORCE VS STRUCTURAL ALTERNATIVES:
 
