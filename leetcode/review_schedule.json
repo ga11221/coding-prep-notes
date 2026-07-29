@@ -1,0 +1,1697 @@
+{
+  "15": {
+    "id": 15,
+    "title": "3Sum",
+    "pattern": "Sorting + Two Pointers",
+    "insight": "Reduces 3Sum to repeated 2Sum on sorted subarrays. Duplicate skipping is what makes it clean.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "128": {
+    "id": 128,
+    "title": "Longest Consecutive Sequence",
+    "pattern": "Hash Set",
+    "insight": "Only start counting from sequence beginnings. Skipping elements that are mid-sequence avoids revisiting.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "238": {
+    "id": 238,
+    "title": "Product of Array Except Self",
+    "pattern": "Prefix/Suffix Products",
+    "insight": "Each element = product of everything left \u00d7 everything right. Two independent passes, no division needed.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "200": {
+    "id": 200,
+    "title": "Number of Islands",
+    "pattern": "Dynamic Programming",
+    "insight": "Must track which prefixes are valid, not just look up substrings.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "152": {
+    "id": 152,
+    "title": "Maximum Product Subarray",
+    "pattern": "Dynamic Programming",
+    "insight": "Negative \u00d7 negative = positive. Track both extremes at each position.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "5": {
+    "id": 5,
+    "title": "Longest Palindromic Substring",
+    "pattern": "Binary Search",
+    "insight": "Rotation guarantees one half is always sorted. Use that to decide which half to discard.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "73": {
+    "id": 73,
+    "title": "Set Matrix Zeroes",
+    "pattern": "In-place Matrix Manipulation",
+    "insight": "First row/column can double as marker storage. Process markers last to avoid overwriting.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "11": {
+    "id": 11,
+    "title": "Container With Most Water",
+    "pattern": "Two Pointers",
+    "insight": "The shorter line limits the area. Moving the taller line inward can only decrease width without increasing height.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "207": {
+    "id": 207,
+    "title": "Course Schedule",
+    "pattern": "Graph / Topological Sort",
+    "insight": "BFS alone can't detect cycles. In-degree tracking ensures prerequisites are satisfied before visiting.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "146": {
+    "id": 146,
+    "title": "LRU Cache",
+    "pattern": "Design / Hash Map + Linked List",
+    "insight": "Doubly linked list allows O(1) removal from middle. Stack can't do that.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "102": {
+    "id": 102,
+    "title": "Binary Tree Level Order Traversal",
+    "pattern": "BFS / Tree Traversal",
+    "insight": "Queue size at each iteration = number of nodes at that level.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "322": {
+    "id": 322,
+    "title": "Coin Change",
+    "pattern": "Dynamic Programming",
+    "insight": "Each amount depends on smaller amounts. Build up, don't recurse down.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "98": {
+    "id": 98,
+    "title": "Validate Binary Search Tree",
+    "pattern": "Tree / In-order Traversal",
+    "insight": "In-order of BST is strictly increasing. One pass, one check.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "133": {
+    "id": 133,
+    "title": "Clone Graph",
+    "pattern": "Graph BFS/DFS",
+    "insight": "Map prevents infinite loops on cycles. Clone on first visit, reuse on revisit.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "153": {
+    "id": 153,
+    "title": "Find Minimum in Rotated Sorted Array",
+    "pattern": "Binary Search",
+    "insight": "One comparison with right boundary is enough to decide which half to keep.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "416": {
+    "id": 416,
+    "title": "Partition Equal Subset Sum",
+    "pattern": "Dynamic Programming / Knapsack",
+    "insight": "Partition equal sum = subset sum to total/2. One boolean array, iterate backwards to avoid reuse.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "236": {
+    "id": 236,
+    "title": "Lowest Common Ancestor of Binary Tree",
+    "pattern": "Tree Recursion",
+    "insight": "LCA is the first node where p and q diverge into different subtrees. Recursion naturally finds it.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "19": {
+    "id": 19,
+    "title": "Remove Nth Node From End of List",
+    "pattern": "Two Pointers / Linked List",
+    "insight": "One pass with two pointers spaced n apart. No need to compute list length.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "3": {
+    "id": 3,
+    "title": "Longest Substring Without Repeating Characters",
+    "pattern": "Sliding Window / Hash Map",
+    "insight": "Map stores last seen index of each character. Jump left directly past the duplicate, no incremental shrink.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "208": {
+    "id": 208,
+    "title": "Implement Trie",
+    "pattern": "Design / Trie",
+    "insight": "Fixed-width array at each node gives O(1) child lookup. isEnd distinguishes prefixes from complete words.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "76": {
+    "id": 76,
+    "title": "Minimum Window Substring",
+    "pattern": "Sliding Window / Hash Map",
+    "insight": "Track required vs available counts. Shrink while all requirements met, expand when broken.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "148": {
+    "id": 148,
+    "title": "Sort List",
+    "pattern": "Linked List / Merge Sort",
+    "insight": "Merge sort is the natural fit for linked lists \u2014 split is O(1) with fast/slow pointers, merge is O(n) with dummy head.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1481": {
+    "id": 1481,
+    "title": "Least Number of Unique Integers after K Removals",
+    "pattern": "Backtracking",
+    "insight": "Reuse means recursion tree depth isn't bounded by array length. Prune when current sum exceeds target.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "48": {
+    "id": 48,
+    "title": "Rotate Image",
+    "pattern": "Matrix Manipulation",
+    "insight": "Rotate = transpose + reverse. Two simple ops instead of tracking four-way swaps.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "84": {
+    "id": 84,
+    "title": "Largest Rectangle in Histogram",
+    "pattern": "Monotonic Stack",
+    "insight": "Each popped index defines a rectangle that extends left (previous smaller) and right (current smaller). The stack maintains \"next smaller to the left\" \u2014 when it breaks, you know the rectangle's boundaries.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "56": {
+    "id": 56,
+    "title": "Merge Intervals",
+    "pattern": "Intervals / Sweep Line",
+    "insight": "Sorting guarantees you only need to look at the previous interval \u2014 no backtracking needed. Merge or push, never skip.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "31": {
+    "id": 31,
+    "title": "Next Permutation",
+    "pattern": "Array Manipulation",
+    "insight": "Backtracking gives all permutations in O(n!) \u2014 overkill. One linear scan + one swap + one reverse gives the next permutation directly.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "394": {
+    "id": 394,
+    "title": "Decode String",
+    "pattern": "Stack",
+    "insight": "`[` saves state (current string and repeat count) to stacks, `]` restores and applies. Same idea as recursion but explicit.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "49": {
+    "id": 49,
+    "title": "Group Anagrams",
+    "pattern": "Hash Map",
+    "insight": "Your approach works but is O(n\u00b2) because you compare every pair. Sorting or counting as the key groups in one pass \u2014 no pairwise comparison needed.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "155": {
+    "id": 155,
+    "title": "Min Stack",
+    "pattern": "Design / Stack",
+    "insight": "Your linked list idea works too \u2014 essentially the same thing. Min stack approach is cleaner to implement. The \u2264 on push (not <) handles duplicates correctly.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "287": {
+    "id": 287,
+    "title": "Find the Duplicate Number",
+    "pattern": "Array / Floyd's Cycle Detection",
+    "insight": "No extra structure needed \u2014 indices ARE your pointers. In-place, O(1) space.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "54": {
+    "id": 54,
+    "title": "Spiral Matrix",
+    "pattern": "Matrix Manipulation",
+    "insight": "Each traversal shrinks the \"ring\" \u2014 boundaries are your state, not recursion.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "78": {
+    "id": 78,
+    "title": "Subsets",
+    "pattern": "Backtracking",
+    "insight": "Same as combo/permutation backtracking \u2014 just don't track a target. Every node in the tree is a valid subset.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "46": {
+    "id": 46,
+    "title": "Permutations",
+    "pattern": "Backtracking",
+    "insight": "Two clean implementations \u2014 swap-in-place or build-new-list. Both give the same result. Swap-in-place is O(1) space, build-new-list is cleaner to reason about.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "104": {
+    "id": 104,
+    "title": "Maximum Depth of Binary Tree",
+    "pattern": "Tree Recursion",
+    "insight": "In-order isn't required \u2014 any traversal works. DFS is simplest: base case is null (return 0), otherwise 1 + max of children.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "136": {
+    "id": 136,
+    "title": "Single Number",
+    "pattern": "Bit Manipulation",
+    "insight": "XOR is its own inverse. a ^ a = 0, a ^ 0 = a. Order doesn't matter.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "2": {
+    "id": 2,
+    "title": "Add Two Numbers",
+    "pattern": "Linked List / Math",
+    "insight": "Reverse order is a gift \u2014 you process least significant digit first, which is exactly what addition needs.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "198": {
+    "id": 198,
+    "title": "House Robber",
+    "pattern": "Dynamic Programming",
+    "insight": "You only need the last two states. Not prefix sums \u2014 it's a decision at each step, not a guaranteed include.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "300": {
+    "id": 300,
+    "title": "Longest Increasing Subsequence",
+    "pattern": "Dynamic Programming / Binary Search",
+    "insight": "Your state description is correct \u2014 that's the O(n\u00b2) DP. The O(n log n) optimization uses binary search on tails instead of scanning all previous elements.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "141": {
+    "id": 141,
+    "title": "Linked List Cycle",
+    "pattern": "Fast & Slow Pointers",
+    "insight": "In a cycle, fast gains 1 step per iteration on slow. It's guaranteed to lap slow within one cycle length.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "560": {
+    "id": 560,
+    "title": "Subarray Sum Equals K",
+    "pattern": "Prefix Sum / Hash Map",
+    "insight": "Combo recursion is O(2^n). Prefix sum reduces it to one pass \u2014 each position asks \"have I seen the sum that makes this subarray equal k?\"",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "494": {
+    "id": 494,
+    "title": "Target Sum",
+    "pattern": "Dynamic Programming / Knapsack",
+    "insight": "Assigning +/- is the same as picking a \"positive\" subset. Reframing as subset sum reduces exponential to O(n \u00d7 sum). **FLAG: Review before interview \u2014 user wants to revisit.**",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1091": {
+    "id": 1091,
+    "title": "Shortest Path in Binary Matrix",
+    "pattern": "BFS",
+    "insight": "BFS explores level by level \u2014 the first time you reach the destination is guaranteed shortest. DFS doesn't have that guarantee.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "981": {
+    "id": 981,
+    "title": "Time Based Key-Value Store",
+    "pattern": "Hash Map + Binary Search",
+    "insight": "Each key's values are naturally inserted in timestamp order, so the list is already sorted. Binary search is the right tool for \"largest \u2264 target.\"",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "116": {
+    "id": 116,
+    "title": "Populating Next Right Pointers in Each Node",
+    "pattern": "Tree / BFS",
+    "insight": "Perfect binary tree means the next pointers you've already set give you a free linked list to traverse when setting up the next level.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "347": {
+    "id": 347,
+    "title": "Top K Frequent Elements",
+    "pattern": "Bucket Sort / Hash Map",
+    "insight": "Bucket sort avoids O(n log n) sorting. Frequency is bounded by n, so you get O(n) guaranteed.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "994": {
+    "id": 994,
+    "title": "Rotting Oranges",
+    "pattern": "BFS",
+    "insight": "The O(m\u00d7n) scan at the end is unnecessary \u2014 just track the fresh count as you go. When BFS finishes, one comparison tells you if it's possible.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "230": {
+    "id": 230,
+    "title": "Kth Smallest Element in a BST",
+    "pattern": "Tree / In-order Traversal",
+    "insight": "In-order of BST is sorted. You don't need to traverse the whole tree \u2014 stop as soon as k hits 0.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "105": {
+    "id": 105,
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "pattern": "Tree Recursion",
+    "insight": "Preorder gives you the root. Inorder tells you the size of left/right subtrees. Use the left subtree size to split the preorder array correctly.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "55": {
+    "id": 55,
+    "title": "Jump Game",
+    "pattern": "Greedy",
+    "insight": "You don't need to track which path \u2014 just track the farthest you can possibly reach. If every index up to the end is reachable, you're good.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "75": {
+    "id": 75,
+    "title": "Sort Colors",
+    "pattern": "Two Pointers / In-place Partition",
+    "insight": "Three-way partition in a single pass. Mid walks forward, low and high converge from ends.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "210": {
+    "id": 210,
+    "title": "Course Schedule II",
+    "pattern": "Topological Sort / BFS",
+    "insight": "Regular BFS with a visited set can revisit nodes. In-degree tracking ensures you only visit each node once prerequisites are satisfied.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "62": {
+    "id": 62,
+    "title": "Unique Paths",
+    "pattern": "Dynamic Programming",
+    "insight": "Recursion + memoization works but bottom-up avoids stack overhead. 1D compression works because each cell only depends on top and left.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "131": {
+    "id": 131,
+    "title": "Palindrome Partitioning",
+    "pattern": "Backtracking",
+    "insight": "Same tree structure as subsets/combo \u2014 just with a palindrome check as the gate for valid branches.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "199": {
+    "id": 199,
+    "title": "Binary Tree Right Side View",
+    "pattern": "Tree DFS/BFS",
+    "insight": "Just following right children misses nodes in left subtree when right subtree is shorter. Track depth to capture deeper visible nodes.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "235": {
+    "id": 235,
+    "title": "Lowest Common Ancestor of a Binary Search Tree",
+    "pattern": "Tree / BST",
+    "insight": "BST ordering means you don't need to search both subtrees \u2014 one comparison tells you which direction to go. No need to check for nulls.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "79": {
+    "id": 79,
+    "title": "Word Search",
+    "pattern": "Backtracking / Matrix DFS",
+    "insight": "The exponential factor is 4^L not 4^(m\u00d7n) because you stop at word length. Unmarking (backtracking) is what allows revisiting cells on different paths.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "221": {
+    "id": 221,
+    "title": "Maximal Square",
+    "pattern": "Dynamic Programming",
+    "insight": "A square at (i,j) can only exist if there are squares above, left, and diagonally above-left. The minimum of those three + 1 gives the largest square ending here. Use bottom-up 1D DP to avoid stack overflow.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "91": {
+    "id": 91,
+    "title": "Decode Ways",
+    "pattern": "Dynamic Programming",
+    "insight": "Backtracking is exponential. DP with two states back is O(n) \u2014 at each position you have at most two choices (1 digit or 2 digits), and you only need the next two values.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "437": {
+    "id": 437,
+    "title": "Path Sum III",
+    "pattern": "DFS / Prefix Sum",
+    "insight": "Same idea as LC560 (Subarray Sum Equals K) \u2014 but on a tree. The map tracks prefix sums along the current path. Backtracking the map when you leave a node ensures you only count paths in the current branch.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1029": {
+    "id": 1029,
+    "title": "Two City Scheduling",
+    "pattern": "Greedy",
+    "insight": "The person with the biggest savings going to A (vs B) should go to A. Sort by difference, take top n for A.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "138": {
+    "id": 138,
+    "title": "Copy List with Random Pointer",
+    "pattern": "Hash Map / Linked List",
+    "insight": "Map eliminates the need to search for random targets. Two passes \u2014 one to build nodes, one to wire pointers.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1143": {
+    "id": 1143,
+    "title": "Longest Common Subsequence",
+    "pattern": "Dynamic Programming",
+    "insight": "Backtracking over all shared chars is exponential. DP with two indices is O(m\u00d7n) \u2014 at each position, you either match or skip one char from either string.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "739": {
+    "id": 739,
+    "title": "Daily Temperatures",
+    "pattern": "Monotonic Stack",
+    "insight": "Same idea as LC84 \u2014 stack maintains \"next greater element\" to the right. When you find one, compute the distance and pop.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "100": {
+    "id": 100,
+    "title": "Same Tree",
+    "pattern": "Tree Recursion",
+    "insight": "Order doesn't matter as long as both trees use the same traversal. Pre-order is simplest \u2014 check current, then recurse left and right.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "121": {
+    "id": 121,
+    "title": "Best Time to Buy and Sell Stock",
+    "pattern": "Greedy / Single Pass",
+    "insight": "You only need to know the cheapest price you've seen up to now. One pass, two variables.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "463": {
+    "id": 463,
+    "title": "Island Perimeter",
+    "pattern": "Matrix DFS",
+    "insight": "4 minus number of adjacent land cells, summed over all land cells.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "226": {
+    "id": 226,
+    "title": "Invert Binary Tree",
+    "pattern": "Tree Recursion",
+    "insight": "Post-order works naturally \u2014 children are inverted before you swap them. Pre-order also works (swap then recurse). Either way, every node gets exactly one swap.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1024": {
+    "id": 1024,
+    "title": "Video Stitching",
+    "pattern": "Greedy / Intervals",
+    "insight": "No backtracking needed \u2014 pure greedy. Extending coverage as far as possible at each step is always optimal. Picking shorter leaves less room for future clips.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1249": {
+    "id": 1249,
+    "title": "Minimum Remove to Make Valid Parentheses",
+    "pattern": "Stack",
+    "insight": "You only need to track ( positions \u2014 unmatched ) are simply ignored during the scan. Stack tells you which ( to remove at the end.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1539": {
+    "id": 1539,
+    "title": "Kth Missing Positive Number",
+    "pattern": "Binary Search",
+    "insight": "Gap-walking is O(n). Binary search on the missing count formula gives O(log n). Missing before arr[i] = arr[i] - (i + 1).",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "334": {
+    "id": 334,
+    "title": "Increasing Triplet Subsequence",
+    "pattern": "Greedy",
+    "insight": "second and first don't need to come from the same subsequence \u2014 second being updated means a smaller element existed before it. So finding anything > second always yields a valid triplet.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1423": {
+    "id": 1423,
+    "title": "Maximum Points You Can Obtain from Cards",
+    "pattern": "Sliding Window",
+    "insight": "Taking i from left and k-i from right = skipping a contiguous block of n-k. Sliding that block left to right explores all valid splits in one pass.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "438": {
+    "id": 438,
+    "title": "Find All Anagrams in a String",
+    "pattern": "Sliding Window",
+    "insight": "Window always slides by one \u2014 never skips. But chars not in p act as blockers that keep matches < 26 until they slide out. The `matches` counter makes each step O(1) instead of O(26).",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "735": {
+    "id": 735,
+    "title": "Asteroid Collision",
+    "pattern": "Stack / Simulation",
+    "insight": "The while loop is the tricky part \u2014 after popping a smaller positive, the incoming negative might still collide with the next positive on the stack. Each asteroid pushed/popped at most once.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "64": {
+    "id": 64,
+    "title": "Minimum Path Sum",
+    "pattern": "Dynamic Programming / Grid",
+    "insight": "DFS is O(2^(m+n)) without memo. DP with 1D compression \u2014 each cell depends only on cell above and cell to the left, update in place left to right, top to bottom.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1048": {
+    "id": 1048,
+    "title": "Longest String Chain",
+    "pattern": "Dynamic Programming / String",
+    "insight": "Predecessor = remove exactly one character to get the other word. Frequency map check doesn't work \u2014 \"ab\" and \"ba\" have same frequencies but neither is a predecessor. Removing one char at a time and checking existence is the correct test.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1347": {
+    "id": 1347,
+    "title": "Minimum Number of Steps to Make Two Strings Anagram",
+    "pattern": "Hash Map / Counting",
+    "insight": "Two strings of equal length are anagrams iff their frequency maps are identical. Count the gap between maps \u2014 that's the answer.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "380": {
+    "id": 380,
+    "title": "Insert Delete GetRandom O(1)",
+    "pattern": "Design / Hash Map + Array",
+    "insight": "Swap-and-pop keeps the array dense \u2014 no tombstones, no gaps to track. Remove is O(1) because the map always has correct indices after the swap.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "567": {
+    "id": 567,
+    "title": "Permutation in String",
+    "pattern": "Sliding Window",
+    "insight": "Same problem as LC438 \u2014 just return true/false instead of all start indices.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "904": {
+    "id": 904,
+    "title": "Fruit Into Baskets",
+    "pattern": "Sliding Window",
+    "insight": "\"Two baskets\" = at most 2 distinct values in the window. Classic variable-size sliding window \u2014 expand until constraint breaks, shrink to restore.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "71": {
+    "id": 71,
+    "title": "Simplify Path",
+    "pattern": "Stack",
+    "insight": "Each component is independent \u2014 just push, pop, or skip. No counting or running string needed. Join at the end.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "424": {
+    "id": 424,
+    "title": "Longest Repeating Character Replacement",
+    "pattern": "Sliding Window",
+    "insight": "Replacements needed = window_size - most_frequent_count. Keep expanding while that's \u2264 k. max_freq is monotonically non-decreasing \u2014 no need to shrink it.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1300": {
+    "id": 1300,
+    "title": "Sum of Mutated Array Closest to Target",
+    "pattern": "Binary Search / Sorting",
+    "insight": "After sorting, each candidate value replaces all elements >= it with itself. Prefix sums let you compute the resulting sum in O(1) per candidate.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "309": {
+    "id": 309,
+    "title": "Best Time to Buy and Sell Stock with Cooldown",
+    "pattern": "Dynamic Programming",
+    "insight": "Cooldown is captured by the state machine \u2014 after selling, you must pass through rest before buying again. Three states keep the transitions clean.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "24": {
+    "id": 24,
+    "title": "Swap Nodes in Pairs",
+    "pattern": "Linked List",
+    "insight": "Dummy head eliminates edge cases for head swaps. Each pair swap is the same four pointer reassignments \u2014 prev always anchors the operation.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "176": {
+    "id": 176,
+    "title": "Second Highest Salary",
+    "pattern": "SQL",
+    "insight": "LIMIT/OFFSET is close but needs DISTINCT for duplicates. Subquery version is cleaner \u2014 find max, then find max below it.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "47": {
+    "id": 47,
+    "title": "Permutations II",
+    "pattern": "Backtracking",
+    "insight": "Same as LC46 but with duplicate handling. Sort + \"previous not used at this level\" check eliminates duplicate permutations without needing a set per recursion level.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1177": {
+    "id": 1177,
+    "title": "Can Make Palindrome from Substring",
+    "pattern": "Prefix Sum / Hash Map",
+    "insight": "In a palindrome, at most one character has odd frequency. Each change fixes two odd counts, so odd_count / 2 is minimum changes needed. Prefix sums make substring frequency queries O(26).",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "515": {
+    "id": 515,
+    "title": "Find Largest Value in Each Tree Row",
+    "pattern": "BFS / Tree",
+    "insight": "Queue size at each iteration = number of nodes at that level. Track max per level, reset for next.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "318": {
+    "id": 318,
+    "title": "Maximum Product of Word Lengths",
+    "pattern": "Bit Manipulation / String",
+    "insight": "Bitmask AND is O(1) vs O(26) for freq map intersection. Same complexity, better constant factor.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "725": {
+    "id": 725,
+    "title": "Split Linked List in Parts",
+    "pattern": "Linked List",
+    "insight": "Simple division math \u2014 extra nodes distributed one each to the first extra parts. Walk once, split at computed sizes.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1701": {
+    "id": 1701,
+    "title": "Average Waiting Time",
+    "pattern": "Greedy / Sorting",
+    "insight": "Customer waits if chef is still busy (finish > arrival). Otherwise starts immediately. Greedy \u2014 serve in order, carry finish time forward.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1823": {
+    "id": 1823,
+    "title": "Find the Winner of the Circular Game",
+    "pattern": "Math / Recursion",
+    "insight": "No array needed. Each iteration computes the survivor's position in a circle of size i from the winner in size i-1. Elimination offset is always k.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "274": {
+    "id": 274,
+    "title": "H-Index",
+    "pattern": "Bucket Sort",
+    "insight": "Unlike sorting (O(n log n)), bucket sort exploits the fact that citations are bounded by n. Capping at n is the trick \u2014 h can't exceed the number of papers.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1658": {
+    "id": 1658,
+    "title": "Minimum Operations to Reduce X to Zero",
+    "pattern": "Sliding Window",
+    "insight": "Removing from ends = keeping a contiguous middle. Minimize removals = maximize kept subarray. Positivity guarantees monotonic sum \u2014 right advances when sum < target, left advances when sum > target, record when sum == target. Each element added once (right passes it) and removed at most once (left passes it) \u2014 2n total moves, amortized O(n).",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "478": {
+    "id": 478,
+    "title": "Generate Random Point in a Circle",
+    "pattern": "Inverse CDF / Probability",
+    "insight": "Area scales with r\u00b2, so radius density must be proportional to r (not uniform). \u221a(uniform) transforms uniform U[0,1] via inverse CDF of F(r) = r\u00b2/R\u00b2. Rejection sampling also works: proposal = uniform over bounding square [\u2212R,R]\u00b2, target = uniform over circle. c = sup target(x)/proposal(x) = (1/\u03c0R\u00b2)/(1/4R\u00b2) = 4/\u03c0 \u2248 1.273. Accept ratio = 1/c \u2248 78.5% = area of circle / area of square.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "3531": {
+    "id": 3531,
+    "title": "Count Covered Buildings",
+    "pattern": "Grouping + Binary Search",
+    "insight": "\"Four directions\" decomposes into independent row and column existence checks. Binary search in sorted groups determines whether neighbors exist on both sides.\n```\nrows = { 1\u2192[2], 2\u2192[1,2,3], 3\u2192[2] }\ncols = { 1\u2192[2], 2\u2192[1,2,3], 3\u2192[2] }\n(2,2): rows[2] idx=1 \u2192 left(1) right(3) \u2713, cols[2] idx=1 \u2192 above(1) below(3) \u2713 \u2192 covered\n(1,2): rows[1] len=1 \u2192 no horizontal neighbors \u2717 \u2192 not covered\n```",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "3796": {
+    "id": 3796,
+    "title": "Find Maximum Value in a Constrained Sequence \u2691 REVISIT",
+    "pattern": "Constraint Propagation / Shortest Path on Line",
+    "insight": "|a[i]-a[i+1]| \u2264 diff[i] gives two directed inequalities. Chain is a DAG \u2014 forward pass propagates left-to-right increases, backward pass propagates right-to-left decreases from restrictions. The tightest bound is the intersection of both passes.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "3546": {
+    "id": 3546,
+    "title": "Equal Sum Grid Partition I",
+    "pattern": "Prefix Sum",
+    "insight": "Single prefix check works for each direction \u2014 no need for both forward and backward. If total is odd, impossible immediately.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "16": {
+    "id": 16,
+    "title": "3Sum Closest",
+    "pattern": "Sorting + Two Pointers",
+    "insight": "Same skeleton as 3Sum but replace \"sum == 0\" with \"track min absolute difference.\" Two-pointer direction always moves sum toward target.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "3377": {
+    "id": 3377,
+    "title": "Digit Operations to Make Two Integers Equal",
+    "pattern": "Graph / Dijkstra / Number Theory",
+    "insight": "Edge weights depend on target node (not source), so Dijkstra still works \u2014 cost accumulates additively. Prime constraint makes greedy fail; graph is small enough for full search.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "848": {
+    "id": 848,
+    "title": "Shifting Letters",
+    "pattern": "Suffix Sum",
+    "insight": "Naively applying each shift to i+1 letters is O(n\u00b2). Each letter's total shift = sum of shifts[i..n-1] \u2014 one pass from right.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "319": {
+    "id": 319,
+    "title": "Bulb Switcher",
+    "pattern": "Math / Number Theory",
+    "insight": "Divisors come in pairs unless i is a perfect square. Only perfect-square bulbs are toggled an odd number of times \u2192 left on.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "2592": {
+    "id": 2592,
+    "title": "Maximize Greatness of an Array",
+    "pattern": "Greedy / Two Pointers",
+    "insight": "Pair smallest beater with smallest target \u2014 never waste a large element. Greedy on sorted arrays is optimal because ordering preserves the \"greater than\" relation transitively.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1438": {
+    "id": 1438,
+    "title": "Longest Continuous Subarray With Absolute Diff \u2264 Limit",
+    "pattern": "Queue / Sliding Window / Monotonic Queue",
+    "insight": "Two deques maintain running min and max in O(1) amortized per operation. Condition is any two elements, so both min and max must be tracked.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "621": {
+    "id": 621,
+    "title": "Task Scheduler",
+    "pattern": "Union-Find",
+    "insight": "Cycle detection in undirected graph reduces to checking if endpoints are already connected before adding edge. First edge where find(u)==find(v) is the redundant one.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "167": {
+    "id": 167,
+    "title": "Two Sum II (Input Array Is Sorted)",
+    "pattern": "Two Pointers / Binary Search",
+    "insight": "Sorted input enables linear two-pointer instead of hash map. The monotonicity of sum with respect to pointer movement guarantees finding the pair.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "875": {
+    "id": 875,
+    "title": "Koko Eating Bananas",
+    "pattern": "Binary Search",
+    "insight": "Feasibility function is monotonic \u2014 if k works, any k' > k also works. Binary search on the threshold.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "2029": {
+    "id": 2029,
+    "title": "Stone Game IX",
+    "pattern": "Math / Game Theory / Greedy",
+    "insight": "Only mod-3 classes matter, not actual values. Game reduces to counting remainders and reasoning about forced sequences.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "3255": {
+    "id": 3255,
+    "title": "Find the Power of K-Size Subarrays II",
+    "pattern": "Sliding Window / Array",
+    "insight": "\"Consecutive ascending\" means +1 exactly, not monotonic. Valid window's max is its last element. Single pass with running counter \u2014 no stack needed.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1404": {
+    "id": 1404,
+    "title": "Number of Steps to Reduce a Number in Binary Representation to One",
+    "pattern": "String / Bit Manipulation / Simulation",
+    "insight": "No conversion to int \u2014 binary string is already the number. Operations map directly to string manipulation: divide = drop LSB, subtract = flip LSB 1\u21920 (with carry propagation). Carry tracks pending subtraction across bits.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  },
+  "1915": {
+    "id": 1915,
+    "title": "Number of Wonderful Substrings",
+    "pattern": "Bit Manipulation / Prefix XOR / Hash Map",
+    "insight": "Parity is the only thing that matters for \"at most one odd\" condition. XOR tracks parity toggles. Wonderful = mask has 0 or 1 set bits. 10 letters max enables O(10) per position.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": []
+  }
+}

@@ -1,0 +1,2492 @@
+{
+  "LC:15": {
+    "topic": "LC",
+    "id": "15",
+    "title": "3Sum",
+    "detail": "Pattern: Sorting + Two Pointers",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:128": {
+    "topic": "LC",
+    "id": "128",
+    "title": "Longest Consecutive Sequence",
+    "detail": "Pattern: Hash Set",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:238": {
+    "topic": "LC",
+    "id": "238",
+    "title": "Product of Array Except Self",
+    "detail": "Pattern: Prefix/Suffix Products",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:200": {
+    "topic": "LC",
+    "id": "200",
+    "title": "Number of Islands",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:152": {
+    "topic": "LC",
+    "id": "152",
+    "title": "Maximum Product Subarray",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:5": {
+    "topic": "LC",
+    "id": "5",
+    "title": "Longest Palindromic Substring",
+    "detail": "Pattern: Binary Search",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:73": {
+    "topic": "LC",
+    "id": "73",
+    "title": "Set Matrix Zeroes",
+    "detail": "Pattern: In-place Matrix Manipulation",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:11": {
+    "topic": "LC",
+    "id": "11",
+    "title": "Container With Most Water",
+    "detail": "Pattern: Two Pointers",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:207": {
+    "topic": "LC",
+    "id": "207",
+    "title": "Course Schedule",
+    "detail": "Pattern: Graph / Topological Sort",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:146": {
+    "topic": "LC",
+    "id": "146",
+    "title": "LRU Cache",
+    "detail": "Pattern: Design / Hash Map + Linked List",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:102": {
+    "topic": "LC",
+    "id": "102",
+    "title": "Binary Tree Level Order Traversal",
+    "detail": "Pattern: BFS / Tree Traversal",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:322": {
+    "topic": "LC",
+    "id": "322",
+    "title": "Coin Change",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:98": {
+    "topic": "LC",
+    "id": "98",
+    "title": "Validate Binary Search Tree",
+    "detail": "Pattern: Tree / In-order Traversal",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:133": {
+    "topic": "LC",
+    "id": "133",
+    "title": "Clone Graph",
+    "detail": "Pattern: Graph BFS/DFS",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:153": {
+    "topic": "LC",
+    "id": "153",
+    "title": "Find Minimum in Rotated Sorted Array",
+    "detail": "Pattern: Binary Search",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:416": {
+    "topic": "LC",
+    "id": "416",
+    "title": "Partition Equal Subset Sum",
+    "detail": "Pattern: Dynamic Programming / Knapsack",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:236": {
+    "topic": "LC",
+    "id": "236",
+    "title": "Lowest Common Ancestor of Binary Tree",
+    "detail": "Pattern: Tree Recursion",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:19": {
+    "topic": "LC",
+    "id": "19",
+    "title": "Remove Nth Node From End of List",
+    "detail": "Pattern: Two Pointers / Linked List",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:3": {
+    "topic": "LC",
+    "id": "3",
+    "title": "Longest Substring Without Repeating Characters",
+    "detail": "Pattern: Sliding Window / Hash Map",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:208": {
+    "topic": "LC",
+    "id": "208",
+    "title": "Implement Trie",
+    "detail": "Pattern: Design / Trie",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:76": {
+    "topic": "LC",
+    "id": "76",
+    "title": "Minimum Window Substring",
+    "detail": "Pattern: Sliding Window / Hash Map",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:148": {
+    "topic": "LC",
+    "id": "148",
+    "title": "Sort List",
+    "detail": "Pattern: Linked List / Merge Sort",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1481": {
+    "topic": "LC",
+    "id": "1481",
+    "title": "Least Number of Unique Integers after K Removals",
+    "detail": "Pattern: Backtracking",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:48": {
+    "topic": "LC",
+    "id": "48",
+    "title": "Rotate Image",
+    "detail": "Pattern: Matrix Manipulation",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:84": {
+    "topic": "LC",
+    "id": "84",
+    "title": "Largest Rectangle in Histogram",
+    "detail": "Pattern: Monotonic Stack",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:56": {
+    "topic": "LC",
+    "id": "56",
+    "title": "Merge Intervals",
+    "detail": "Pattern: Intervals / Sweep Line",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:31": {
+    "topic": "LC",
+    "id": "31",
+    "title": "Next Permutation",
+    "detail": "Pattern: Array Manipulation",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:394": {
+    "topic": "LC",
+    "id": "394",
+    "title": "Decode String",
+    "detail": "Pattern: Stack",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:49": {
+    "topic": "LC",
+    "id": "49",
+    "title": "Group Anagrams",
+    "detail": "Pattern: Hash Map",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:155": {
+    "topic": "LC",
+    "id": "155",
+    "title": "Min Stack",
+    "detail": "Pattern: Design / Stack",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:287": {
+    "topic": "LC",
+    "id": "287",
+    "title": "Find the Duplicate Number",
+    "detail": "Pattern: Array / Floyd's Cycle Detection",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:54": {
+    "topic": "LC",
+    "id": "54",
+    "title": "Spiral Matrix",
+    "detail": "Pattern: Matrix Manipulation",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:78": {
+    "topic": "LC",
+    "id": "78",
+    "title": "Subsets",
+    "detail": "Pattern: Backtracking",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:46": {
+    "topic": "LC",
+    "id": "46",
+    "title": "Permutations",
+    "detail": "Pattern: Backtracking",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:104": {
+    "topic": "LC",
+    "id": "104",
+    "title": "Maximum Depth of Binary Tree",
+    "detail": "Pattern: Tree Recursion",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:136": {
+    "topic": "LC",
+    "id": "136",
+    "title": "Single Number",
+    "detail": "Pattern: Bit Manipulation",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:2": {
+    "topic": "LC",
+    "id": "2",
+    "title": "Add Two Numbers",
+    "detail": "Pattern: Linked List / Math",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:198": {
+    "topic": "LC",
+    "id": "198",
+    "title": "House Robber",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:300": {
+    "topic": "LC",
+    "id": "300",
+    "title": "Longest Increasing Subsequence",
+    "detail": "Pattern: Dynamic Programming / Binary Search",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:141": {
+    "topic": "LC",
+    "id": "141",
+    "title": "Linked List Cycle",
+    "detail": "Pattern: Fast & Slow Pointers",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:560": {
+    "topic": "LC",
+    "id": "560",
+    "title": "Subarray Sum Equals K",
+    "detail": "Pattern: Prefix Sum / Hash Map",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:494": {
+    "topic": "LC",
+    "id": "494",
+    "title": "Target Sum",
+    "detail": "Pattern: Dynamic Programming / Knapsack",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1091": {
+    "topic": "LC",
+    "id": "1091",
+    "title": "Shortest Path in Binary Matrix",
+    "detail": "Pattern: BFS",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:981": {
+    "topic": "LC",
+    "id": "981",
+    "title": "Time Based Key-Value Store",
+    "detail": "Pattern: Hash Map + Binary Search",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:116": {
+    "topic": "LC",
+    "id": "116",
+    "title": "Populating Next Right Pointers in Each Node",
+    "detail": "Pattern: Tree / BFS",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:347": {
+    "topic": "LC",
+    "id": "347",
+    "title": "Top K Frequent Elements",
+    "detail": "Pattern: Bucket Sort / Hash Map",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:994": {
+    "topic": "LC",
+    "id": "994",
+    "title": "Rotting Oranges",
+    "detail": "Pattern: BFS",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:230": {
+    "topic": "LC",
+    "id": "230",
+    "title": "Kth Smallest Element in a BST",
+    "detail": "Pattern: Tree / In-order Traversal",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:105": {
+    "topic": "LC",
+    "id": "105",
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "detail": "Pattern: Tree Recursion",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:55": {
+    "topic": "LC",
+    "id": "55",
+    "title": "Jump Game",
+    "detail": "Pattern: Greedy",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:75": {
+    "topic": "LC",
+    "id": "75",
+    "title": "Sort Colors",
+    "detail": "Pattern: Two Pointers / In-place Partition",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:210": {
+    "topic": "LC",
+    "id": "210",
+    "title": "Course Schedule II",
+    "detail": "Pattern: Topological Sort / BFS",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:62": {
+    "topic": "LC",
+    "id": "62",
+    "title": "Unique Paths",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:131": {
+    "topic": "LC",
+    "id": "131",
+    "title": "Palindrome Partitioning",
+    "detail": "Pattern: Backtracking",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:199": {
+    "topic": "LC",
+    "id": "199",
+    "title": "Binary Tree Right Side View",
+    "detail": "Pattern: Tree DFS/BFS",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:235": {
+    "topic": "LC",
+    "id": "235",
+    "title": "Lowest Common Ancestor of a Binary Search Tree",
+    "detail": "Pattern: Tree / BST",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:79": {
+    "topic": "LC",
+    "id": "79",
+    "title": "Word Search",
+    "detail": "Pattern: Backtracking / Matrix DFS",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:221": {
+    "topic": "LC",
+    "id": "221",
+    "title": "Maximal Square",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:91": {
+    "topic": "LC",
+    "id": "91",
+    "title": "Decode Ways",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:437": {
+    "topic": "LC",
+    "id": "437",
+    "title": "Path Sum III",
+    "detail": "Pattern: DFS / Prefix Sum",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1029": {
+    "topic": "LC",
+    "id": "1029",
+    "title": "Two City Scheduling",
+    "detail": "Pattern: Greedy",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:138": {
+    "topic": "LC",
+    "id": "138",
+    "title": "Copy List with Random Pointer",
+    "detail": "Pattern: Hash Map / Linked List",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1143": {
+    "topic": "LC",
+    "id": "1143",
+    "title": "Longest Common Subsequence",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:739": {
+    "topic": "LC",
+    "id": "739",
+    "title": "Daily Temperatures",
+    "detail": "Pattern: Monotonic Stack",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:100": {
+    "topic": "LC",
+    "id": "100",
+    "title": "Same Tree",
+    "detail": "Pattern: Tree Recursion",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:121": {
+    "topic": "LC",
+    "id": "121",
+    "title": "Best Time to Buy and Sell Stock",
+    "detail": "Pattern: Greedy / Single Pass",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:463": {
+    "topic": "LC",
+    "id": "463",
+    "title": "Island Perimeter",
+    "detail": "Pattern: Matrix DFS",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:226": {
+    "topic": "LC",
+    "id": "226",
+    "title": "Invert Binary Tree",
+    "detail": "Pattern: Tree Recursion",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1024": {
+    "topic": "LC",
+    "id": "1024",
+    "title": "Video Stitching",
+    "detail": "Pattern: Greedy / Intervals",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1249": {
+    "topic": "LC",
+    "id": "1249",
+    "title": "Minimum Remove to Make Valid Parentheses",
+    "detail": "Pattern: Stack",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1539": {
+    "topic": "LC",
+    "id": "1539",
+    "title": "Kth Missing Positive Number",
+    "detail": "Pattern: Binary Search",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:334": {
+    "topic": "LC",
+    "id": "334",
+    "title": "Increasing Triplet Subsequence",
+    "detail": "Pattern: Greedy",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1423": {
+    "topic": "LC",
+    "id": "1423",
+    "title": "Maximum Points You Can Obtain from Cards",
+    "detail": "Pattern: Sliding Window",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:438": {
+    "topic": "LC",
+    "id": "438",
+    "title": "Find All Anagrams in a String",
+    "detail": "Pattern: Sliding Window",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:735": {
+    "topic": "LC",
+    "id": "735",
+    "title": "Asteroid Collision",
+    "detail": "Pattern: Stack / Simulation",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:64": {
+    "topic": "LC",
+    "id": "64",
+    "title": "Minimum Path Sum",
+    "detail": "Pattern: Dynamic Programming / Grid",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1048": {
+    "topic": "LC",
+    "id": "1048",
+    "title": "Longest String Chain",
+    "detail": "Pattern: Dynamic Programming / String",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1347": {
+    "topic": "LC",
+    "id": "1347",
+    "title": "Minimum Number of Steps to Make Two Strings Anagram",
+    "detail": "Pattern: Hash Map / Counting",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:380": {
+    "topic": "LC",
+    "id": "380",
+    "title": "Insert Delete GetRandom O(1)",
+    "detail": "Pattern: Design / Hash Map + Array",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:567": {
+    "topic": "LC",
+    "id": "567",
+    "title": "Permutation in String",
+    "detail": "Pattern: Sliding Window",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:904": {
+    "topic": "LC",
+    "id": "904",
+    "title": "Fruit Into Baskets",
+    "detail": "Pattern: Sliding Window",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:71": {
+    "topic": "LC",
+    "id": "71",
+    "title": "Simplify Path",
+    "detail": "Pattern: Stack",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:424": {
+    "topic": "LC",
+    "id": "424",
+    "title": "Longest Repeating Character Replacement",
+    "detail": "Pattern: Sliding Window",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1300": {
+    "topic": "LC",
+    "id": "1300",
+    "title": "Sum of Mutated Array Closest to Target",
+    "detail": "Pattern: Binary Search / Sorting",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:309": {
+    "topic": "LC",
+    "id": "309",
+    "title": "Best Time to Buy and Sell Stock with Cooldown",
+    "detail": "Pattern: Dynamic Programming",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:24": {
+    "topic": "LC",
+    "id": "24",
+    "title": "Swap Nodes in Pairs",
+    "detail": "Pattern: Linked List",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:176": {
+    "topic": "LC",
+    "id": "176",
+    "title": "Second Highest Salary",
+    "detail": "Pattern: SQL",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:47": {
+    "topic": "LC",
+    "id": "47",
+    "title": "Permutations II",
+    "detail": "Pattern: Backtracking",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1177": {
+    "topic": "LC",
+    "id": "1177",
+    "title": "Can Make Palindrome from Substring",
+    "detail": "Pattern: Prefix Sum / Hash Map",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:515": {
+    "topic": "LC",
+    "id": "515",
+    "title": "Find Largest Value in Each Tree Row",
+    "detail": "Pattern: BFS / Tree",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:318": {
+    "topic": "LC",
+    "id": "318",
+    "title": "Maximum Product of Word Lengths",
+    "detail": "Pattern: Bit Manipulation / String",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:725": {
+    "topic": "LC",
+    "id": "725",
+    "title": "Split Linked List in Parts",
+    "detail": "Pattern: Linked List",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1701": {
+    "topic": "LC",
+    "id": "1701",
+    "title": "Average Waiting Time",
+    "detail": "Pattern: Greedy / Sorting",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1823": {
+    "topic": "LC",
+    "id": "1823",
+    "title": "Find the Winner of the Circular Game",
+    "detail": "Pattern: Math / Recursion",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:274": {
+    "topic": "LC",
+    "id": "274",
+    "title": "H-Index",
+    "detail": "Pattern: Bucket Sort",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1658": {
+    "topic": "LC",
+    "id": "1658",
+    "title": "Minimum Operations to Reduce X to Zero",
+    "detail": "Pattern: Sliding Window",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:478": {
+    "topic": "LC",
+    "id": "478",
+    "title": "Generate Random Point in a Circle",
+    "detail": "Pattern: Inverse CDF / Probability",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:3531": {
+    "topic": "LC",
+    "id": "3531",
+    "title": "Count Covered Buildings",
+    "detail": "Pattern: Grouping + Binary Search",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:3796": {
+    "topic": "LC",
+    "id": "3796",
+    "title": "Find Maximum Value in a Constrained Sequence \u2691 REVISIT",
+    "detail": "Pattern: Constraint Propagation / Shortest Path on Line",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:3546": {
+    "topic": "LC",
+    "id": "3546",
+    "title": "Equal Sum Grid Partition I",
+    "detail": "Pattern: Prefix Sum",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:16": {
+    "topic": "LC",
+    "id": "16",
+    "title": "3Sum Closest",
+    "detail": "Pattern: Sorting + Two Pointers",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:3377": {
+    "topic": "LC",
+    "id": "3377",
+    "title": "Digit Operations to Make Two Integers Equal",
+    "detail": "Pattern: Graph / Dijkstra / Number Theory",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:848": {
+    "topic": "LC",
+    "id": "848",
+    "title": "Shifting Letters",
+    "detail": "Pattern: Suffix Sum",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:319": {
+    "topic": "LC",
+    "id": "319",
+    "title": "Bulb Switcher",
+    "detail": "Pattern: Math / Number Theory",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:2592": {
+    "topic": "LC",
+    "id": "2592",
+    "title": "Maximize Greatness of an Array",
+    "detail": "Pattern: Greedy / Two Pointers",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "LC:1438": {
+    "topic": "LC",
+    "id": "1438",
+    "title": "Longest Continuous Subarray With Absolute Diff \u2264 Limit",
+    "detail": "Pattern: Queue / Sliding Window / Monotonic Queue",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "LC:621": {
+    "topic": "LC",
+    "id": "621",
+    "title": "Task Scheduler",
+    "detail": "Pattern: Union-Find",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "LC:167": {
+    "topic": "LC",
+    "id": "167",
+    "title": "Two Sum II (Input Array Is Sorted)",
+    "detail": "Pattern: Two Pointers / Binary Search",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "LC:875": {
+    "topic": "LC",
+    "id": "875",
+    "title": "Koko Eating Bananas",
+    "detail": "Pattern: Binary Search",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "LC:2029": {
+    "topic": "LC",
+    "id": "2029",
+    "title": "Stone Game IX",
+    "detail": "Pattern: Math / Game Theory / Greedy",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "LC:3255": {
+    "topic": "LC",
+    "id": "3255",
+    "title": "Find the Power of K-Size Subarrays II",
+    "detail": "Pattern: Sliding Window / Array",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "LC:1404": {
+    "topic": "LC",
+    "id": "1404",
+    "title": "Number of Steps to Reduce a Number in Binary Representation to One",
+    "detail": "Pattern: String / Bit Manipulation / Simulation",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "LC:1915": {
+    "topic": "LC",
+    "id": "1915",
+    "title": "Number of Wonderful Substrings",
+    "detail": "Pattern: Bit Manipulation / Prefix XOR / Hash Map",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "DDIA:Q1: LSM write path \u2014 two structures and what happe": {
+    "topic": "DDIA",
+    "id": "Q1: LSM write path \u2014 two structures and what happe",
+    "title": "Q1: LSM write path \u2014 two structures and what happens to each?",
+    "detail": "Inserts written to WAL, then to memtable (red-black/skip list), appended to most recent SSTable with sparse index. SSTable overflow triggers compaction.",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q2: Why does LSM need compaction?": {
+    "topic": "DDIA",
+    "id": "Q2: Why does LSM need compaction?",
+    "title": "Q2: Why does LSM need compaction?",
+    "detail": "Inserts and updates are append-only, SSTables on disk grow and read queries degrade. Compaction merges and dedupes records in SSTables.",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q3: B-tree write amplification \u2014 why is updating a": {
+    "topic": "DDIA",
+    "id": "Q3: B-tree write amplification \u2014 why is updating a",
+    "title": "Q3: B-tree write amplification \u2014 why is updating a single key expensive?",
+    "detail": "Inserting a single key in a full page requires a page split and updates to any index reference by it or replacing it with a forwarding index \u2014 all of which require additional writes beyond the insert ",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q4: LSM vs B-trees \u2014 read performance tradeoff?": {
+    "topic": "DDIA",
+    "id": "Q4: LSM vs B-trees \u2014 read performance tradeoff?",
+    "title": "Q4: LSM vs B-trees \u2014 read performance tradeoff?",
+    "detail": "LSM reads could require scanning back to oldest SSTable for recently-updated records. Recent writes read fast, especially consulting memtable before final lookup. B-trees require walking a fixed heigh",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q5: Sparse index vs dense index?": {
+    "topic": "DDIA",
+    "id": "Q5: Sparse index vs dense index?",
+    "title": "Q5: Sparse index vs dense index?",
+    "detail": "Sparse index for LSM \u2014 requires an index lookup followed by range scan to queried record. Sparse indexes don't reference each and every record in an SSTable. B-trees use dense indexes \u2014 every row has ",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q1: What are the four properties of ACID?": {
+    "topic": "DDIA",
+    "id": "Q1: What are the four properties of ACID?",
+    "title": "Q1: What are the four properties of ACID?",
+    "detail": "Atomicity \u2014 transaction either succeeds or fails, no partial updates. Consistency \u2014 transactions should not alter referential integrity or violate constraints. Isolation \u2014 concurrent transactions exec",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q2: What isolation levels exist and what anomalies": {
+    "topic": "DDIA",
+    "id": "Q2: What isolation levels exist and what anomalies",
+    "title": "Q2: What isolation levels exist and what anomalies does each prevent?",
+    "detail": "Read uncommitted \u2014 allows dirty reads (identical reads in single transaction return differing values). Read committed \u2014 every read gets a snapshot, prevents dirty reads. Snapshot isolation \u2014 reads get",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q3: What is a write skew anomaly?": {
+    "topic": "DDIA",
+    "id": "Q3: What is a write skew anomaly?",
+    "title": "Q3: What is a write skew anomaly?",
+    "detail": "Two concurrent transactions write data to separate rows that violate a conceptual/app layer invariant.",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q4: What problem do serializable snapshots solve?": {
+    "topic": "DDIA",
+    "id": "Q4: What problem do serializable snapshots solve?",
+    "title": "Q4: What problem do serializable snapshots solve?",
+    "detail": "R/W skew.",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q5: What is the difference between 2PL and SSI?": {
+    "topic": "DDIA",
+    "id": "Q5: What is the difference between 2PL and SSI?",
+    "title": "Q5: What is the difference between 2PL and SSI?",
+    "detail": "2PL is pessimistic \u2014 reads acquire shared locks and upgrade to XL when writing. SSI is optimistic \u2014 transactions run to completion and commit as long as cycles are undetected.",
+    "created": "2026-07-21",
+    "reviews": [
+      "2026-07-22",
+      "2026-07-24",
+      "2026-07-28",
+      "2026-08-04",
+      "2026-08-20"
+    ],
+    "done": []
+  },
+  "DDIA:Q1: Backward compatibility (new code reads old dat": {
+    "topic": "DDIA",
+    "id": "Q1: Backward compatibility (new code reads old dat",
+    "title": "Q1: Backward compatibility (new code reads old data) vs forward compatibility (old code reads new data) \u2014 which is harder and why?",
+    "detail": "Old schema reading new data shouldn't be an issue if new fields have nullable/sensible defaults \u2014 new fields are ignored anyway. Type changes are breaking in both directions. Backward compatibility is",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q2: RPC system with clients upgraded in waves \u2014 wh": {
+    "topic": "DDIA",
+    "id": "Q2: RPC system with clients upgraded in waves \u2014 wh",
+    "title": "Q2: RPC system with clients upgraded in waves \u2014 which compatibility direction matters more, and what schema design choice helps?",
+    "detail": "Forward compatibility \u2014 old schema reads new data, old code breaks. If RPC schema generation is dynamic, old code ignores new fields.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q3: JSON payloads in DB \u2014 V1 has name/email, V2 ad": {
+    "topic": "DDIA",
+    "id": "Q3: JSON payloads in DB \u2014 V1 has name/email, V2 ad",
+    "title": "Q3: JSON payloads in DB \u2014 V1 has name/email, V2 adds phone (optional). Old code reads V2. Why does JSON handle this better than Protobuf \u2014 or does it?",
+    "detail": "JSON unmarshalling can be configured to throw error on extra/unknown properties \u2014 or not. Protobuf schema fields are versioned, thus are equally flexible.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q4: Plain-text vs binary log format \u2014 binary is 3x": {
+    "topic": "DDIA",
+    "id": "Q4: Plain-text vs binary log format \u2014 binary is 3x",
+    "title": "Q4: Plain-text vs binary log format \u2014 binary is 3x smaller. What's the tradeoff when debugging at 2 AM?",
+    "detail": "Human vs machine readable. Plain-text is a good starting point but binary might be useful if tools exist to read and pinpoint issues (say from a serialized stack trace).",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q5: Async message queue \u2014 producer sends V2 with n": {
+    "topic": "DDIA",
+    "id": "Q5: Async message queue \u2014 producer sends V2 with n",
+    "title": "Q5: Async message queue \u2014 producer sends V2 with new field, consumer is still V1. What happens to the new field, and is that safe?",
+    "detail": "Message queues are the communication method \u2014 but the underlying phenomenon of old code reading new data is unchanged. Old code skips new data.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q1: What's the difference between a stream and a b": {
+    "topic": "DDIA",
+    "id": "Q1: What's the difference between a stream and a b",
+    "title": "Q1: What's the difference between a stream and a batch?",
+    "detail": "Streams are generalized batches in that they're unbounded.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q2: What is a log-based message broker vs a messag": {
+    "topic": "DDIA",
+    "id": "Q2: What is a log-based message broker vs a messag",
+    "title": "Q2: What is a log-based message broker vs a message queue?",
+    "detail": "Message queues remain in RAM and have weaker delivery guarantees. Log-based message brokers persist to disk or keep WALs in event of crashes and guarantee at-least-once delivery.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q3: What is event time vs processing time?": {
+    "topic": "DDIA",
+    "id": "Q3: What is event time vs processing time?",
+    "title": "Q3: What is event time vs processing time?",
+    "detail": "Event time is a logical timestamp that is app-layer relevant. Processing time is when the stream queued the record.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q4: What is a window in stream processing?": {
+    "topic": "DDIA",
+    "id": "Q4: What is a window in stream processing?",
+    "title": "Q4: What is a window in stream processing?",
+    "detail": "A window chunks records by processing time in order to process downstream. Windows can be tumbling, fixed, or sliding and contain watermarks that allow time for straggler records to queue.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q5: What problem do exactly-once semantics solve a": {
+    "topic": "DDIA",
+    "id": "Q5: What problem do exactly-once semantics solve a",
+    "title": "Q5: What problem do exactly-once semantics solve and how?",
+    "detail": "In the event of a failure in producer/broker/consumer, records should not be re-processed unless they can be guaranteed idempotent using a key or having broker keep track of consumer offsets.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q1: Write-heavy, read-rare key-value store \u2014 LSM-t": {
+    "topic": "DDIA",
+    "id": "Q1: Write-heavy, read-rare key-value store \u2014 LSM-t",
+    "title": "Q1: Write-heavy, read-rare key-value store \u2014 LSM-tree or B-tree?",
+    "detail": "LSM-tree maintained in RAM \u2014 but writes will require compaction and ordered inserts for records that may not be read at all. B-tree could potentially have write amplification and in-place updates woul",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q2 (Ch 7): Snapshot isolation vs SSI \u2014 what anomal": {
+    "topic": "DDIA",
+    "id": "Q2 (Ch 7): Snapshot isolation vs SSI \u2014 what anomal",
+    "title": "Q2 (Ch 7): Snapshot isolation vs SSI \u2014 what anomaly does SSI catch that snapshot isolation doesn't?",
+    "detail": "(Repeat from Ch 7 quiz \u2014 already logged.) SI prevents dirty and non-repeatable reads via committed snapshots, but read/write skew can't be prevented without rw-rw cycle detection offered by SSI.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q4 (Ch 3): What problem do Bloom filters solve for": {
+    "topic": "DDIA",
+    "id": "Q4 (Ch 3): What problem do Bloom filters solve for",
+    "title": "Q4 (Ch 3): What problem do Bloom filters solve for LSM-trees, and what's the tradeoff?",
+    "detail": "LSM-trees are self-balancing trees like red-black trees that allow looking up the block where a key might be stored in the latest corresponding sorted string table. Because SSTables are append-only, o",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q5 (Ch 7): Write skew under snapshot isolation \u2014 w": {
+    "topic": "DDIA",
+    "id": "Q5 (Ch 7): Write skew under snapshot isolation \u2014 w",
+    "title": "Q5 (Ch 7): Write skew under snapshot isolation \u2014 what happened and why can't SI catch it?",
+    "detail": "If T1's write of row B depended on its snapshot read (SI) of row A, and T2 updates row A while T1 is in transaction, then that is write skew. SI cannot detect cyclic RW dependencies.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q6 (Ch 11): Slow downstream consumer in a stream p": {
+    "topic": "DDIA",
+    "id": "Q6 (Ch 11): Slow downstream consumer in a stream p",
+    "title": "Q6 (Ch 11): Slow downstream consumer in a stream pipeline \u2014 what happens, how do you handle it?",
+    "detail": "Buffer overflow and spill to disk. Introduce backpressure.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q7 (Ch 3): B-tree page split \u2014 what triggers it, a": {
+    "topic": "DDIA",
+    "id": "Q7 (Ch 3): B-tree page split \u2014 what triggers it, a",
+    "title": "Q7 (Ch 3): B-tree page split \u2014 what triggers it, and why is it expensive?",
+    "detail": "An insert that takes the page over its fan-out limit \u2014 creates two left-aligned pages \u2014 old pages have to be moved on disk.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q8 (Ch 4): Adding a required field in Protobuf V2 ": {
+    "topic": "DDIA",
+    "id": "Q8 (Ch 4): Adding a required field in Protobuf V2 ",
+    "title": "Q8 (Ch 4): Adding a required field in Protobuf V2 \u2014 how do you handle backward compatibility?",
+    "detail": "Old clients reading V2 messages will ignore the field on unmarshalling even if it's required. On marshalling, old code will break unless required field has a default configured.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q1: Write-heavy event log with LSM-tree \u2014 compacti": {
+    "topic": "DDIA",
+    "id": "Q1: Write-heavy event log with LSM-tree \u2014 compacti",
+    "title": "Q1: Write-heavy event log with LSM-tree \u2014 compaction spikes causing latency. What's happening and mitigation?",
+    "detail": "As append-only SSTable files grow during bursts of record inserts, compaction is triggered in the background to merge SSTables and delete out-of-date records. Tune compaction params and compaction sch",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q2: Protobuf over gRPC \u2014 Service A adds new field,": {
+    "topic": "DDIA",
+    "id": "Q2: Protobuf over gRPC \u2014 Service A adds new field,",
+    "title": "Q2: Protobuf over gRPC \u2014 Service A adds new field, Service B hasn't deployed. What happens on the wire?",
+    "detail": "New fields should typically be marked optional or have defaults if required. Old code unmarshals using the previous schema w/o the new field, it simply drops the new field.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q3: Financial system \u2014 two transfers, concurrent r": {
+    "topic": "DDIA",
+    "id": "Q3: Financial system \u2014 two transfers, concurrent r",
+    "title": "Q3: Financial system \u2014 two transfers, concurrent reads must see consistent total. Which ACID properties and isolation level?",
+    "detail": "Account transfers involve mutating disjoint data (ie separate records - without a materializing conflicts table, Snapshot Serializable Isolation is required to detect potential cycles and rollback all",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q4: Kafka topic, events out of order. What goes wr": {
+    "topic": "DDIA",
+    "id": "Q4: Kafka topic, events out of order. What goes wr",
+    "title": "Q4: Kafka topic, events out of order. What goes wrong windowing by processing time instead of event time?",
+    "detail": "Processing time is logged by the broker not the application - processing time has no semantic value to the application.",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q5: B-tree vs LSM \u2014 read-heavy workload with occas": {
+    "topic": "DDIA",
+    "id": "Q5: B-tree vs LSM \u2014 read-heavy workload with occas",
+    "title": "Q5: B-tree vs LSM \u2014 read-heavy workload with occasional large batch writes (nightly ETL). Which wins and why?",
+    "detail": "Large batch writes, even at off-peak hours, can trigger heavy compaction for a LSM datastore - additionally, reads can be slower, especially for older data in older SSTables; a well indexed B-tree can",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q6: Exactly-once semantics in Kafka vs at-least-on": {
+    "topic": "DDIA",
+    "id": "Q6: Exactly-once semantics in Kafka vs at-least-on",
+    "title": "Q6: Exactly-once semantics in Kafka vs at-least-once with idempotent consumers \u2014 difference and when to pick which?",
+    "detail": "Kafka ensures during node failures that one consumer from a consumer-group can resume a stream, as the broker maintains offsets for each consumer/consumer group. Other vendors may retry un-acked event",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q7: Migrating Protobuf V1 to V2 with a renamed fie": {
+    "topic": "DDIA",
+    "id": "Q7: Migrating Protobuf V1 to V2 with a renamed fie",
+    "title": "Q7: Migrating Protobuf V1 to V2 with a renamed field \u2014 compatibility concerns and safest rollout order?",
+    "detail": "Protobuf uses field numbers to match fields, a rename shouldn't be an issue",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q8: Stream processor handles 100K events/sec, down": {
+    "topic": "DDIA",
+    "id": "Q8: Stream processor handles 100K events/sec, down",
+    "title": "Q8: Stream processor handles 100K events/sec, downstream writes 20K/sec. What happens without intervention, and two strategies?",
+    "detail": "Stream processor buffers events - buffer overflows to disk. Downstream can apply back pressure",
+    "created": "2026-07-22",
+    "reviews": [
+      "2026-07-23",
+      "2026-07-25",
+      "2026-07-29",
+      "2026-08-05",
+      "2026-08-21"
+    ],
+    "done": []
+  },
+  "DDIA:Q1: What's the difference between synchronous and ": {
+    "topic": "DDIA",
+    "id": "Q1: What's the difference between synchronous and ",
+    "title": "Q1: What's the difference between synchronous and asynchronous replication, and what's the practical compromise most systems use?",
+    "detail": "In synchronous rep, leader waits for followers to update. In async, leaders do not wait. Node failures can cause loss of data in async, and sync can affect availability. Semi-sync ensures that at leas",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "DDIA:Q2: A client writes to the leader, then immediatel": {
+    "topic": "DDIA",
+    "id": "Q2: A client writes to the leader, then immediatel",
+    "title": "Q2: A client writes to the leader, then immediately reads from a follower and doesn't see the write. What's this problem called, and what are two ways to solve it?",
+    "detail": "Read-your-writes. Either read from the leader for certain app-specific logical writes, or find a replica to read from that has the greatest logical timestamp among replicas for that user/write.",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "DDIA:Q3: If a follower falls far behind (lagging), what": {
+    "topic": "DDIA",
+    "id": "Q3: If a follower falls far behind (lagging), what",
+    "title": "Q3: If a follower falls far behind (lagging), what's one safe way to bring it back up without serving stale reads?",
+    "detail": "Ask leader for logs between latest snapshot and now.",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "DDIA:Q4: Statement-based replication has a problem with": {
+    "topic": "DDIA",
+    "id": "Q4: Statement-based replication has a problem with",
+    "title": "Q4: Statement-based replication has a problem with non-deterministic functions like NOW() or RAND(). What's the alternative that avoids this?",
+    "detail": "Ship logical records in logs.",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "DDIA:Q5: The leader crashes mid-write. How does the sys": {
+    "topic": "DDIA",
+    "id": "Q5: The leader crashes mid-write. How does the sys",
+    "title": "Q5: The leader crashes mid-write. How does the system choose a new leader, and what's the risk if the old leader comes back?",
+    "detail": "New leader is follower with latest/largest log offset. Old leader can still assume it's the leader \u2014 it would have to be quarantined.",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "DDIA:Q6: What problem do consistent prefix reads solve,": {
+    "topic": "DDIA",
+    "id": "Q6: What problem do consistent prefix reads solve,",
+    "title": "Q6: What problem do consistent prefix reads solve, and why can't you just use timestamps?",
+    "detail": "Consistent prefix reads preserve the causal chain of writes. Timestamps provide a total ordering but don't provide info on which writes might be causally linked.",
+    "created": "2026-07-25",
+    "reviews": [
+      "2026-07-26",
+      "2026-07-28",
+      "2026-08-01",
+      "2026-08-08",
+      "2026-08-24"
+    ],
+    "done": []
+  },
+  "DDIA:What's the main disadvantage of multi-leader compa": {
+    "topic": "DDIA",
+    "id": "What's the main disadvantage of multi-leader compa",
+    "title": "What's the main disadvantage of multi-leader compared to single-leader?",
+    "detail": "Conflicts.",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "DDIA:What happens if different transactions use the sam": {
+    "topic": "DDIA",
+    "id": "What happens if different transactions use the sam",
+    "title": "What happens if different transactions use the same table but different rows on two leaders?",
+    "detail": "Causal chain can be broken \u2014 write A on leader 1 happens before write B on leader 2, but B arrives at a replica before A, violating causality.",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "DDIA:How does multi-leader ensure causal ordering?": {
+    "topic": "DDIA",
+    "id": "How does multi-leader ensure causal ordering?",
+    "title": "How does multi-leader ensure causal ordering?",
+    "detail": "Version vectors track per-key causality between replicas. For cross-key causal ordering, the coordinator attaches a dependency list (or the client includes a vector timestamp of observed keys) so the ",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "DDIA:What's the difference between conflict avoidance v": {
+    "topic": "DDIA",
+    "id": "What's the difference between conflict avoidance v",
+    "title": "What's the difference between conflict avoidance vs resolution, and when to pick which?",
+    "detail": "Conflict avoidance pins a client/replica to a specific leader for all writes, trading availability/throughput for safety. Resolution is needed when writes aren't coordinated across leaders in favor of",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "DDIA:How do new leaders discover existing ones in multi": {
+    "topic": "DDIA",
+    "id": "How do new leaders discover existing ones in multi",
+    "title": "How do new leaders discover existing ones in multi-leader?",
+    "detail": "Three mechanisms: (1) static config (restart to add), (2) gossip protocol (propagates membership in seconds), (3) external discovery (ZooKeeper/etcd). Cassandra uses gossip; Galera/InnoDB Cluster uses",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "DDIA:What happens on the write path when a leader fails": {
+    "topic": "DDIA",
+    "id": "What happens on the write path when a leader fails",
+    "title": "What happens on the write path when a leader fails in multi-leader?",
+    "detail": "Clients route writes to another leader (app/load balancer failover). Other leaders continue normally. Dead leader's partners stop receiving replication from it. On recovery, the leader catches up via ",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "MATH:Poset vs Total Order": {
+    "topic": "MATH",
+    "id": "Poset vs Total Order",
+    "title": "Q1: Poset vs Total Order",
+    "detail": "Difference between a partially ordered set and a totally ordered set? Example of each. \u2192 Both \u211d and \u2115 under \u2264 are total orders (all pairs comparable). A proper poset example is (P({a,b}), \u2286",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "MATH:Duality Principle": {
+    "topic": "MATH",
+    "id": "Duality Principle",
+    "title": "Q2: Duality Principle",
+    "detail": "State the duality principle for posets. \u2192 Holds for all posets, not just lattices. Reversing every \u2264 in a true statement about *all* posets yi",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "MATH:Extra Structure of Lattices vs Posets": {
+    "topic": "MATH",
+    "id": "Extra Structure of Lattices vs Posets",
+    "title": "Q3: Extra Structure of Lattices vs Posets",
+    "detail": "What's the extra structure of lattices? \u2192 A lattice is a poset where every pair has both a join (\u2228, sup) and meet (\u2227, inf). Posets may have mi",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "MATH:Join \u2194 Least Upper Bound": {
+    "topic": "MATH",
+    "id": "Join \u2194 Least Upper Bound",
+    "title": "Q4: Join \u2194 Least Upper Bound",
+    "detail": "Why is join interchangeable with least upper bound? \u2192 They're the same concept described two ways \u2014 order-theoretic (lub) vs algebraic (binary op \u2228). The ",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "MATH:Lattice \u21d2 Well-ordering?": {
+    "topic": "MATH",
+    "id": "Lattice \u21d2 Well-ordering?",
+    "title": "Q5: Lattice \u21d2 Well-ordering?",
+    "detail": "If a lattice has both sup and inf, is it also a well-ordering? \u2192 No. Lattice = property of pairs; well-ordering = property of all subsets. [0,1] is a complete lattic",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  },
+  "MATH:Unsorted integer array \u2014 best classification?": {
+    "topic": "MATH",
+    "id": "Unsorted integer array \u2014 best classification?",
+    "title": "Q6: Unsorted integer array \u2014 best classification?",
+    "detail": "An unsorted integer array \u2014 what's the best order-theoretic classification? \u2192 Totally ordered set. The values under \u2264 are all comparable. \"Unsorted\" describes the arrangement, no",
+    "created": "2026-07-28",
+    "reviews": [
+      "2026-07-29",
+      "2026-07-31",
+      "2026-08-04",
+      "2026-08-11",
+      "2026-08-27"
+    ],
+    "done": []
+  }
+}

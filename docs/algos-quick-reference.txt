@@ -1,6 +1,7 @@
 Sprague-Grundy - Game theory ***
 Memoized recursion - searching state space
 Two-pointer (with k-skip tolerance)/fixed or sliding window/deque - sequence comparisons
+  - Monotonicity check: constraint must change predictably as window grows/shrinks (positive sums increase, distinct chars decrease). If adding always moves metric in one direction and removing reverses it, two-pointer works. If not monotonic (negative sums, median), use prefix sums + hash map.
 DP (with carry/state - evaluate surplus) - op at i might influence op at i+1
 	1. State definition - meaning of one cell
 	2. State space - total set of possible states - if dp table is m x n, state space is O(m*n) - determines if DP is feasible (ie how large is m*n?)

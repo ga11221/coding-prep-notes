@@ -1,0 +1,599 @@
+# Rapid Fire LC Medium Approaches (Jul 25, 2026)
+
+## LC15 — 3Sum
+**User approach:** Map of target - nums[i], then two pointers on sorted array.
+**Refined approach:** Sort the array. Fix one element nums[i], then two-pointer the remaining subarray for the pair that sums to -nums[i]. Skip duplicates at both the fixed element and the two pointers to avoid duplicate triplets.
+**Time:** O(n²)
+**Pattern:** Sorting + Two Pointers
+**Key insight:** Reduces 3Sum to repeated 2Sum on sorted subarrays. Duplicate skipping is what makes it clean.
+
+## LC128 — Longest Consecutive Sequence
+**User approach:** Sliding window — expand right while elements are consecutive, shrink and start from next element that breaks sequence.
+**Refined approach:** Hash set. For each element, check if it's the start of a sequence (num-1 not in set), then count forward. Each element visited at most twice.
+**Time:** O(n)
+**Pattern:** Hash Set
+**Key insight:** Only start counting from sequence beginnings. Skipping elements that are mid-sequence avoids revisiting.
+
+## LC238 — Product of Array Except Self
+**User approach:** Find product for first element (24) and carry forward, product for next element at i is product/array[i] * array[i-1].
+**Refined approach:** Two passes — no division. Left pass builds prefix products, right pass multiplies in suffix products. Suffix: iterate right to left, starting with 1, multiply by next element.
+**Time:** O(n)
+**Pattern:** Prefix/Suffix Products
+**Key insight:** Each element = product of everything left × everything right. Two independent passes, no division needed.
+
+## LC200 — Number of Islands
+**User approach:** DFS from each unvisited '1', mark everything reachable, count.
+**Time:** O(m*n)
+**Pattern:** Graph DFS/BFS
+**Key insight:** Classic flood fill. Visit each cell once.
+
+## LC139 — Word Break
+**User approach:** Trie for dictionary lookup.
+**Refined approach:** DP + Trie (or hash set). dp[i] = true if any s[j:i] is in dict and dp[j] is true. Trie helps lookup but DP tracks valid prefixes.
+**Time:** O(n² × k) where k = max word length, or O(n²) with hash set
+**Pattern:** Dynamic Programming
+**Key insight:** Must track which prefixes are valid, not just look up substrings.
+
+## LC152 — Maximum Product Subarray
+**User approach:** Sliding window, move left past negative number. / Prefix products - carry forward min and max products at every index.
+**Refined approach:** DP tracking both max and min product at each position. new_max = max(nums[i], prev_max * nums[i], prev_min * nums[i]), same for min. Double negatives flip sign — min can become max.
+**Time:** O(n)
+**Pattern:** Dynamic Programming
+**Key insight:** Negative × negative = positive. Track both extremes at each position.
+
+## LC5 — Longest Palindromic Substring
+**User approach:** Expand around center. Odd length: expand from single char. Even length: find repeating chars and expand from pair.
+**Time:** O(n²)
+**Pattern:** Two Pointers / Expand Around Center
+**Key insight:** Every palindrome has a center. Check all centers, expand outward while characters match.
+
+## LC33 — Search in Rotated Sorted Array
+**User approach:** BST to find rotation point, then BST on right half if target between rotation point and end, or left half.
+**Refined approach:** Single pass. At each mid, one half is always sorted. Check if target is in the sorted half, go there. Otherwise go to the other half.
+**Time:** O(log n)
+**Pattern:** Binary Search
+**Key insight:** Rotation guarantees one half is always sorted. Use that to decide which half to discard.
+
+## LC73 — Set Matrix Zeroes
+**User approach:** DFS.
+**Refined approach:** Use first row/column as markers. Scan for zeros, mark their row/col, then zero based on marks. O(1) space.
+**Time:** O(m×n)
+**Pattern:** In-place Matrix Manipulation
+**Key insight:** First row/column can double as marker storage. Process markers last to avoid overwriting.
+
+## LC11 — Container With Most Water
+**User approach:** Monotonically increasing stack.
+**Refined approach:** Two pointers from both ends. Move the shorter one inward — it's the bottleneck, moving the taller can never help.
+**Time:** O(n)
+**Pattern:** Two Pointers
+**Key insight:** The shorter line limits the area. Moving the taller line inward can only decrease width without increasing height.
+
+## LC207 — Course Schedule
+**User approach:** BFS with set for visited nodes.
+**Refined approach:** Topological sort (Kahn's). Track in-degrees, only visit nodes with 0 prerequisites remaining. If not all nodes visited, cycle exists.
+**Time:** O(V + E)
+**Pattern:** Graph / Topological Sort
+**Key insight:** BFS alone can't detect cycles. In-degree tracking ensures prerequisites are satisfied before visiting.
+
+## LC146 — LRU Cache
+**User approach:** Map for key-values, LIFO queue to track recency.
+**Refined approach:** Map + doubly linked list. Map points to nodes, list tracks recency. Move accessed item to head in O(1). Evict from tail.
+**Time:** O(1) per operation
+**Pattern:** Design / Hash Map + Linked List
+**Key insight:** Doubly linked list allows O(1) removal from middle. Stack can't do that.
+
+## LC102 — Binary Tree Level Order Traversal
+**User approach:** BFS with queue.
+**Refined approach:** Same. Track level size at each step, process that many nodes per level.
+**Time:** O(n)
+**Pattern:** BFS / Tree Traversal
+**Key insight:** Queue size at each iteration = number of nodes at that level.
+
+## LC322 — Coin Change
+**User approach:** Combo recursion.
+**Refined approach:** Bottom-up DP. dp[i] = min(dp[i], dp[i-coin] + 1) for each coin. Build from 0 to amount.
+**Time:** O(amount × coins)
+**Pattern:** Dynamic Programming
+**Key insight:** Each amount depends on smaller amounts. Build up, don't recurse down.
+
+## LC98 — Validate Binary Search Tree
+**User approach:** In-order traversal.
+**Refined approach:** Same. Track previous value during in-order traversal. If current ≤ previous, invalid BST.
+**Time:** O(n)
+**Pattern:** Tree / In-order Traversal
+**Key insight:** In-order of BST is strictly increasing. One pass, one check.
+
+## LC133 — Clone Graph
+**User approach:** Build adjacency lists and copy.
+**Refined approach:** BFS or DFS with a map (original → clone). Avoid cycles by checking if node already cloned.
+**Time:** O(V + E)
+**Pattern:** Graph BFS/DFS
+**Key insight:** Map prevents infinite loops on cycles. Clone on first visit, reuse on revisit.
+
+## LC153 — Find Minimum in Rotated Sorted Array
+**User approach:** BST on right half — if right half larger than midpt, BST on left.
+**Refined approach:** Same. Compare mid with right boundary. If mid > right, min is right half. Otherwise left half (or mid).
+**Time:** O(log n)
+**Pattern:** Binary Search
+**Key insight:** One comparison with right boundary is enough to decide which half to keep.
+
+## LC416 — Partition Equal Subset Sum
+**User approach:** Find any combination that sums to sum(array)/2.
+**Refined approach:** 0/1 knapsack DP. dp[i] = true if sum i is achievable. dp[0] = true, iterate elements, update backwards.
+**Time:** O(n × sum/2)
+**Pattern:** Dynamic Programming / Knapsack
+**Key insight:** Partition equal sum = subset sum to total/2. One boolean array, iterate backwards to avoid reuse.
+
+## LC236 — Lowest Common Ancestor of Binary Tree
+**User approach:** Prefix traversal.
+**Refined approach:** Recursion. If current is p or q, return it. If both left and right return non-nil, current is LCA. If one side returns non-nil, propagate it up.
+**Time:** O(n)
+**Pattern:** Tree Recursion
+**Key insight:** LCA is the first node where p and q diverge into different subtrees. Recursion naturally finds it.
+
+## LC19 — Remove Nth Node From End of List
+**User approach:** Fast pointer starts n ahead of slow pointer.
+**Refined approach:** Same. Move fast n steps, then both together. When fast hits end, slow is at node before target.
+**Time:** O(n)
+**Pattern:** Two Pointers / Linked List
+**Key insight:** One pass with two pointers spaced n apart. No need to compute list length.
+
+## LC3 — Longest Substring Without Repeating Characters
+**User approach:** Sliding window with map to track seen. / Sliding window - extend right while char uniq, shrink left while left matches newly added char.
+**Refined approach:** Sliding window with a hash map tracking last seen index of each char. Expand right; when duplicate hit, jump left past previous occurrence (not incrementally). Update max length.
+**Time:** O(n)
+**Pattern:** Sliding Window / Hash Map
+**Key insight:** Map stores last seen index of each character. Jump left directly past the duplicate, no incremental shrink.
+
+## LC208 — Implement Trie
+**User approach:** Tree with [26]char at each level.
+**Refined approach:** Same. Each node: array of 26 children + isEnd flag. Insert traverses/creates, search traverses checking isEnd, startsWith traverses without checking isEnd.
+**Time:** O(m) per operation where m = word length
+**Pattern:** Design / Trie
+**Key insight:** Fixed-width array at each node gives O(1) child lookup. isEnd distinguishes prefixes from complete words.
+
+## LC76 — Minimum Window Substring
+**User approach:** Sliding window — expand right until all chars found, shrink from left to second match, continue expanding until dropped match found again.
+**Refined approach:** Expand right until window valid, shrink left while still valid, update min. Repeat. No need to track specific matches — just check counts.
+**Time:** O(n)
+**Pattern:** Sliding Window / Hash Map
+**Key insight:** Track required vs available counts. Shrink while all requirements met, expand when broken.
+
+## LC148 — Sort List
+**User approach:** Fast pointer 2 ahead of slow to find midpoint, merge sort.
+**Refined approach:** Same. Split at midpoint, recursively sort halves, merge sorted halves.
+**Time:** O(n log n)
+**Pattern:** Linked List / Merge Sort
+**Key insight:** Merge sort is the natural fit for linked lists — split is O(1) with fast/slow pointers, merge is O(n) with dummy head.
+
+## LC1481 — Least Number of Unique Integers after K Removals
+**User approach:** Freq map and priority queue ordered by freq asc, remove from head, return length of remaining queue.
+**Time:** O(n log n)
+**Pattern:** Greedy / Heap
+**Key insight:** Remove rarest first. Sort or min-heap on frequencies.
+
+## LC22 — Generate Parentheses
+**User approach:** Generate permutations with 2ary state for open/close, only close if fewer opens remain.
+**Time:** O(4^n / √n) — Catalan number
+**Pattern:** Backtracking
+**Key insight:** Two counters constrain the tree. close < open to add `)`, open < n to add `(`. Prunes invalid branches early.
+
+## LC39 — Combination Sum
+**User approach:** Combo recursion.
+**Refined approach:** Backtracking. Try each candidate, recurse with remaining target, backtrack when target < 0 or == 0. Reuse allowed.
+**Time:** O(n^(target/min)) — exponential, not n²
+**Pattern:** Backtracking
+**Key insight:** Reuse means recursion tree depth isn't bounded by array length. Prune when current sum exceeds target.
+
+## LC48 — Rotate Image
+**User approach:** Swap corners going clockwise with dummy var, move inward and repeat.
+**Refined approach:** Transpose (swap across diagonal), then reverse each row. Same O(n²), easier to implement.
+**Time:** O(n²)
+**Pattern:** Matrix Manipulation
+**Key insight:** Rotate = transpose + reverse. Two simple ops instead of tracking four-way swaps.
+
+## LC84 — Largest Rectangle in Histogram
+**User approach:** Monotonically increasing stack of indices - compute area with smallest element in stack when invariant breaks.
+**Refined approach:** Monotonic stack of indices. Push each index. When current height < stack top, pop and compute area: height[popped] × width (current index - new top - 1, or full width if stack empty). Push current index. Add sentinel (height 0) at end to flush remaining.
+**Time:** O(n)
+**Pattern:** Monotonic Stack
+**Key insight:** Each popped index defines a rectangle that extends left (previous smaller) and right (current smaller). The stack maintains "next smaller to the left" — when it breaks, you know the rectangle's boundaries.
+
+## LC56 — Merge Intervals
+**User approach:** Sort intervals, sweep line to merge potentially multiple overlapping intervals.
+**Refined approach:** Sort by start time. Sweep left to right — if current start ≤ previous end, merge (extend end to max). Otherwise push new interval.
+**Time:** O(n log n)
+**Pattern:** Intervals / Sweep Line
+**Key insight:** Sorting guarantees you only need to look at the previous interval — no backtracking needed. Merge or push, never skip.
+
+## LC31 — Next Permutation
+**User approach:** Permutations/backtracking starting from last index.
+**Refined approach:** Scan right to left for first index where nums[i] < nums[i+1]. Swap nums[i] with the smallest element to its right that's larger than it. Reverse the suffix after i.
+**Time:** O(n)
+**Pattern:** Array Manipulation
+**Key insight:** Backtracking gives all permutations in O(n!) — overkill. One linear scan + one swap + one reverse gives the next permutation directly.
+
+## LC394 — Decode String
+**User approach:** Recursively find inner most char - duplicate as necessary - and repeat going up the call stack - do this for all distinct chunks/groups of encoded chars.
+**Refined approach:** Two stacks (or recursion). Push numbers and strings onto stacks when hitting `[`. Pop and repeat when hitting `]`. Iterative version uses two stacks — cleaner than recursion for this.
+**Time:** O(n × max_repeat)
+**Pattern:** Stack
+**Key insight:** `[` saves state (current string and repeat count) to stacks, `]` restores and applies. Same idea as recursion but explicit.
+
+## LC49 — Group Anagrams
+**User approach:** Freq_map of chars per string - O(n^2) iteration over all maps for full intersection of frequencies.
+**Refined approach:** Hash map with sorted string as key (or tuple of char counts as key). Same anagram → same key → group them. O(nk log k) with sorting, O(nk) with fixed-size count array.
+**Time:** O(nk log k) or O(nk)
+**Pattern:** Hash Map
+**Key insight:** Your approach works but is O(n²) because you compare every pair. Sorting or counting as the key groups in one pass — no pairwise comparison needed.
+
+## LC155 — Min Stack
+**User approach:** Linked list -> pop removes head and repoints -> push updates head to point to old head -> top gets head -> track min separately in encounter order.
+**Refined approach:** Two stacks — main stack + min stack. Push to min stack whenever new value ≤ current min. Pop from both. Min stack top is always current minimum.
+**Time:** O(1) all ops
+**Pattern:** Design / Stack
+**Key insight:** Your linked list idea works too — essentially the same thing. Min stack approach is cleaner to implement. The ≤ on push (not <) handles duplicates correctly.
+
+## LC287 — Find the Duplicate Number
+**User approach:** Cycle detection - treating nums as a linked list but not sure how to walk the array.
+**Refined approach:** Treat nums[i] as next pointer from node i. Start at index 0, use Floyd's cycle detection (slow = nums[slow], fast = nums[nums[fast]]). Cycle entrance = duplicate.
+**Time:** O(n)
+**Pattern:** Array / Floyd's Cycle Detection
+**Key insight:** No extra structure needed — indices ARE your pointers. In-place, O(1) space.
+
+## LC54 — Spiral Matrix
+**User approach:** Nested traversal?
+**Refined approach:** Four boundaries (top, bottom, left, right). Traverse top row, right col, bottom row, left col. Shrink boundaries inward, repeat.
+**Time:** O(m×n)
+**Pattern:** Matrix Manipulation
+**Key insight:** Each traversal shrinks the "ring" — boundaries are your state, not recursion.
+
+## LC78 — Subsets
+**User approach:** Combo recursion - no duplicate subsets - pruned naturally if going left to right in nums.
+**Refined approach:** Backtracking. At each index, include or exclude. Or simpler: at each step, pick from remaining elements to the right, recurse. Natural dedup because you never look left.
+**Time:** O(2^n)
+**Pattern:** Backtracking
+**Key insight:** Same as combo/permutation backtracking — just don't track a target. Every node in the tree is a valid subset.
+
+## LC46 — Permutations
+**User approach:** Recursion for nums i to end.
+**Refined approach:** Backtracking. At each position, swap each remaining element into it, recurse, swap back. Or: build a new list by inserting current element at every position in the recursive result.
+**Time:** O(n × n!)
+**Pattern:** Backtracking
+**Key insight:** Two clean implementations — swap-in-place or build-new-list. Both give the same result. Swap-in-place is O(1) space, build-new-list is cleaner to reason about.
+
+## LC104 — Maximum Depth of Binary Tree
+**User approach:** In-order traversal - return 1+ (next level) - return total to parent call.
+**Refined approach:** Recursion. return 1 + max(maxDepth(left), maxDepth(right)). Or BFS counting levels.
+**Time:** O(n)
+**Pattern:** Tree Recursion
+**Key insight:** In-order isn't required — any traversal works. DFS is simplest: base case is null (return 0), otherwise 1 + max of children.
+
+## LC136 — Single Number
+**User approach:** Compare left and right pointers with center elem -> scan inward from left/right.
+**Refined approach:** XOR all elements. Pairs cancel (a ^ a = 0), single number remains. result ^= nums[i] for all i.
+**Time:** O(n)
+**Pattern:** Bit Manipulation
+**Key insight:** XOR is its own inverse. a ^ a = 0, a ^ 0 = a. Order doesn't matter.
+
+## LC2 — Add Two Numbers
+**User approach:** Traverse lists in parallel -> propagate carry number to next and create new tail if carry causes "overflow".
+**Refined approach:** Same. Iterate both lists, sum digits + carry, create new node with sum % 10, carry = sum / 10. Continue until both lists exhausted and carry is 0.
+**Time:** O(max(m, n))
+**Pattern:** Linked List / Math
+**Key insight:** Reverse order is a gift — you process least significant digit first, which is exactly what addition needs.
+
+## LC198 — House Robber
+**User approach:** Prefix sum that skips an index O(n).
+**Refined approach:** DP. At each house, max of (skip it = prev) or (rob it = prev_prev + nums[i]). Two variables, no array needed.
+**Time:** O(n), O(1) space
+**Pattern:** Dynamic Programming
+**Key insight:** You only need the last two states. Not prefix sums — it's a decision at each step, not a guaranteed include.
+
+## LC300 — Longest Increasing Subsequence
+**User approach:** DP - state is length of sequence at i and last number in sequence.
+**Refined approach:** O(n²) DP: dp[i] = length of LIS ending at i, check all j < i. O(n log n): patience sorting with binary search on tails array.
+**Time:** O(n²) or O(n log n)
+**Pattern:** Dynamic Programming / Binary Search
+**Key insight:** Your state description is correct — that's the O(n²) DP. The O(n log n) optimization uses binary search on tails instead of scanning all previous elements.
+
+## LC141 — Linked List Cycle
+**User approach:** Fast pointer 1 ahead of slow - fast falls behind slow in cycle - but how to detect?
+**Refined approach:** Slow moves 1 step, fast moves 2 steps. If fast or fast.next is null → no cycle. If they meet → cycle.
+**Time:** O(n), O(1) space
+**Pattern:** Fast & Slow Pointers
+**Key insight:** In a cycle, fast gains 1 step per iteration on slow. It's guaranteed to lap slow within one cycle length.
+
+## LC560 — Subarray Sum Equals K
+**User approach:** Combo recursion.
+**Refined approach:** Prefix sum + hash map. Track cumulative sum, for each index check if sum - k existed before. Map stores count of each prefix sum.
+**Time:** O(n)
+**Pattern:** Prefix Sum / Hash Map
+**Key insight:** Combo recursion is O(2^n). Prefix sum reduces it to one pass — each position asks "have I seen the sum that makes this subarray equal k?"
+
+## LC494 — Target Sum
+**User approach:** dp where dp[i] = [s | s in dp[i-1]] ++ [s-dp[i]] ++ [s+dp[i]] O(2^n).
+**Refined approach:** Convert to subset sum. P = (total + target) / 2. Count subsets that sum to P. Recurrence: dp[0] = 1; for each num, for j from P down to num: dp[j] += dp[j - num]. Backwards iteration prevents reuse.
+**Time:** O(n × sum)
+**Pattern:** Dynamic Programming / Knapsack
+**Key insight:** Assigning +/- is the same as picking a "positive" subset. Reframing as subset sum reduces exponential to O(n × sum). **FLAG: Review before interview — user wants to revisit.**
+
+## LC1091 — Shortest Path in Binary Matrix
+**User approach:** DFS - prioritize moving down vertically or diagonally.
+**Refined approach:** BFS from (0,0), explore all 8 neighbors. Track visited cells. Return distance when you reach (n-1, n-1).
+**Time:** O(n²)
+**Pattern:** BFS
+**Key insight:** BFS explores level by level — the first time you reach the destination is guaranteed shortest. DFS doesn't have that guarantee.
+
+## LC981 — Time Based Key-Value Store
+**User approach:** Sorted values by timestamp desc - priority queue/heap - get returns max for key.
+**Refined approach:** Hash map of key → sorted list of (timestamp, value) pairs. On get, binary search the list for largest timestamp ≤ target.
+**Time:** O(log n) per get, O(1) amortized per set
+**Pattern:** Hash Map + Binary Search
+**Key insight:** Each key's values are naturally inserted in timestamp order, so the list is already sorted. Binary search is the right tool for "largest ≤ target."
+
+## LC116 — Populating Next Right Pointers in Each Node
+**User approach:** BFS - each child points to next in level.
+**Refined approach:** BFS works, O(n) space. But O(1) space possible — use already-established next pointers to traverse current level while setting up next level. No queue needed.
+**Time:** O(n), O(1) space optimal
+**Pattern:** Tree / BFS
+**Key insight:** Perfect binary tree means the next pointers you've already set give you a free linked list to traverse when setting up the next level.
+
+## LC347 — Top K Frequent Elements
+**User approach:** Freq_map by linear scan - bucket array to get top k.
+**Refined approach:** Same. Count frequencies in O(n). Bucket sort — bucket[i] = list of nums with frequency i. Walk buckets from highest frequency down, collect k elements.
+**Time:** O(n)
+**Pattern:** Bucket Sort / Hash Map
+**Key insight:** Bucket sort avoids O(n log n) sorting. Frequency is bounded by n, so you get O(n) guaranteed.
+
+## LC994 — Rotting Oranges
+**User approach:** BFS starting at cells with 2's and flipping 1's - when no children left O(m*n) scan for 1s.
+**Refined approach:** Multi-source BFS from all 2s simultaneously. Track fresh orange count. Each time a 1 rots, decrement count. When BFS ends, if count > 0 return -1, else return minutes elapsed.
+**Time:** O(m×n)
+**Pattern:** BFS
+**Key insight:** The O(m×n) scan at the end is unnecessary — just track the fresh count as you go. When BFS finishes, one comparison tells you if it's possible.
+
+## LC230 — Kth Smallest Element in a BST
+**User approach:** In-order traversal to find smallest, decrement k on the way up.
+**Refined approach:** Same. In-order traversal (left, root, right). Decrement k each time you visit a node. When k hits 0, that's your answer.
+**Time:** O(n) worst case, O(k) average
+**Pattern:** Tree / In-order Traversal
+**Key insight:** In-order of BST is sorted. You don't need to traverse the whole tree — stop as soon as k hits 0.
+
+## LC105 — Construct Binary Tree from Preorder and Inorder Traversal
+**User approach:** Start with preorder[0] add inorder[0] to left child skip preorder[1] add preorder[2] as right child, alternate skipping arrays for left and right children.
+**Refined approach:** First element of preorder is always the root. Find that root in inorder — everything left is left subtree, everything right is right subtree. Split both arrays at that point and recurse.
+**Time:** O(n)
+**Pattern:** Tree Recursion
+**Key insight:** Preorder gives you the root. Inorder tells you the size of left/right subtrees. Use the left subtree size to split the preorder array correctly.
+
+## LC55 — Jump Game
+**User approach:** Create intervals from each index and sort by end of intervals, look for disjoint intervals.
+**Refined approach:** Greedy. Track max_reachable. At each index i, if i > max_reachable, return false. Otherwise, update max_reachable = max(max_reachable, i + nums[i]).
+**Time:** O(n)
+**Pattern:** Greedy
+**Key insight:** You don't need to track which path — just track the farthest you can possibly reach. If every index up to the end is reachable, you're good.
+
+## LC75 — Sort Colors
+**User approach:** DNF 3-way partition.
+**Refined approach:** Dutch National Flag. Three pointers: low, mid, high. Regions: 0 to low-1 are all 0s, low to mid-1 are all 1s, mid to high are unexamined, high+1 to end are all 2s. If nums[mid] == 0, swap with low, advance both. If nums[mid] == 1, advance mid. If nums[mid] == 2, swap with high, decrement high.
+**Time:** O(n), one pass
+**Pattern:** Two Pointers / In-place Partition
+**Key insight:** Three-way partition in a single pass. Mid walks forward, low and high converge from ends.
+
+## LC210 — Course Schedule II
+**User approach:** BFS with set to track seen.
+**Refined approach:** Build adjacency list and in-degree array. Start with all 0-in-degree nodes. BFS: pop node, add to result, decrement neighbors' in-degrees. If neighbor hits 0, enqueue. If result length != numCourses, cycle exists.
+**Time:** O(V + E)
+**Pattern:** Topological Sort / BFS
+**Key insight:** Regular BFS with a visited set can revisit nodes. In-degree tracking ensures you only visit each node once prerequisites are satisfied.
+
+## LC62 — Unique Paths
+**User approach:** f(m, n) = f(m+1, n) U f(m, n+1) with boundary checks.
+**Refined approach:** Same idea as recursion, but bottom-up DP. dp[i][j] = dp[i-1][j] + dp[i][j-1]. Or compress to 1D — just one row, update in place.
+**Time:** O(m×n), O(n) space with compression
+**Pattern:** Dynamic Programming
+**Key insight:** Recursion + memoization works but bottom-up avoids stack overhead. 1D compression works because each cell only depends on top and left.
+
+## LC131 — Palindrome Partitioning
+**User approach:** Recursively find palindromes left to right - i from 0 to end.
+**Refined approach:** Backtracking. At each position, try all substrings starting at i. If palindrome, add to path, recurse from i+len. When you reach end of string, record the partition.
+**Time:** O(n × 2^n) worst case
+**Pattern:** Backtracking
+**Key insight:** Same tree structure as subsets/combo — just with a palindrome check as the gate for valid branches.
+
+## LC199 — Binary Tree Right Side View
+**User approach:** DFS following right children to leaf.
+**Refined approach:** DFS right-first, track depth. First node at each depth is the rightmost. Or BFS level-order, take last node per level.
+**Time:** O(n)
+**Pattern:** Tree DFS/BFS
+**Key insight:** Just following right children misses nodes in left subtree when right subtree is shorter. Track depth to capture deeper visible nodes.
+
+## LC235 — Lowest Common Ancestor of a Binary Search Tree
+**User approach:** Find p and q and return them - the node higher up in the recursive call stack that gets non-nil vals for both is the LCA.
+**Refined approach:** Use BST property. If both p and q are less than root, go left. If both greater, go right. Otherwise, root is the LCA — you've found the split point.
+**Time:** O(h)
+**Pattern:** Tree / BST
+**Key insight:** BST ordering means you don't need to search both subtrees — one comparison tells you which direction to go. No need to check for nulls.
+
+## LC79 — Word Search
+**User approach:** Backtracking.
+**Refined approach:** DFS + backtracking. At each cell, try all 4 directions. Mark visited, recurse, unmark on return. Early exit when all chars matched.
+**Time:** O(m × n × 4^L) where L = word length
+**Pattern:** Backtracking / Matrix DFS
+**Key insight:** The exponential factor is 4^L not 4^(m×n) because you stop at word length. Unmarking (backtracking) is what allows revisiting cells on different paths.
+
+## LC221 — Maximal Square
+**User approach:** Backtracking - match 1x1 - then look for 2x2 etc.
+**Refined approach:** DP. dp[i][j] = side length of largest square ending at (i,j). If matrix[i][j] == '1', dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1. Track max side, return area.
+**Time:** O(m×n)
+**Pattern:** Dynamic Programming
+**Key insight:** A square at (i,j) can only exist if there are squares above, left, and diagonally above-left. The minimum of those three + 1 gives the largest square ending here. Use bottom-up 1D DP to avoid stack overflow.
+
+## LC91 — Decode Ways
+**User approach:** Count combinations where s is traversed in order and a single digit can be reused - pruning for numbers 1-26.
+**Refined approach:** DP. dp[i] = number of ways to decode s[i:]. If s[i] != '0', add dp[i+1]. If s[i:i+2] is between 10-26, add dp[i+2]. Build from end to start.
+**Time:** O(n)
+**Pattern:** Dynamic Programming
+**Key insight:** Backtracking is exponential. DP with two states back is O(n) — at each position you have at most two choices (1 digit or 2 digits), and you only need the next two values.
+
+## LC437 — Path Sum III
+**User approach:** DFS - flag which child (R/L) following for current path - tally count if sum = target.
+**Refined approach:** DFS with prefix sum map. At each node, current_sum - target tells you if a path ending here exists. Add current_sum to map, recurse left and right, remove from map (backtrack).
+**Time:** O(n)
+**Pattern:** DFS / Prefix Sum
+**Key insight:** Same idea as LC560 (Subarray Sum Equals K) — but on a tree. The map tracks prefix sums along the current path. Backtracking the map when you leave a node ensures you only count paths in the current branch.
+
+## LC1029 — Two City Scheduling
+**User approach:** (corrected example) Sort by difference between city costs, send top n to cheaper city.
+**Refined approach:** Sort by the difference cost_A - cost_B. Send the first n (biggest A savers) to A, rest to B.
+**Time:** O(n log n)
+**Pattern:** Greedy
+**Key insight:** The person with the biggest savings going to A (vs B) should go to A. Sort by difference, take top n for A.
+
+## LC138 — Copy List with Random Pointer
+**User approach:** 2 pass copy - second pass sets random pointers in clone.
+**Refined approach:** Same. Pass 1: create cloned nodes, map original → clone. Pass 2: set clone.next = map[original.next] and clone.random = map[original.random].
+**Time:** O(n)
+**Pattern:** Hash Map / Linked List
+**Key insight:** Map eliminates the need to search for random targets. Two passes — one to build nodes, one to wire pointers.
+
+## LC1143 — Longest Common Subsequence
+**User approach:** Map chars to positions for text2 - iterate over text1, looking up chars for text2 in map and backtrack for all shared chars with increasing indices.
+**Refined approach:** DP. dp[i][j] = LCS of text1[i:] and text2[j:]. If chars match, dp[i][j] = 1 + dp[i+1][j+1]. Else, dp[i][j] = max(dp[i+1][j], dp[i][j+1]).
+**Time:** O(m×n)
+**Pattern:** Dynamic Programming
+**Key insight:** Backtracking over all shared chars is exponential. DP with two indices is O(m×n) — at each position, you either match or skip one char from either string.
+
+## LC739 — Daily Temperatures
+**User approach:** Monotonically increasing stack of indices - for any item left in stack - set their temperatures[i] to zero.
+**Refined approach:** Monotonic stack of indices. Push each index. When current temp > stack top, pop and compute answer[popped] = i - popped. Items left in stack at the end already have 0 (default).
+**Time:** O(n)
+**Pattern:** Monotonic Stack
+**Key insight:** Same idea as LC84 — stack maintains "next greater element" to the right. When you find one, compute the distance and pop.
+
+## LC100 — Same Tree
+**User approach:** Traverse in parallel and compare values - order doesn't matter but should be consistent for both trees.
+**Refined approach:** Same. Recursion: return p.val == q.val && sameTree(p.left, q.left) && sameTree(p.right, q.right). Base case: both null → true, one null → false.
+**Time:** O(n)
+**Pattern:** Tree Recursion
+**Key insight:** Order doesn't matter as long as both trees use the same traversal. Pre-order is simplest — check current, then recurse left and right.
+
+## LC121 — Best Time to Buy and Sell Stock
+**User approach:** Generating sequences where each elem starts a new sequence if it can't be appended to an existing because it's smaller than last of every sequence so far.
+**Refined approach:** Track min price so far. At each day, calculate prices[i] - min_so_far, update max profit.
+**Time:** O(n), O(1) space
+**Pattern:** Greedy / Single Pass
+**Key insight:** You only need to know the cheapest price you've seen up to now. One pass, two variables.
+
+## LC463 — Island Perimeter
+**User approach:** DFS keeping count of sides, subtract one for every shared border below or to left/right (level-wise).
+**Refined approach:** Each land cell starts with 4 sides. For each land cell, check 4 neighbors — if neighbor is also land, subtract 1 (shared border). Total = sum of all adjusted sides.
+**Time:** O(m×n)
+**Pattern:** Matrix DFS
+**Key insight:** 4 minus number of adjacent land cells, summed over all land cells.
+
+## LC226 — Invert Binary Tree
+**User approach:** Depth-first - swap children on the way up.
+**Refined approach:** Same. Recursion: invert left, invert right, swap left and right. Base case: null → return null.
+**Time:** O(n)
+**Pattern:** Tree Recursion
+**Key insight:** Post-order works naturally — children are inverted before you swap them. Pre-order also works (swap then recurse). Either way, every node gets exactly one swap.
+
+## LC1024 — Video Stitching
+**User approach:** Sort by start time, greedy backtracking.
+**Refined approach:** Sort by start time. Greedy: always extend to the clip that reaches furthest while staying within current coverage. Count clips used.
+**Time:** O(n log n)
+**Pattern:** Greedy / Intervals
+**Key insight:** No backtracking needed — pure greedy. Extending coverage as far as possible at each step is always optimal. Picking shorter leaves less room for future clips.
+
+## LC1249 — Minimum Remove to Make Valid Parentheses
+**User approach:** Use stack to track invalid parens positions.
+**Refined approach:** Stack for unmatched ( positions. Also track unmatched ) — just skip them (don't push). At the end, remove any remaining unmatched ( from stack. Build result excluding those indices.
+**Time:** O(n)
+**Pattern:** Stack
+**Key insight:** You only need to track ( positions — unmatched ) are simply ignored during the scan. Stack tells you which ( to remove at the end.
+
+## LC1539 — Kth Missing Positive Number
+**User approach:** Iteration - add differences between neighboring elems until the kth is found or the next gap that contains k is found.
+**Refined approach:** Binary search. At index i, the number of missing integers before arr[i] is arr[i] - i - 1. Find the index where missing count crosses k.
+**Time:** O(log n)
+**Pattern:** Binary Search
+**Key insight:** Gap-walking is O(n). Binary search on the missing count formula gives O(log n). Missing before arr[i] = arr[i] - (i + 1).
+
+## LC334 — Increasing Triplet Subsequence
+**User approach:** DP where dp[i][triplet_pos] = true if dp[i-1][triplet_pos-1] = true.
+**Refined approach:** Greedy. Track `first` (smallest so far) and `second` (smallest value that is end of an increasing pair). If nums[i] > first → update first. Else if nums[i] > second → update second. Else → return true. First update after second is fine because second being set guarantees some smaller element existed before it at the time of update.
+**Time:** O(n), O(1) space
+**Pattern:** Greedy
+**Key insight:** second and first don't need to come from the same subsequence — second being updated means a smaller element existed before it. So finding anything > second always yields a valid triplet.
+
+## LC1423 — Maximum Points You Can Obtain from Cards
+**User approach:** Start window at center, track sums on left and right, expand in direction of smaller sum.
+**Refined approach:** Sliding window of "cards NOT taken." Take all k from right initially (window = first n-k cards). Slide window right: drop leftmost card, add next card. Current score = total - window_sum. Track max across all k+1 possible splits.
+**Time:** O(n), O(1) space
+**Pattern:** Sliding Window
+**Key insight:** Taking i from left and k-i from right = skipping a contiguous block of n-k. Sliding that block left to right explores all valid splits in one pass.
+
+## LC438 — Find All Anagrams in a String
+**User approach:** Resetting freq_map of p, move window past char not in freq map, move window forward by one if window length matches p but no anagram found.
+**Refined approach:** Fixed-size sliding window of len(p). Maintain window freq map and compare to p's freq map. Use a `matches` counter (how many of 26 letters have equal counts) to avoid full comparison each step. When a char not in p enters the window, that window is definitely not an anagram until it fully exits.
+**Time:** O(n), O(1) space
+**Pattern:** Sliding Window
+**Key insight:** Window always slides by one — never skips. But chars not in p act as blockers that keep matches < 26 until they slide out. The `matches` counter makes each step O(1) instead of O(26).
+
+## LC735 — Asteroid Collision
+**User approach:** Stack where top is popped if mag(top) < mag(current) and top and current have opposite signs, remove both if equal.
+**Refined approach:** Push each asteroid. When current is negative and stack top is positive: if |top| < |current| → pop and repeat, if equal → pop both, if |top| > |current| → discard current. Collision only happens when positive is left of negative (moving toward each other). Negative top + positive current = moving apart, no collision.
+**Time:** O(n), O(n) space
+**Pattern:** Stack / Simulation
+**Key insight:** The while loop is the tricky part — after popping a smaller positive, the incoming negative might still collide with the next positive on the stack. Each asteroid pushed/popped at most once.
+
+## LC64 — Minimum Path Sum
+**User approach:** DFS.
+**Refined approach:** Bottom-up DP. dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]. First row/col only have one direction to come from. Space optimize to 1D array since each cell only depends on above and left.
+**Time:** O(m×n), O(n) space
+**Pattern:** Dynamic Programming / Grid
+**Key insight:** DFS is O(2^(m+n)) without memo. DP with 1D compression — each cell depends only on cell above and cell to the left, update in place left to right, top to bottom.
+
+## LC1048 — Longest String Chain
+**User approach:** Sort by word length asc, dp[i] = 0 if length 1 else 1+dp[i-1] if freq maps differ by one key or value.
+**Refined approach:** Sort by length. dp[word] = longest chain ending at word. For each word, try removing each character — if result exists in the set, dp[word] = max(dp[word], dp[result] + 1). Track global max.
+**Time:** O(n × L²) where n = words, L = max word length
+**Pattern:** Dynamic Programming / String
+**Key insight:** Predecessor = remove exactly one character to get the other word. Frequency map check doesn't work — "ab" and "ba" have same frequencies but neither is a predecessor. Removing one char at a time and checking existence is the correct test.
+
+## LC1347 — Minimum Number of Steps to Make Two Strings Anagram
+**User approach:** The difference of frequency maps.
+**Refined approach:** Build freq maps for both strings. Sum of positive differences: for each character, if s has more than t, the excess must be replaced. Since lengths are equal, this equals half the sum of all absolute differences.
+**Time:** O(n), O(1) space
+**Pattern:** Hash Map / Counting
+**Key insight:** Two strings of equal length are anagrams iff their frequency maps are identical. Count the gap between maps — that's the answer.
+
+## LC380 — Insert Delete GetRandom O(1)
+**User approach:** Map of val to index in positional array, tombstones in pos array, look-up table of tombstone intervals.
+**Refined approach:** Map + dynamic array. Insert: append to array, store map[val] = index. Remove: swap element to remove with last element, update swapped element's index in map, pop from end, delete map entry. getRandom: random index in dense array.
+**Time:** O(1) all ops, O(n) space
+**Pattern:** Design / Hash Map + Array
+**Key insight:** Swap-and-pop keeps the array dense — no tombstones, no gaps to track. Remove is O(1) because the map always has correct indices after the swap.
+
+## LC567 — Permutation in String
+**User approach:** Fixed window over s2 of size s1, count matching chars from s1.
+**Refined approach:** Same as LC438. Fixed window of len(s1) sliding over s2. Maintain freq maps and compare. Use matches counter for O(1) per step. Return true on first match found.
+**Time:** O(n), O(1) space
+**Pattern:** Sliding Window
+**Key insight:** Same problem as LC438 — just return true/false instead of all start indices.
+
+## LC904 — Fruit Into Baskets
+**User approach:** Longest subarray with at most two distinct integers, dp[i] = index after i where third unique integer is encountered.
+**Refined approach:** Sliding window with a map. Expand right, add to map. When map size > 2, shrink left until map size ≤ 2. Track max window size. Map holds at most 3 entries.
+**Time:** O(n), O(1) space
+**Pattern:** Sliding Window
+**Key insight:** "Two baskets" = at most 2 distinct values in the window. Classic variable-size sliding window — expand until constraint breaks, shrink to restore.
+
+## LC71 — Simplify Path
+**User approach:** Split by / and push to stack, pop logic for .. and . gets complex.
+**Refined approach:** Split by /. For each component: empty or "." → skip, ".." → pop stack if not empty, anything else → push. Join stack with "/" and prepend "/".
+**Time:** O(n), O(n) space
+**Pattern:** Stack
+**Key insight:** Each component is independent — just push, pop, or skip. No counting or running string needed. Join at the end.

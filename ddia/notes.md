@@ -260,3 +260,71 @@
 **Answer:** Stream processor buffers events - buffer overflows to disk. Downstream can apply back pressure
 
 **Feedback:** Correct on buffer overflow and back pressure. But question asks for TWO strategies. Second options: (1) drop messages — accept data loss, (2) scale downstream — add consumers/partitions, (3) rate-limit ingestion — slow producer to match capacity. Back pressure is usually right tradeoff, but interviewers want to hear alternatives and when each is acceptable.
+
+---
+
+# DDIA Chapter 5 — Replication (Single Leader, up to pg 207)
+
+## Quiz
+
+### Q1: What's the difference between synchronous and asynchronous replication, and what's the practical compromise most systems use?
+
+**Answer:** In synchronous rep, leader waits for followers to update. In async, leaders do not wait. Node failures can cause loss of data in async, and sync can affect availability. Semi-sync ensures that at least one follower is in sync with leader.
+
+**Feedback:** Correct. Semi-sync is the sweet spot — one synchronous follower guarantees durability while keeping writes fast. If that follower dies, you promote another to synchronous (or tolerate the risk temporarily).
+
+### Q2: A client writes to the leader, then immediately reads from a follower and doesn't see the write. What's this problem called, and what are two ways to solve it?
+
+**Answer:** Read-your-writes. Either read from the leader for certain app-specific logical writes, or find a replica to read from that has the greatest logical timestamp among replicas for that user/write.
+
+**Feedback:** First solution correct. Second is slightly off — standard solutions are: (1) read from leader after writes, (2) monotonic reads (stick to same replica), (3) causal timestamps (attach logical timestamp to writes, replicas report timestamp, client waits for replica to catch up before reading). "Greatest timestamp among replicas" isn't the pattern — you stick to one or ensure it's caught up to your write, not dynamically pick the most up-to-date.
+
+### Q3: If a follower falls far behind (lagging), what's one safe way to bring it back up without serving stale reads?
+
+**Answer:** Ask leader for logs between latest snapshot and now.
+
+**Feedback:** Right idea but underspecified. Key nuance: replaying old logs is slow. Correct process: (1) leader takes a new snapshot, (2) ship snapshot to follower, (3) after follower loads snapshot, request logs from the point the snapshot was taken, (4) follower catches up by replaying just the recent logs. Snapshot gives a clean starting point instead of replaying thousands of old entries.
+
+### Q4: Statement-based replication has a problem with non-deterministic functions like NOW() or RAND(). What's the alternative that avoids this?
+
+**Answer:** Ship logical records in logs.
+
+**Feedback:** Correct. Logical log records actual row-level changes (which row was inserted/updated/deleted, before/after values) rather than the SQL statement. NOW() and RAND() execute once on the leader — the resulting value is what gets shipped, so followers replay the exact same change.
+
+### Q5: The leader crashes mid-write. How does the system choose a new leader, and what's the risk if the old leader comes back?
+
+**Answer:** New leader is follower with latest/largest log offset. Old leader can still assume it's the leader — it would have to be quarantined.
+
+**Feedback:** Correct on both counts. The risk is split-brain — two nodes both think they're leader, both accept writes, data diverges. Solution is fencing tokens: new leader gets a monotonically increasing token, old leader's token is invalidated. Any write from old leader with outdated token is rejected by followers/storage.
+
+### Q6: What problem do consistent prefix reads solve, and why can't you just use timestamps?
+
+**Answer:** Consistent prefix reads preserve the causal chain of writes. Timestamps provide a total ordering but don't provide info on which writes might be causally linked.
+
+**Feedback:** Correct. A reader switching between followers at different lag levels might see answer 1 before question 1 — causal chain broken. Timestamps give a total order but don't tell you that write B was *caused by* write A. Solution: all replicas apply writes in the same sequence (sequence numbers, or ensuring writes from one leader are always applied in order on followers). This way, no matter which follower you read from, you see writes in the same relative order.
+
+### Multi-Leader Replication (Jul 28)
+
+**Q: What's the main disadvantage of multi-leader compared to single-leader?**
+
+Conflicts.
+
+**Q: What happens if different transactions use the same table but different rows on two leaders?**
+
+Causal chain can be broken — write A on leader 1 happens before write B on leader 2, but B arrives at a replica before A, violating causality.
+
+**Q: How does multi-leader ensure causal ordering?**
+
+Version vectors track per-key causality between replicas. For cross-key causal ordering, the coordinator attaches a dependency list (or the client includes a vector timestamp of observed keys) so the receiving leader can enforce ordering.
+
+**Q: What's the difference between conflict avoidance vs resolution, and when to pick which?**
+
+Conflict avoidance pins a client/replica to a specific leader for all writes, trading availability/throughput for safety. Resolution is needed when writes aren't coordinated across leaders in favor of throughput — uses CRDTs, OT, or LWW to converge.
+
+**Q: How do new leaders discover existing ones in multi-leader?**
+
+Three mechanisms: (1) static config (restart to add), (2) gossip protocol (propagates membership in seconds), (3) external discovery (ZooKeeper/etcd). Cassandra uses gossip; Galera/InnoDB Cluster uses static seed list + gossip.
+
+**Q: What happens on the write path when a leader fails in multi-leader?**
+
+Clients route writes to another leader (app/load balancer failover). Other leaders continue normally. Dead leader's partners stop receiving replication from it. On recovery, the leader catches up via log replay or anti-entropy (gossip-based sync). Hinted handoff is Dynamo-style, not standard multi-leader — Cassandra uses it for temporary failures; MySQL Group Replication and PostgreSQL BDR just resync on reconnect.
