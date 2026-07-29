@@ -111,6 +111,32 @@ def stats():
     if all_rev:
         print(f"Completion rate: {done_rev/all_rev*100:.0f}%")
 
+def list_topics():
+    sched = load()
+    by_topic = {}
+    for key, entry in sched.items():
+        by_topic.setdefault(entry["topic"], []).append((key, entry))
+
+    print("=== Topics ===\n")
+    for topic in sorted(by_topic):
+        entries = by_topic[topic]
+        print(f"  {topic}: {len(entries)} items")
+    print(f"\n  Total: {len(sched)} items")
+
+def list_topic(topic):
+    sched = load()
+    items = [(k, v) for k, v in sched.items() if v["topic"].lower() == topic.lower()]
+    if not items:
+        print(f"Topic '{topic}' not found")
+        return
+
+    print(f"=== {topic.upper()} ({len(items)}) ===\n")
+    for key, entry in sorted(items, key=lambda x: str(x[1]["id"])):
+        print(f"  {entry['id']} — {entry['title']}")
+        print(f"    Created: {entry['created']}")
+        print(f"    Next reviews: {', '.join(r for r in entry['reviews'] if r not in entry.get('done', []))}")
+        print()
+
 def reinit_lc():
     """(Re)import all LC problems from rapid-fire-log.md into schedule"""
     log_path = os.path.join(REVIEW_DIR, "leetcode", "rapid-fire-log.md")
@@ -173,10 +199,17 @@ if __name__ == "__main__":
         reinit_lc()
     elif sys.argv[1] == "add" and len(sys.argv) >= 5:
         add(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5] if len(sys.argv) > 5 else "")
+    elif sys.argv[1] == "list":
+        if len(sys.argv) >= 3:
+            list_topic(sys.argv[2])
+        else:
+            list_topics()
     else:
         print("Commands:")
-        print("  (no args)         Show today's due items")
-        print("  stats             Show stats")
+        print("  (no args)          Show today's due items")
+        print("  stats              Show stats")
+        print("  list               List all topics")
+        print("  list <topic>       List items in a topic")
         print("  done <topic> <id>  Mark item reviewed (e.g. done LC 1438)")
         print("  reinit-lc          (Re)import all LC problems from log")
         print("  add <topic> <id> <title> [detail]  Add custom review item")
