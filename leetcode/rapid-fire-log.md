@@ -14,6 +14,7 @@
 **Time:** O(n)
 **Pattern:** Hash Set
 **Key insight:** Only start counting from sequence beginnings. Skipping elements that are mid-sequence avoids revisiting.
+**Tradeoff note:** Sliding window fails because consecutive numbers aren't contiguous in the raw array ([100,4,200,1,2,3] has 1,2,3,4 scattered). No-extra-space forces sorting → O(n log n). The O(n) solution requires the HashSet — you can't have both no-space and O(n).
 **Discrete Math:** Set theory (membership), Integer sequences
 
 ## LC238 — Product of Array Except Self
@@ -990,3 +991,44 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Pattern:** Bit Manipulation / Prefix XOR / Hash Map
 **Key insight:** Parity is the only thing that matters for "at most one odd" condition. XOR tracks parity toggles. Wonderful = mask has 0 or 1 set bits. 10 letters max enables O(10) per position.
 **Discrete Math:** Parity, XOR as toggle, Combinatorics (count of substrings with given parity)
+
+## LC809 — Expressive Words
+**User approach:** Preprocess s into (char, freq) runs. For each word, compare runs: if chars differ → skip; diff = s_count - word_count. Valid if diff == 0 or (diff > 0 and s_count > 3).
+**Refined approach:** Same, but s_count >= 3 (not > 3). When s_count == 3 and diff > 0, extension is valid because a group of 3 can be extended further. Condition: chars match AND (s_count == word_count OR s_count >= 3).
+**Time:** O(n * (|s| + |word|))
+**Pattern:** String / Two Pointers / Run-Length Encoding
+**Key insight:** The extension rule is: a group can only grow if it's already ≥3 characters. Runs of size 1 or 2 cannot be extended; they must match exactly. Precomputing s runs avoids recomputation.
+**Discrete Math:** Run-length encoding, equivalence relation under stretchy operation
+
+## LC1894 — Find the Student that Will Replace the Chalk
+**User approach:** Prefix sums on chalk, binary search on prefix sums to place `k % total_sum`.
+**Refined approach:** Same. `k %= total_sum` eliminates full rounds. Binary search for first index where `prefix[i] > k`. Or just walk O(n) after modulo since n ≤ 1e5.
+**Time:** O(n) for prefix sum, O(log n) for binary search
+**Pattern:** Array / Prefix Sum / Binary Search / Simulation
+**Key insight:** Modulo reduces k to the remainder after complete rounds, making the last round trivial to identify.
+**Discrete Math:** Modular arithmetic, prefix accumulation
+
+## LC91 — Decode Ways
+**User approach:** Recursive: `f(i) = 1 + f(i+1) if s[i] != '0' + 1 + f(i+2) if two-digit valid`. Base: 0 if s[i] == '0'.
+**Refined approach:** DP: `dp[i] = dp[i-1] (single digit) + dp[i-2] (two-digit 10-26)`. No `+1` — each subproblem counts *ways*, not steps. Equivalent to Fibonacci with constraints.
+**Time:** O(n)
+**Pattern:** 1-D Dynamic Programming / String
+**Key insight:** Each decode choice is either 1-digit or 2-digit. The number of ways = sum of ways for both options, not 1 + ways. Leading zero kills the entire branch.
+**Discrete Math:** Fibonacci-like recurrence, constrained combinatorics
+
+## LC743 — Network Delay Time
+**User approach:** Looking for the longest path (max distance from source).
+**Refined approach:** Dijkstra from k with min-heap. Answer = max(dist) over all nodes — the time until the last node receives the signal. If any node remains at infinity → -1. n ≤ 100 so O((V+E) log V) trivial.
+**Time:** O((V+E) log V)
+**Pattern:** Graph / Shortest Path / Dijkstra / Min-Heap
+**Key insight:** "All nodes receive the signal" reduces to the maximum shortest-path distance from k, not a longest-path (most-edges) computation. Unreachable node → -1.
+**Discrete Math:** Shortest path on weighted directed graph, relaxation as triangle inequality
+
+## LC215 — Kth Largest Element in an Array
+**User approach:** Bucket array or k-sized max heap / priority queue, return last item.
+**Refined approach:** Min-heap of size k, not max-heap. Heap holds the k largest elements seen; root = smallest of them = kth largest. For each num: if heap < k push; else if num > heap[0], pop and push. Answer = heap[0]. Bucket array also works: values bounded [-10^4, 10^4], count array size 20001 with offset, scan high→low accumulating until k.
+**Time:** O(n log k) heap; O(n + range) bucket
+**Pattern:** Heap / Priority Queue / Quickselect / Counting Sort
+**Key insight:** A max-heap of size k exposes the largest of the k (1st largest), not the kth. The cutoff element must sit at the root for O(1) access — min-heap does this. Replacement check compares against the cutoff, which only works when the root is the smallest of the kept set.
+**Discrete Math:** Selection problem (k-th order statistic), partial order in heaps
+

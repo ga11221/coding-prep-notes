@@ -1587,7 +1587,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "LC:621": {
     "topic": "LC",
@@ -1602,7 +1604,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "LC:167": {
     "topic": "LC",
@@ -1617,7 +1621,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "LC:875": {
     "topic": "LC",
@@ -1632,7 +1638,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "LC:2029": {
     "topic": "LC",
@@ -1647,7 +1655,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "LC:3255": {
     "topic": "LC",
@@ -1662,7 +1672,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "LC:1404": {
     "topic": "LC",
@@ -1677,7 +1689,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "LC:1915": {
     "topic": "LC",
@@ -1692,7 +1706,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q1: LSM write path \u2014 two structures and what happe": {
     "topic": "DDIA",
@@ -1737,7 +1753,9 @@
       "2026-08-04",
       "2026-08-20"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q4: LSM vs B-trees \u2014 read performance tradeoff?": {
     "topic": "DDIA",
@@ -1857,7 +1875,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q2: RPC system with clients upgraded in waves \u2014 wh": {
     "topic": "DDIA",
@@ -1977,7 +1997,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q5: What problem do exactly-once semantics solve a": {
     "topic": "DDIA",
@@ -1992,7 +2014,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q1: Write-heavy, read-rare key-value store \u2014 LSM-t": {
     "topic": "DDIA",
@@ -2022,7 +2046,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q4 (Ch 3): What problem do Bloom filters solve for": {
     "topic": "DDIA",
@@ -2037,7 +2063,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q5 (Ch 7): Write skew under snapshot isolation \u2014 w": {
     "topic": "DDIA",
@@ -2052,7 +2080,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q6 (Ch 11): Slow downstream consumer in a stream p": {
     "topic": "DDIA",
@@ -2082,7 +2112,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q8 (Ch 4): Adding a required field in Protobuf V2 ": {
     "topic": "DDIA",
@@ -2172,7 +2204,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q6: Exactly-once semantics in Kafka vs at-least-on": {
     "topic": "DDIA",
@@ -2217,7 +2251,9 @@
       "2026-08-05",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q1: What's the difference between synchronous and ": {
     "topic": "DDIA",
@@ -2247,7 +2283,9 @@
       "2026-08-08",
       "2026-08-24"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q3: If a follower falls far behind (lagging), what": {
     "topic": "DDIA",
@@ -2277,7 +2315,9 @@
       "2026-08-08",
       "2026-08-24"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:Q5: The leader crashes mid-write. How does the sys": {
     "topic": "DDIA",
@@ -2307,7 +2347,9 @@
       "2026-08-08",
       "2026-08-24"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:What's the main disadvantage of multi-leader compa": {
     "topic": "DDIA",
@@ -2322,7 +2364,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:What happens if different transactions use the sam": {
     "topic": "DDIA",
@@ -2352,7 +2396,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:What's the difference between conflict avoidance v": {
     "topic": "DDIA",
@@ -2382,7 +2428,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "DDIA:What happens on the write path when a leader fails": {
     "topic": "DDIA",
@@ -2412,7 +2460,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "MATH:Duality Principle": {
     "topic": "MATH",
@@ -2427,7 +2477,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "MATH:Extra Structure of Lattices vs Posets": {
     "topic": "MATH",
@@ -2442,7 +2494,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "MATH:Join \u2194 Least Upper Bound": {
     "topic": "MATH",
@@ -2457,7 +2511,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "MATH:Lattice \u21d2 Well-ordering?": {
     "topic": "MATH",
@@ -2472,7 +2528,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-29"
+    ]
   },
   "MATH:Unsorted integer array \u2014 best classification?": {
     "topic": "MATH",
@@ -2486,6 +2544,214 @@
       "2026-08-04",
       "2026-08-11",
       "2026-08-27"
+    ],
+    "done": [
+      "2026-07-29"
+    ]
+  },
+  "DDIA:ch5q1": {
+    "topic": "DDIA",
+    "id": "ch5q1",
+    "title": "Semi-sync replication \u2014 which follower acks before leader responds?",
+    "detail": "Leader waits for SYNC follower ack, not async. Semi-sync ensures durability on \u22651 replica.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29",
+      "2026-07-30"
+    ]
+  },
+  "DDIA:ch5q2": {
+    "topic": "DDIA",
+    "id": "ch5q2",
+    "title": "Read-your-writes \u2014 third solution",
+    "detail": "Causal timestamps: client attaches logical timestamp to writes, replica reports its latest, client waits until replica catches up.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29",
+      "2026-07-30"
+    ]
+  },
+  "DDIA:ch5q6": {
+    "topic": "DDIA",
+    "id": "ch5q6",
+    "title": "Sloppy vs strict quorum",
+    "detail": "Strict: designated n replicas. Sloppy: any w healthy nodes. Sloppy trades consistency for availability; hinted handoff replays to real nodes.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29",
+      "2026-07-30"
+    ]
+  },
+  "MATH:Maximal vs Maximum": {
+    "topic": "MATH",
+    "id": "Maximal vs Maximum",
+    "title": "Maximal vs Maximum",
+    "detail": "Maximal: no element greater than it (may be incomparable to others). Maximum: \u2265 every element.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29"
+    ]
+  },
+  "MATH:Chain and Antichain": {
+    "topic": "MATH",
+    "id": "Chain and Antichain",
+    "title": "Chain and Antichain",
+    "detail": "Chain: totally ordered subset (all comparable). Antichain: no two distinct elements comparable.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29"
+    ]
+  },
+  "MATH:Complete Lattice": {
+    "topic": "MATH",
+    "id": "Complete Lattice",
+    "title": "Complete Lattice",
+    "detail": "Every subset (not just pairs) has sup and inf. [0,1] is a complete lattice.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29"
+    ]
+  },
+  "MATH:Zorn's Lemma \u2194 Well-Ordering": {
+    "topic": "MATH",
+    "id": "Zorn's Lemma \u2194 Well-Ordering",
+    "title": "Zorn's Lemma \u2194 Well-Ordering",
+    "detail": "Equivalent to AC and Well-Ordering Theorem in ZF. Every chain-bounded poset has a maximal element.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29"
+    ]
+  },
+  "DDIA:ch5q3": {
+    "topic": "DDIA",
+    "id": "ch5q3",
+    "title": "Split-brain prevention",
+    "detail": "New leader gets monotonically increasing fencing token. Replicas reject writes with stale tokens.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29",
+      "2026-07-30"
+    ]
+  },
+  "DDIA:ch5q4": {
+    "topic": "DDIA",
+    "id": "ch5q4",
+    "title": "Multi-leader conflict tradeoff",
+    "detail": "True concurrency \u2014 both writes succeed locally. LWW silently drops one. Single-leader trades latency for zero conflicts.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29",
+      "2026-07-30"
+    ]
+  },
+  "DDIA:ch5q5": {
+    "topic": "DDIA",
+    "id": "ch5q5",
+    "title": "Leaderless quorum (w+r>n)",
+    "detail": "n=3,w=2,r=2: w+r>n guarantees overlap. Resolution via version vectors. Read repair + anti-entropy.",
+    "created": "2026-07-29",
+    "reviews": [
+      "2026-07-30",
+      "2026-08-01",
+      "2026-08-05",
+      "2026-08-12",
+      "2026-08-28"
+    ],
+    "done": [
+      "2026-07-29",
+      "2026-07-30"
+    ]
+  },
+  "LC:215": {
+    "topic": "LC",
+    "id": "215",
+    "title": "Kth Largest Element in an Array",
+    "detail": "Min-heap of size k; root = kth largest. Max-heap of size k exposes 1st largest, not kth.",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
+  },
+  "LC:743": {
+    "topic": "LC",
+    "id": "743",
+    "title": "Network Delay Time",
+    "detail": "Dijkstra from k; answer = max(dist) over all nodes. Unreachable \u2192 -1.",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
     ],
     "done": []
   }

@@ -328,3 +328,118 @@ Three mechanisms: (1) static config (restart to add), (2) gossip protocol (propa
 **Q: What happens on the write path when a leader fails in multi-leader?**
 
 Clients route writes to another leader (app/load balancer failover). Other leaders continue normally. Dead leader's partners stop receiving replication from it. On recovery, the leader catches up via log replay or anti-entropy (gossip-based sync). Hinted handoff is Dynamo-style, not standard multi-leader — Cassandra uses it for temporary failures; MySQL Group Replication and PostgreSQL BDR just resync on reconnect.
+
+---
+
+## Chapter 5 Quiz (Jul 29, 2026)
+
+**Score: 4.5/6**
+
+**Q1 — Semi-sync replication timing** ❌
+- The leader responds **after the sync follower acks**, not the async one.
+- Semi-sync: exactly one sync follower guarantees durability on ≥1 replica; the rest are async.
+
+**Q2 — Read-your-writes consistency** ✅ (2/3)
+- Solutions: (1) read from leader, (2) pin user to same replica (monotonic reads), (3) **causal timestamps** — client attaches logical timestamp to writes, replica reports its latest, client waits until replica catches up.
+
+**Q3 — Split-brain prevention** ✅
+- Worst case: both leaders accept writes, data diverges.
+- Prevention: **fencing tokens** — new leader gets monotonically increasing token, replicas reject stale-token writes.
+
+**Q4 — Multi-leader conflict** ✅
+- Two users, two DCs, last item: both writes succeed locally, conflict on replication.
+- LWW silently drops one order. Single-leader trades write latency for zero conflicts.
+
+**Q5 — Leaderless quorum (n=3, w=2, r=2)** ✅
+- `w+r > n` guarantees ≥1 overlapping replica has fresh data.
+- Resolution via version vectors + read repair pushes fresh data to stale replica.
+- Anti-entropy (Merkle trees) catches replicas missed entirely.
+
+**Q6 — Sloppy quorum** ✅
+- Strict: requires designated n replicas, w acks from those. High consistency, lower availability during partition.
+- Sloppy: any w healthy nodes. Higher availability, consistency restored via hinted handoff.
+
+---
+
+## DDIA Review (Jul 29, 2026)
+
+### Ch 3 — Storage
+
+**Q — B-tree page split** ✅
+- Triggers on insert exceeding page fan-out. Expensive due to write amplification, half-empty pages, disk block movement.
+
+**Q — Bloom filters in LSM** ❌
+- User: "Never yield false positives." Correction: **Bloom filters can yield false positives but never false negatives** ("definitely no, maybe yes"). Tradeoff: memory for fewer unnecessary SSTable reads.
+
+**Q — Statement-based replication problem** ✅
+- Non-deterministic functions (NOW(), RAND()) give different results on replicas. Solution: **row-based replication** sends actual row values, not SQL statements.
+
+**Q — B-tree vs LSM (read-heavy + nightly ETL)** ✅
+- B-tree wins. Reads are O(log n) via direct page index. LSM compaction storms from batch writes can spill into peak hours.
+
+### Ch 4 — Encoding
+
+**Q — Backward vs forward compatibility** ❌
+- User described forward issues (old code breaks on new fields) but labeled it "harder backward." Correction: **Forward compatibility** (old code reads new data) is harder — must ignore unknown fields gracefully.
+
+**Q — Slow consumer in stream processor** ✅
+- Two strategies: (1) **buffer/spill to disk** (Kafka's approach — log persists, consumer reads at own pace), (2) **backpressure** — signal producer to slow. Kafka does not drop messages.
+
+**Q — Exactly-once semantics** ❌
+- User mixed at-least-once + idempotent consumer with Kafka EOS. Kafka EOS = **idempotent producer** (producer ID + seq number for dedup) + **atomic transaction** (commit produce + offset update atomically).
+
+### Ch 5 — Replication
+
+**Q — Read-your-writes consistency** ✅
+- 3 solutions: (1) read from leader, (2) monotonic reads (same replica), (3) causal timestamps.
+
+**Q — Consistent prefix reads** ❌
+- User missed clock skew. Timestamps don't work because clocks drift — timestamp ordering ≠ causal ordering. Need hybrid logical clocks or version vectors.
+
+**Q — Multi-leader disadvantage** ✅
+- Write conflicts and resolution complexity. Async replication between leaders also causes read-your-writes and causal consistency issues.
+
+**Q — Multi-leader causal ordering across keys** ❌
+- User said "version vectors." Correction: version vectors handle **per-key** causality. Cross-key causal ordering needs **dependency lists** (vector timestamp of all observed keys).
+
+**Q — New leader discovery** ❌ (partial)
+- User said "coordinator tracks leaders." Three mechanisms: **static config**, **gossip protocol**, **external discovery** (ZK/etcd).
+
+### Ch 5 Review — Jul 30, 2026
+
+**Q — Semi-sync replication** ✅
+- User: "the semi-sync follower — of all the followers, typically all but one are async"
+- Mine: One synchronous follower acks before leader responds. Remaining followers are async. Ensures durability on ≥1 replica.
+
+**Q — Read-your-writes (third solution)** ✅
+- User: "read from leader for a given user or a given op"
+- Mine: Causal timestamps — client tracks logical timestamp of its last write, replica reports its latest, client waits until replica catches up.
+
+**Q — Split-brain prevention via fencing token** ✅
+- User: "replicas get back a token that's greater than what the rogue leader might have"
+- Mine: Coordination service issues monotonically increasing token to new leader. Storage layer rejects writes from old leader bearing a stale token.
+
+**Q — Multi-leader LWW tradeoff** ✅
+- User: "no app code conflict resolution needed, but intermediate writes get lost"
+- Mine: LWW guarantees convergence without app logic, but silently drops concurrent writes that lose the timestamp comparison.
+
+**Q — Leaderless quorum (w+r>n)** ✅
+- User: "if 2/3 are written to, reading from 2 nodes guarantees at least one of the three nodes will have fresh data. if one of the two nodes delivers stale data, read repair and anti-entropy fix it"
+- Mine: n=3,w=2,r=2 ensures w+r>n guarantees overlap on every read. Stale reads fixed by read repair (on read) and anti-entropy (background).
+
+**Q — Sloppy vs strict quorum** ✅
+- User: "sloppy quorum doesn't require majority"
+- Mine: Strict = designated n replicas must respond. Sloppy = any w healthy nodes. Sloppy trades consistency for availability; hinted handoff replays writes to designated nodes.
+
+### Ch 7 — Transactions
+
+**Q — SSI vs SI** ✅
+- SSI detects **rw-dependency cycles** (write skew). SI only detects conflicts on same row via MVCC.
+
+**Q — Write skew scenario** ✅
+- Two doctors check on-call roster, each takes themselves off. Each writes different row — SI misses the cross-row rw-dependency.
+
+### Ch 11 — Stream Processing
+
+**Q — Windows in stream processing** ✅
+- Four types: **tumbling** (fixed, non-overlapping), **sliding** (overlapping, size + slide), **session** (gap-based), **fixed** (= tumbling). Key: event time vs processing time — processing time gives wrong results for late events.
