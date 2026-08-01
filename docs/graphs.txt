@@ -1,0 +1,50 @@
+Undirected graph API (adjacency list):
+
+type Graph struct {
+    adj map[int][]int       // vertex -> neighbors
+    mu  sync.RWMutex        // optional, for concurrent access
+}
+
+func New() *Graph
+func (g *Graph) AddVertex(v int)     // ensure key exists in map with nil slice
+func (g *Graph) AddEdge(u, v int)    // auto-creates vertices if missing (lazy)
+func (g *Graph) RemoveEdge(u, v int)
+func (g *Graph) RemoveVertex(v int)
+func (g *Graph) HasVertex(v int) bool
+func (g *Graph) HasEdge(u, v int) bool
+func (g *Graph) Neighbors(v int) []int
+func (g *Graph) Vertices() []int
+func (g *Graph) Degree(v int) int        // = len(Neighbors(v)). Undirected: incident edges count. Directed: out-degree.
+func (g *Graph) Size() int
+func (g *Graph) EdgeCount() int
+
+Traversal:
+
+func (g *Graph) DFS(start int, visit func(v int))
+func (g *Graph) DFSAll(visit func(v int))     // handles disconnected components
+func (g *Graph) BFS(start int, visit func(v int))
+func (g *Graph) HasPath(from, to int) bool
+func (g *Graph) ShortestPath(from, to int) []int  // BFS, unweighted
+func (g *Graph) IsConnected() bool                 // DFSAll, single component
+func (g *Graph) Components() [][]int               // DFSAll, collect each component
+func (g *Graph) HasCycle() bool                    // DFS with parent check (undirected)
+func (g *Graph) HasCycleDirected() bool            // DFS with 3-state: 0=unvisited, 1=in-stack, 2=done (directed)
+
+Design decisions:
+| Decision | Approach | Notes |
+|----------|----------|-------|
+| Lazy vs eager AddEdge | Lazy — AddEdge auto-creates vertices | Simplifies callers; AddVertex exists for explicit creation |
+| Vertex type | int | String or comparable generic: map[K][]K |
+| Edge check | Iterate neighbors (O(d)) vs map[int]struct{} | Pick HasEdge frequency to decide |
+
+Storage options:
+| Storage type              | HasEdge | Memory | Iteration | Use for |
+|---------------------------|---------|--------|-----------|---------|
+| map[int][]int             | O(d)    | Low    | Fast      | DFS/BFS interviews, sparse graphs |
+| map[int]map[int]struct{}  | O(1)    | High   | Slower    | Dense graphs, frequent edge checks |
+
+Weighted variant:
+type Edge struct { To int; Weight float64 }
+type WeightedGraph struct {
+    adj map[int][]Edge
+}
