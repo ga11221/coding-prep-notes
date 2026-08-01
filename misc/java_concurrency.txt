@@ -1,0 +1,71 @@
+Java thread pool types:
+
+| Type                   | Core/Max | Queue                           | Behaviour                                      | Use when                                             |
+| ---------------------- | -------- | ------------------------------- | ---------------------------------------------- | ---------------------------------------------------- |
+| FixedThreadPool(n)     | n/n      | LinkedBlockingQueue (unbounded) | Tasks queue up when all n threads busy         | Stable throughput, predictable thread count          |
+| CachedThreadPool       | 0/MAX    | SynchronousQueue (capacity 0)   | Each task creates/idles a thread; no queuing   | Many short-lived tasks, low overhead                 |
+| SingleThreadExecutor   | 1/1      | LinkedBlockingQueue (unbounded) | Tasks execute sequentially in FIFO order       | Serial execution, no concurrency                     |
+| ScheduledThreadPool(n) | n/MAX    | DelayedWorkQueue                | Tasks ordered by scheduled time, not insertion | Delayed/periodic tasks (scheduleAtFixedRate)         |
+
+TPE - ThreadPoolExecutor (base class) allows custom core/max threads, queue type, saturation policy, and thread factory. It is the underlying implementation for all above.
+
+Queue type details:
+
+| Queue                 | Capacity                       | Binds to pool            | Handoff behaviour                                                                       |
+| --------------------- | ------------------------------ | ------------------------ | --------------------------------------------------------------------------------------- |
+| LinkedBlockingQueue   | Unbounded (default) or bounded | Fixed, Single, or custom | Blocks producer on full; never rejected unless bounded full                             |
+| SynchronousQueue      | 0                              | Cached                   | Each insert must wait for a consumer thread -- forces immediate thread creation         |
+| ArrayBlockingQueue    | Bounded (user-set)             | Custom TPE               | Fixed capacity, blocks or rejects based on saturation policy                            |
+| DelayedWorkQueue      | Unbounded                      | Scheduled                | Elements ordered by remaining delay; worker pulls earliest-due task                     |
+| PriorityBlockingQueue | Unbounded                      | Custom TPE               | Tasks ordered by priority (Comparator or Comparable), not FIFO                          |
+| LinkedTransferQueue   | Unbounded                      | Custom TPE               | Like SynchronousQueue but with queuing fallback; transfer() blocks until consumed       |
+
+Behaviour rule (ThreadPoolExecutor):
+1. Core threads fill first -- new task creates thread until core reached.
+2. Queue fills next -- task enqueued when all core threads busy.
+3. Max threads spill -- new thread created (up to max) when queue is full.
+4. Saturation policy fires -- when queue full AND all max threads busy.
+
+So the queue type + capacity determines whether you grow threads or queue tasks. FixedThreadPool (unbounded queue) never creates beyond core. CachedThreadPool (SynchronousQueue, capacity 0) never queues -- always creates threads up to max. Custom pools use a bounded queue to throttle and reject.
+
+Work-stealing (ForkJoinPool):
+
+| Pool                  | Queues                                   | Steal behavior                               | Use when                                                  |
+| --------------------- | ---------------------------------------- | -------------------------------------------- | --------------------------------------------------------- |
+| newWorkStealingPool() | Per-thread deques (LIFO own, FIFO steal) | Idle thread steals from another's deque tail | CPU-bound, recursive, uneven task sizes                   |
+| commonPool()          | Same                                     | Same, shared across parallelStream/CF        | General parallel decomposition                            |
+
+ForkJoinPool.commonPool(): default size = availableProcessors - 1. Used by parallelStream(), CompletableFuture parallelism.
+
+Virtual threads (Java 21+): Executors.newVirtualThreadPerTaskExecutor(). Each task gets a new virtual thread (carrier pool underneath). Replaces all above for I/O-heavy workloads. Millions of threads, cheap.
+
+Saturation policies (when queue full + all max threads busy):
+
+| Policy              | Behaviour                                                                 | Use when                                              |
+| ------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------- |
+| AbortPolicy         | Throws RejectedExecutionException.                                        | Default. Caller must handle.                          |
+| CallerRunsPolicy    | Runs task on the submitting (caller) thread.                              | Natural back-pressure; caller thread blocks until task completes. |
+| DiscardPolicy       | Silently drops the task.                                                  | Task is optional; don't care if it runs.              |
+| DiscardOldestPolicy | Pops queue head (oldest unprocessed), drops it, retries submission.       | New tasks > old tasks. Spread the queue age.          |
+
+Custom: implement RejectedExecutionHandler for blocking, dead-letter queue, fallback executor, logging, etc.
+
+ThreadPoolExecutor base: customize core/max, keep-alive, queue type, saturation policy, ThreadFactory.
+
+Comparable types in Java (implement Comparable<T>):
+- Numbers: Integer, Long, Double, Float, Byte, Short, BigInteger, BigDecimal, AtomicInteger, AtomicLong
+- Strings: String (lexicographic)
+- Time: Date, LocalDate, LocalTime, LocalDateTime, ZonedDateTime, OffsetDateTime, Instant, Year, YearMonth, MonthDay, Duration, Period
+- Other: Enum (ordinal), File, InetAddress, URI, UUID, Version
+
+Not Comparable (by design): Void, Optional (null/empty ambiguity)
+
+Comparable vs Comparator: Comparable = natural ordering (on the class). Comparator = external ordering (separate class/lambda, injected to sort/TreeMap/Stream).
+
+Comparable types in Go (can use ==, valid map key):
+- bool, all integer types, float32/64, complex64/128, string
+- pointers, channels (pointer equality)
+- structs if all fields comparable, arrays [N]T if T comparable
+- interfaces (panics at runtime if dynamic type is not comparable)
+
+Not comparable in Go: slices, maps, functions

@@ -1081,3 +1081,43 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **LC3255 — Power of K-Size Subarrays II** ✅
 - User: "append i to array; if nums[i+1]==nums[i]+1 append else remove; check array length == k"
 - Refined: only need run length, not the window: run = (nums[i-1]==nums[i]-1) ? run+1 : 1. For i ≥ k-1, result[i-k+1] = run >= k ? nums[i] : -1. O(n) time O(1) space — "consecutive ascending" is a local property.
+
+## LC53 — Maximum Subarray *(moved from coding_practice)*
+**User approach:** 2D DP table — dp[i][j] = sum of subarray nums[i..j], fill via dp[i][j] = dp[i][j-1] + nums[j], scan whole table for max. Notes in-file ask "O(n) approach? kadane's?".
+**Refined approach:** Kadane's — single pass, O(1) space. dp[i] = max subarray sum *ending at* i = max(nums[i], dp[i-1]+nums[i]); answer = max over dp. This enforces contiguity structurally: either the subarray starts fresh at i or extends the previous best ending at i-1. Divide & conquer also O(n log n): max over left, right, or crossing (crossing = max suffix of left + max prefix of right).
+**Time:** O(n); O(n) space version is dp, O(1) is running max
+**Pattern:** 1-D Dynamic Programming / Kadane's Algorithm
+**Key insight:** The 2D table enumerates every subarray explicitly — O(n²) because the start index is part of the state. Collapse it: the start is implied by "restart here vs extend previous". Max-subarray ending at i only needs the best ending at i-1.
+**Discrete Math:** Optimization collapsing a 2D state space (start,end) to 1D (end); DP optimal substructure
+
+## LC763 — Partition Labels *(moved from coding_practice)*
+**User approach:** Build a [first,last] window per character from first/last occurrence, then merge overlapping windows. File has TODO "besides merging windows, need to remove contained windows" — incomplete.
+**Refined approach:** Greedy, no window-merge bookkeeping: store last occurrence of each char (O(n)). Walk again: extend `end` to max last-occurrence of every char seen in the current segment; when i == end, cut a partition here and restart. Contained windows can't survive because `end` only grows — a contained char's last occurrence is inside [start,end] by definition.
+**Time:** O(n), O(1) space (fixed 26-char alphabet)
+**Pattern:** Greedy / Hash Map / Two Pointers
+**Key insight:** Only each character's LAST occurrence matters — merging interval representations of characters is equivalent to running a running max of last-occurrences; the merge loop (O(chars²)) collapses to a single pass.
+**Discrete Math:** Interval merging; greedy exchange argument (cut as early as possible is safe)
+
+## LC17 — Letter Combinations of a Phone Number *(moved from coding_practice)*
+**User approach:** Iterative expansion — start from dialPad[digits[0]], for each next digit append each letter to every existing combination (build/rebuild combos list per digit). Missing empty-input edge case.
+**Refined approach:** Backtracking DFS: at depth i pick one letter for digits[i], recurse, backtrack. Base case i == len(digits) → append path. Empty digits → []. Or the iterative cartesian-product expansion (user's version) which is the same growth but done as reduce. 3ⁿ/4ⁿ leaves, branching factor 3-4.
+**Time:** O(4ⁿ · n) worst case (4 letters for 7/9)
+**Pattern:** Backtracking / Recursion / Cartesian Product
+**Key insight:** Combination count = product of each digit's letter count — exponential in digits, no shortcut exists. The recursion tree is a fixed-depth tree where each level's branching = letters on that digit.
+**Discrete Math:** Cartesian product of sets; fixed-depth combinatorics
+
+## LC2829 — Determine Minimum Sum of a K-avoiding Array *(moved from coding_practice — stub)*
+**User approach:** Greedy idea only, unimplemented — "always start with smallest num, choose next smallest that doesn't sum to k" with an O(n²) re-check against all existing elements.
+**Refined approach:** Greedy with a set: iterate x = 1, 2, 3, ...; take x iff k-x not already taken, until n numbers. Justification: any x ≥ k pairs with nothing below it that sums to k (x + y = k needs y = k-x ≤ 0), so once you cross k, every remaining integer is safe and smallest-first is optimal. Equivalent closed form: take all of [1..min(n, floor(k/2))] plus the next n - taken numbers from k upward.
+**Time:** O(n), O(n) space
+**Pattern:** Greedy / Math / Set
+**Key insight:** The constraint is a matching on integers: x is banned only when its complement k-x is already chosen. Cross the k threshold and all numbers are unconstrained — so the optimal set is a prefix of the safe sequence. Greedy smallest-first is provably optimal by exchange.
+**Discrete Math:** Bipartite matching on pairs summing to k; greedy via exchange argument; arithmetic progression sums
+
+## LC653 — Two Sum IV — Input is a BST *(moved from coding_practice — stub)*
+**User approach:** Commented but WRONG recurrence: f(node,k) branches into left/right based on k-node.Val comparisons, like a BST search for a single key — but we need a *pair* of nodes, so a single path cannot find it.
+**Refined approach:** (1) BST inorder → sorted array → classic two-pointer. O(n) time, O(n) space. (2) Or BFS/DFS with a set: for each node, check if k-node.Val is already in the set (a previously seen value); if so return true, else insert node.Val and enqueue children. O(n) time, O(n) space. (3) Or two-pointer traversal without materializing: BST iterator from both ends. The set-BFS version is cleanest to write.
+**Time:** O(n) time, O(n) space
+**Pattern:** BST / Two Pointers (inorder) / Hash Set (DFS)
+**Key insight:** A pair-sum search on a tree needs history — you can't decide from the current node alone. The BST structure only helps by making inorder sorted (two-pointer); otherwise it's identical to Two Sum on the value multiset.
+**Discrete Math:** Sorted sequence from BST inorder traversal = linearization of tree; two-pointer correctness from monotonicity

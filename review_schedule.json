@@ -2816,5 +2816,80 @@
       "2026-08-30"
     ],
     "done": []
+  },
+  "LC:53": {
+    "topic": "LC",
+    "id": "53",
+    "title": "Maximum Subarray",
+    "detail": "Pattern: 1-D DP / Kadane. Moved from coding_practice.",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
+  },
+  "LC:763": {
+    "topic": "LC",
+    "id": "763",
+    "title": "Partition Labels",
+    "detail": "Pattern: Greedy / Hash Map. Moved from coding_practice.",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
+  },
+  "LC:17": {
+    "topic": "LC",
+    "id": "17",
+    "title": "Letter Combinations of a Phone Number",
+    "detail": "Pattern: Backtracking / Cartesian Product. Moved from coding_practice.",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
+  },
+  "LC:2829": {
+    "topic": "LC",
+    "id": "2829",
+    "title": "Determine Minimum Sum of a K-avoiding Array",
+    "detail": "Pattern: Greedy / Math. Moved from coding_practice (stub).",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
+  },
+  "LC:653": {
+    "topic": "LC",
+    "id": "653",
+    "title": "Two Sum IV - Input is a BST",
+    "detail": "Pattern: BST / Two Pointers / Hash Set. Moved from coding_practice (stub).",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
   }
 }
