@@ -443,3 +443,29 @@ Clients route writes to another leader (app/load balancer failover). Other leade
 
 **Q — Windows in stream processing** ✅
 - Four types: **tumbling** (fixed, non-overlapping), **sliding** (overlapping, size + slide), **session** (gap-based), **fixed** (= tumbling). Key: event time vs processing time — processing time gives wrong results for late events.
+
+### Ch 7 — Multi-Leader Replication (Review Jul 31, 2026)
+
+**Q — How do new leaders discover existing ones?** ✅
+- User: "not sure if Kafka uses Zookeeper? gossip protocol or external discovery for dynamic"
+- Mine: Three mechanisms: **static config** (restart to add), **gossip** (Cassandra, propagates in seconds, no central dependency), **external discovery** (ZooKeeper/etcd; Galera/InnoDB Cluster). Dynamic clusters → gossip or external discovery. Kafka: used ZooKeeper but is single-leader-per-partition, and dropped ZK in KRaft (3.3+) for its own Raft metadata quorum (neither gossip nor external). ZooKeeper: HDFS/HBase/Pulsar/Solr/Trino; etcd: Kubernetes/TiDB; third option: Consul. Gossip = eventually-consistent membership (AP-friendly), external discovery = strong membership (needs coordination). This is the same CAP-flavored tradeoff.
+
+**Q — How does multi-leader ensure causal ordering?** ✅
+- User: "version vectors per key, prefixes across keys"
+- Mine: Version vectors capture per-key causality (each replica counts its own writes). Across keys, no single node sees all writes, so the client/coordinator attaches a **prefix** — a vector of versions of every observed key — and a node receiving a write can detect "missing a write this depends on" and refuse/queue rather than reorder.
+
+**Q — Same table, different rows, different leaders?** ✅
+- User: "rw-rw cycles can go undetected"
+- Mine: **Write skew**: two transactions write *different* rows (no same-key WW conflict → async conflict detection sees nothing), yet each read a row the other wrote → a WR/RW **cycle** in the dependency graph. No single node sees both writes, so the nonserializable schedule goes undetected. Conflict detection only flags same-key WW; RW/cycle edges are invisible. (Two-doctors-on-call example.)
+
+**Q — Write path when a leader fails?** ✅
+- User: "alternate leader(s) write atomically to their tables/WALs and propagate — replacement leader elected"
+- Mine: No election in multi-leader — clients/app/LB re-route to an available leader (failover = client retargeting). Peers keep accepting writes; the dead leader just stops receiving their streams. On recovery the failed leader **catches up** by replaying missed writes. Election is single-leader/Raft vocabulary (ZK/etcd, Galera primary-component quorum). "Write atomically to WAL and propagate" is just how any leader commits + ships its stream.
+
+**Q — Conflict avoidance vs resolution?** ✅
+- User: "avoidance only achievable in single-leader, resolution needed in multi-leader and leaderless; single for consistency, others for availability"
+- Mine: Avoidance is **automatic** in single-leader (one write point) but also *possible* in multi-leader via **pinning** a client/replica to one leader — trades availability/throughput for safety; if the pinned leader fails, writes fail or conflicts return. Leaderless has no avoidance option (any replica accepts writes) → resolution mandatory. CAP summary: single-leader → consistency; multi/leaderless → availability.
+
+**Q — Main disadvantage of multi-leader?** ✅
+- User: "causal, read-your-writes, and monotonic conflicts"
+- Mine: Conflicts is the headline; concrete failures are the three guarantees that weaken: **read-your-writes** (read lands on a replica that hasn't received your write), **monotonic reads** (later read hits older replica), **causal ordering** (dependent writes arrive out of order). Avoided by pinning a user's reads+writes to one leader — loops back to the avoidance Q.

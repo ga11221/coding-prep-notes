@@ -2365,7 +2365,8 @@
       "2026-08-27"
     ],
     "done": [
-      "2026-07-29"
+      "2026-07-29",
+      "2026-07-31"
     ]
   },
   "DDIA:What happens if different transactions use the sam": {
@@ -2381,13 +2382,15 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-31"
+    ]
   },
   "DDIA:How does multi-leader ensure causal ordering?": {
     "topic": "DDIA",
     "id": "How does multi-leader ensure causal ordering?",
     "title": "How does multi-leader ensure causal ordering?",
-    "detail": "Version vectors track per-key causality between replicas. For cross-key causal ordering, the coordinator attaches a dependency list (or the client includes a vector timestamp of observed keys) so the ",
+    "detail": "Version vectors track per-key causality between replicas. For cross-key causal ordering, the coordinator attaches a dependency list (or the client includes a vector timestamp of observed keys) so a receiving node can detect missing dependencies.",
     "created": "2026-07-28",
     "reviews": [
       "2026-07-29",
@@ -2397,7 +2400,8 @@
       "2026-08-27"
     ],
     "done": [
-      "2026-07-29"
+      "2026-07-29",
+      "2026-07-31"
     ]
   },
   "DDIA:What's the difference between conflict avoidance v": {
@@ -2413,13 +2417,15 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-31"
+    ]
   },
   "DDIA:How do new leaders discover existing ones in multi": {
     "topic": "DDIA",
     "id": "How do new leaders discover existing ones in multi",
     "title": "How do new leaders discover existing ones in multi-leader?",
-    "detail": "Three mechanisms: (1) static config (restart to add), (2) gossip protocol (propagates membership in seconds), (3) external discovery (ZooKeeper/etcd). Cassandra uses gossip; Galera/InnoDB Cluster uses",
+    "detail": "Three mechanisms: (1) static config (restart to add), (2) gossip protocol (Cassandra, propagates membership in seconds, no central dependency), (3) external discovery (ZooKeeper/etcd; Galera/InnoDB Cluster).",
     "created": "2026-07-28",
     "reviews": [
       "2026-07-29",
@@ -2429,7 +2435,8 @@
       "2026-08-27"
     ],
     "done": [
-      "2026-07-29"
+      "2026-07-29",
+      "2026-07-31"
     ]
   },
   "DDIA:What happens on the write path when a leader fails": {
@@ -2445,7 +2452,9 @@
       "2026-08-11",
       "2026-08-27"
     ],
-    "done": []
+    "done": [
+      "2026-07-31"
+    ]
   },
   "MATH:Poset vs Total Order": {
     "topic": "MATH",
@@ -2775,6 +2784,21 @@
     "id": "dijkstra",
     "title": "Dijkstra template",
     "detail": "Lazy deletion: dist array source of truth, skip if item.distance > dist[node]. Min-heap, relax edges.",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
+  },
+  "LC:21": {
+    "topic": "LC",
+    "id": "21",
+    "title": "Merge Two Sorted Lists",
+    "detail": "Two-pointer merge; dummy head.",
     "created": "2026-07-31",
     "reviews": [
       "2026-08-01",

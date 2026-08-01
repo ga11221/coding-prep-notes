@@ -1040,3 +1040,11 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Key insight:** A flat `seen` boolean conflates "visited in different components" with "already connected." The real cycle test is "are both endpoints in the same component" = `find(u) == find(v)`. Sorting by first vertex doesn't fix the seen-array bug — connecting two valid subtrees is a tree edge, not a cycle.
 **Discrete Math:** Tree characterization (n nodes, n-1 edges, connected, acyclic), equivalence relations / connected components as equivalence classes
 
+## LC21 — Merge Two Sorted Lists
+**User approach:** In-place splicing without a dummy node. Pick smaller head as result head, then walk both lists with a `prev` pointer: run through the lower list's run of `<=` values, then rewire `prev.Next` to the other list; alternate. Orphaned segments get re-attached by the next iteration's rewire.
+**Refined approach:** Cleaner standard: dummy head + two-pointer. `dummy := &ListNode{}`, walk `cur`: attach the smaller of l1/l2, advance that list. At the end `cur.Next` = whichever list remains. Returns `dummy.Next`. No base-case branching, no rewire bookkeeping. Recursive version: `mergeTwoLists` = pick smaller head, its `Next` = merge(rest, other), `O(n+m)` stack depth.
+**Time:** O(n + m) time, O(1) space (iterative)
+**Pattern:** Linked List / Two Pointers / Merge
+**Key insight:** A dummy head eliminates the empty-head edge cases — every node, including the first, is attached via `cur.Next` uniformly. The "splice runs" trick is valid but must re-attach orphaned tails; the two-pointer is simpler to verify. Merging two sorted lists is the combine step of merge sort.
+**Discrete Math:** Merge as the combine step of divide-and-conquer (merge sort), merge of two sorted sequences = linear extension of a poset
+
