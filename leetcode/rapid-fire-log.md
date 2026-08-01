@@ -1032,3 +1032,11 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Key insight:** A max-heap of size k exposes the largest of the k (1st largest), not the kth. The cutoff element must sit at the root for O(1) access — min-heap does this. Replacement check compares against the cutoff, which only works when the root is the smallest of the kept set.
 **Discrete Math:** Selection problem (k-th order statistic), partial order in heaps
 
+## LC261 — Graph Valid Tree
+**User approach:** Cycle check by tracking a "bucket" of seen vertices — confirm paths don't pass through vertices already in the bucket.
+**Refined approach:** Sort edges by first vertex. Track separate connected components as bit arrays (`paths`). Cycle = both endpoints already in the same component. Edge cases: merge two components (both endpoints seen in different paths), extend a component (one endpoint seen), start a new component (neither seen). Same logic as Union-Find without parent pointers.
+**Time:** O(E * components) with bit arrays; O(E * α(n)) with Union-Find
+**Pattern:** Graph / Union-Find / Connected Components / Cycle Detection
+**Key insight:** A flat `seen` boolean conflates "visited in different components" with "already connected." The real cycle test is "are both endpoints in the same component" = `find(u) == find(v)`. Sorting by first vertex doesn't fix the seen-array bug — connecting two valid subtrees is a tree edge, not a cycle.
+**Discrete Math:** Tree characterization (n nodes, n-1 edges, connected, acyclic), equivalence relations / connected components as equivalence classes
+

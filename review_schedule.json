@@ -2754,5 +2754,35 @@
       "2026-08-30"
     ],
     "done": []
+  },
+  "LC:261": {
+    "topic": "LC",
+    "id": "261",
+    "title": "Graph Valid Tree",
+    "detail": "Same-component cycle detection. Multi-path bit arrays \u2192 Union-Find. seen bool \u2260 same component.",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
+  },
+  "LC:dijkstra": {
+    "topic": "LC",
+    "id": "dijkstra",
+    "title": "Dijkstra template",
+    "detail": "Lazy deletion: dist array source of truth, skip if item.distance > dist[node]. Min-heap, relax edges.",
+    "created": "2026-07-31",
+    "reviews": [
+      "2026-08-01",
+      "2026-08-03",
+      "2026-08-07",
+      "2026-08-14",
+      "2026-08-30"
+    ],
+    "done": []
   }
 }
