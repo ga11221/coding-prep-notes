@@ -1048,3 +1048,36 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Key insight:** A dummy head eliminates the empty-head edge cases — every node, including the first, is attached via `cur.Next` uniformly. The "splice runs" trick is valid but must re-attach orphaned tails; the two-pointer is simpler to verify. Merging two sorted lists is the combine step of merge sort.
 **Discrete Math:** Merge as the combine step of divide-and-conquer (merge sort), merge of two sorted sequences = linear extension of a poset
 
+## Review Session — Jul 31, 2026
+
+**LC167 — Two Sum II** ✅
+- User: "left/right pointers - move right inward if L+R > target, move left inward if L+R < target"
+- Refined: O(n) two-pointer on sorted array; sum too big → shrink right, too small → advance left.
+
+**LC875 — Koko Eating Bananas** ✅
+- User: "bin search [1, max(piles)] for sum(ceil(piles[i]/k)) < h"
+- Refined: binary search k on [1, max(piles)], feasibility = sum(ceil(p/k)) ≤ h (within, not strictly less). ceil = (p + k - 1)/k. O(n log max).
+
+**LC621 — Task Scheduler** ✅
+- User: "priority queue of tasks by frequency — fill window of n+1 slots with max-freq tasks, idles if empty"
+- Refined: heap simulation is correct; O(26) formula: max(len, (maxCount-1)*(n+1) + numWithMaxCount). Most-frequent task dictates grid, others fill gaps. (Tracker pattern tag was wrong: Greedy/Counting, not Union-Find.)
+
+**LC1404 — Number of Steps to Reduce Binary to One** ✅
+- User: "brute force"
+- Refined: brute force (parse+simulate) overflows — string up to 500 digits. Simulate on the string: last '0' → strip (÷2); last '1' → add 1 (carry-propagate, collapse trailing 1s to 0). O(n²) worst case.
+
+**LC1438 — Longest Subarray Diff ≤ Limit** ✅
+- User: "max/min deques to track max-min for sliding window of limit width"
+- Refined: window isn't fixed-width — expand right greedily, shrink left only while max-min > limit. Two monotonic deques (max, min), front = current extreme in O(1). Each element touched once → O(n).
+
+**LC1915 — Number of Wonderful Substrings** ✅
+- User: "for each i, sweep j to end counting freqs in a map; slide i backward decrementing — O(n²)"
+- Refined: O(n²) TLEs (n ≤ 1e5). Prefix-XOR masks: pref[i] = 26-bit parity mask; substring wonderful ⟺ popcount(pref[i] XOR pref[j]) ≤ 1. Walk once with count[mask] map; per mask add count[m] + Σ count[m XOR (1<<b)] over 26 bits. O(26n). Seed count[0]=1.
+
+**LC2029 — Stone Game IX** ✅ (had to teach)
+- User: "don't know"
+- Refined: only value % 3 matters (c0, c1, c2). Without 0s the game is a forced alternation 1,2,1,2,... once Alice picks the start — the player who must play the missing residue loses (sum hits ≡0). 0-stones = a "pass" that flips the turn; pairs cancel, odd one hands Bob an extra pass. If c0 even: Alice wins iff c1 ≥ 1 && c2 ≥ 1 (only-one-residue case comes back around to Alice). If c0 odd: Bob's extra pass flips it, Alice needs |c1 - c2| > 2.
+
+**LC3255 — Power of K-Size Subarrays II** ✅
+- User: "append i to array; if nums[i+1]==nums[i]+1 append else remove; check array length == k"
+- Refined: only need run length, not the window: run = (nums[i-1]==nums[i]-1) ? run+1 : 1. For i ≥ k-1, result[i-k+1] = run >= k ? nums[i] : -1. O(n) time O(1) space — "consecutive ascending" is a local property.
