@@ -1,49 +1,43 @@
 package main
 
-import (
-	"slices"
-	"testing"
-)
+import "fmt"
 
-func TestTopKFrequent(t *testing.T) {
-	tests := []struct {
-		name string
-		nums []int
-		k    int
-		want []int
-	}{
-		{
-			name: "[1,2,1,2,1,2,3,1,3,2]",
-			nums: []int{1, 2, 1, 2, 1, 2, 3, 1, 3, 2},
-			k:    2,
-			want: []int{1, 2},
-		},
-		{
-			name: "[3,0,1,0]",
-			nums: []int{3, 0, 1, 0},
-			k:    1,
-			want: []int{0},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := topKFrequent(tt.nums, tt.k)
-			slices.Sort(got)
-			if !slices.Equal(got, tt.want) {
-				t.Errorf("topKFrequent() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+/*
+347. Top K Frequent Elements (Medium)
+
+Given an integer array nums and an integer k, return the k most frequent elements.
+You may return the answer in any order.
+
+Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+
+Approach: bucket sort — O(n)
+- freq map: O(n)
+- bucket array of size n+1 (index = frequency): O(n)
+- collect from bucket[n] downward until k elements: O(n)
+*/
+
+func main() {
+	fmt.Println(topKFrequent([]int{1, 1, 1, 2, 2, 3}, 2))      // [1 2]
+	fmt.Println(topKFrequent([]int{1}, 1))                     // [1]
+	fmt.Println(topKFrequent([]int{4, 1, -1, 2, -1, 2, 3}, 2)) // [-1 2] or [2 -1]
 }
 
-func TestOrderedMap(t *testing.T) {
-	gt := func(v1, v2 int) bool {
-		return v1 >= v2
+func topKFrequent(nums []int, k int) []int {
+	freq_map := map[int]int{}
+	for _, n := range nums {
+		freq_map[n]++
 	}
-	om := NewOrderedMap(gt, 2)
-	om.put(1, 3)
-	om.put(2, 2)
-	om.put(3, 10)
-	//t.Debug(om.OrderedKeys)
-
+	buckets := make([][]int, len(nums)+1)
+	for n, freq := range freq_map {
+		buckets[freq] = append(buckets[freq], n)
+	}
+	topK := []int{}
+	for i := len(nums); k > 0; i-- {
+		if buckets[i] != nil {
+			topK = append(topK, buckets[i]...)
+			k -= len(buckets[i])
+		}
+	}
+	return topK
 }
