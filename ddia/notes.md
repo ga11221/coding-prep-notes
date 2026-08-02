@@ -469,3 +469,25 @@ Clients route writes to another leader (app/load balancer failover). Other leade
 **Q — Main disadvantage of multi-leader?** ✅
 - User: "causal, read-your-writes, and monotonic conflicts"
 - Mine: Conflicts is the headline; concrete failures are the three guarantees that weaken: **read-your-writes** (read lands on a replica that hasn't received your write), **monotonic reads** (later read hits older replica), **causal ordering** (dependent writes arrive out of order). Avoided by pinning a user's reads+writes to one leader — loops back to the avoidance Q.
+
+## Review — 2026-08-01 (5 items)
+
+**Q — Ch 4: JSON schema evolution (add field V1→V2, old code/new code)?** ✅
+- User: "old code can read new schema in both as long as JSON configured to ignore unknowns and Protobuf fields not reordered; renames/type changes break both; new code can read old schema in both, but Protobuf needs defaults for new fields"
+- Mine: Field *numbers* are Protobuf's versioning contract — unknown numbers skipped on read, missing read as zero/default. JSON has no wire schema; depends on tool config (Jackson can ignore, others error). Protobuf required is writer-side only; renames/type changes break both since field numbers / JSON keys are immutable contracts.
+
+**Q — Ch 4: Adding a required field in Protobuf V2 (asymmetry)?** ✅
+- User: "favors backward compatibility — old code should keep working but break when writing new data"
+- Mine: `required` is enforced only by the **writer** at encode time (field must be set before serializing, else marshal fails). Readers never enforce it — a new reader can't reject old data. Old reader + new msg: skips unknown field. Old writer + new schema: fails loudly. This unsafe asymmetry is why `required` was **removed in Protobuf 3**; use optional + defaults, enforce in app.
+
+**Q — Ch 5: How does a lagging follower catch up?** ✅
+- User: "requests that the leader slow down" ❌
+- Mine: Leader doesn't pace itself for followers. Follower **fetches missing log entries** between its last applied position and the leader's current position (or restores from snapshot, then replays the post-snapshot log). Async replication: follower pulls the gap on its own.
+
+**Q — Ch 9: Conflict avoidance vs resolution?** ✅
+- User: "avoidance only possible in single-leader; multi-leader should resolve read-your-writes, causal, monotonic conflicts" — partially mixed
+- Mine: Avoidance = **pinning** a client's writes to one leader (works in multi-leader too; trades availability/throughput for safety). Resolution = LWW / merge (CRDT) / app-level conflict handling when writes hit different leaders. read-your-writes/monotonic/causal are Ch 5 *replication-lag consistency* guarantees — a separate axis from Ch 9 write-write conflicts.
+
+**Q — Ch 5: causal timestamps for RYW on followers?** ✅
+- User: "reads from the leader in the meantime, or sends a timestamp with every read"
+- Mine: Read-from-leader guarantees RYW but kills read scaling. Scalable version: client tags each write with a **logical timestamp**, remembers last-write ts, sends it with reads; follower compares its last applied ts and **waits/retries until caught up** (or errors → retry another replica).

@@ -1947,7 +1947,9 @@
       "2026-08-01",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-08-01"
+    ]
   },
   "DDIA:Q4: Plain-text vs binary log format \u2014 binary is 3x": {
     "topic": "DDIA",
@@ -2169,7 +2171,9 @@
       "2026-08-01",
       "2026-08-21"
     ],
-    "done": []
+    "done": [
+      "2026-08-01"
+    ]
   },
   "DDIA:Q1: Write-heavy event log with LSM-tree \u2014 compacti": {
     "topic": "DDIA",
@@ -2340,7 +2344,9 @@
       "2026-08-01",
       "2026-08-24"
     ],
-    "done": []
+    "done": [
+      "2026-08-01"
+    ]
   },
   "DDIA:Q4: Statement-based replication has a problem with": {
     "topic": "DDIA",
@@ -2458,7 +2464,8 @@
       "2026-08-27"
     ],
     "done": [
-      "2026-07-31"
+      "2026-07-31",
+      "2026-08-01"
     ]
   },
   "DDIA:How do new leaders discover existing ones in multi": {
@@ -2631,7 +2638,8 @@
     ],
     "done": [
       "2026-07-29",
-      "2026-07-30"
+      "2026-07-30",
+      "2026-08-01"
     ]
   },
   "DDIA:ch5q6": {
