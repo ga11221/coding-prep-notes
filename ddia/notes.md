@@ -491,3 +491,25 @@ Clients route writes to another leader (app/load balancer failover). Other leade
 **Q — Ch 5: causal timestamps for RYW on followers?** ✅
 - User: "reads from the leader in the meantime, or sends a timestamp with every read"
 - Mine: Read-from-leader guarantees RYW but kills read scaling. Scalable version: client tags each write with a **logical timestamp**, remembers last-write ts, sends it with reads; follower compares its last applied ts and **waits/retries until caught up** (or errors → retry another replica).
+
+## Review — 2026-08-02 (5 items)
+
+**Q — Ch 3: Plain-text vs binary log (debugging at 2 AM)?** ✅
+- User: "binary is not human-readable"
+- Mine: 3× smaller saves storage/bandwidth, but plain text is instantly greppable at 2 AM; binary needs decoder tooling or you're blind. Pattern: plain text for operational logs (humans debug), binary for machine-read high-volume record logs.
+
+**Q — Ch 3: LSM compaction during write bursts?** ✅
+- User: "I/O heavy background compaction of SSTables; appends continue; scheduled compaction or target hot data"
+- Mine: Background merge of overlapping SSTables deleting stale records; appends stay cheap. Risks: compaction lag during bursts → read amplification, WAL/disk spikes. Levers: tune thresholds/schedule, cap overlap, target hot ranges first. Compaction backlog = read-latency signal (compaction storm).
+
+**Q — Ch 5: Statement-based replication ND functions (NOW()/RAND())?** ✅
+- User: "use row-level logging — evaluate ND functions and use their values in rep logs"
+- Mine: Row-based (logical) replication — leader executes, ships resulting row changes; values fixed at leader execution so no divergence. Also fixes side effects/triggers/WHERE-matching divergence. Cost: more verbose log (whole-row diffs). Default in MySQL / Postgres logical.
+
+**Q — Ch 7: Multi-leader leader discovery?** ✅
+- User: "static config, gossip, or via a coordinator (ZooKeeper/etcd)"
+- Mine: Three mechanisms — static config (manual, restart to add), gossip (Cassandra; eventual, no central dep), external service (ZK/etcd; Galera/InnoDB Cluster). Axis: central agreement vs no-dependency eventual vs manual.
+
+**Q — Ch 5: Strict vs sloppy quorum + hinted handoff?** ✅
+- User: "strict needs all leaders to agree, sloppy does not; hinted handoff — replica tracks downed leader state, keeps log current until it returns" — partially off
+- Mine: Strict = w+r>n over the **n designated** replicas for the key. Sloppy = any **w healthy** nodes (incl. non-designated) when designated ones are down — trades consistency for availability. Hinted handoff: surrogate node replays to the real designated node on return. Distinction is *which nodes* agree, not how many.

@@ -367,6 +367,8 @@
 **Key insight:** XOR is its own inverse. a ^ a = 0, a ^ 0 = a. Order doesn't matter.
 **Discrete Math:** XOR, Group theory (abelian group under XOR, inverse property), Bit operations
 **REVIEW 2026-08-01:** User — XOR. Refined — matches stored; XOR all elements, pairs cancel, survivor is the single number. O(n) time, O(1) space.
+**REVIEW 2026-08-02:** User — XOR. Refined — matches stored.
+
 **Pattern:** Bit Manipulation
 **Key insight:** XOR is its own inverse. a ^ a = 0, a ^ 0 = a. Order doesn't matter.
 **Discrete Math:** XOR, Group theory (abelian group under XOR, inverse property), Bit operations
@@ -434,6 +436,8 @@
 **Key insight:** BFS explores level by level — the first time you reach the destination is guaranteed shortest. DFS doesn't have that guarantee.
 **Discrete Math:** Graph theory (grid graph, 8-directional), BFS, Unweighted shortest path
 **REVIEW 2026-08-01:** User — Dijkstra where each cell has 3-8 neighbors. Refined — every move costs 1 so Dijkstra is overkill; early-exit if grid[0][0] or grid[n-1][n-1] != 0, BFS from (0,0), steps=1, mark visited on enqueue, 8-directional offsets, return steps on reaching (n-1,n-1), -1 if queue empties. O(n²) time/space. (Pattern: BFS / Graph Traversal)
+**REVIEW 2026-08-02:** User — DFS. Refined — DFS finds a path, not the shortest; use BFS (uniform edge costs → first arrival is shortest). Early-exit if grid[0][0] or grid[n-1][n-1] != 0, mark visited on enqueue, 8 directions, -1 if empty.
+
 
 ## LC981 — Time Based Key-Value Store
 **URL:** https://leetcode.com/problems/time-based-key-value-store/
@@ -757,6 +761,8 @@
 **Key insight:** Two strings of equal length are anagrams iff their frequency maps are identical. Count the gap between maps — that's the answer.
 **Discrete Math:** Frequency counting, Anagram (multiset equality), L₁ distance (sum of absolute differences)
 **REVIEW 2026-08-01:** User — diff freq_map(s) and freq_map(t). Refined — Σ max(0, count_s[c] − count_t[c]) = chars t is short on = Σ|diff| / 2. O(n), O(26).
+**REVIEW 2026-08-02:** User — diff freq maps of chars. Refined — matches stored.
+
 **Pattern:** Hash Map / Counting
 **Key insight:** Two strings of equal length are anagrams iff their frequency maps are identical. Count the gap between maps — that's the answer.
 **Discrete Math:** Frequency counting, Anagram (multiset equality), L₁ distance (sum of absolute differences)
@@ -1050,6 +1056,8 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Key insight:** Two deques maintain running min and max in O(1) amortized per operation. Condition is any two elements, so both min and max must be tracked.
 **Discrete Math:** Order statistics, Min/max in sliding window, Monotonic sequences
 **REVIEW 2026-08-01:** User — min/max deques on sliding window. Refined — matches stored; two monotonic deques, shrink l while max.front − min.front > limit, pop expired indices, track max size. O(n) amortized.
+**REVIEW 2026-08-02:** User — max/min deques for sliding window. Refined — matches stored; two monotonic deques, shrink l while max.front − min.front > limit, pop expired indices.
+
 **Pattern:** Queue / Sliding Window / Monotonic Queue
 **Key insight:** Two deques maintain running min and max in O(1) amortized per operation. Condition is any two elements, so both min and max must be tracked.
 **Discrete Math:** Order statistics, Min/max in sliding window, Monotonic sequences
@@ -1082,6 +1090,8 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Key insight:** The limiting factor is the shorter line. Moving the taller one inward cannot yield a larger area since the height is bounded by the shorter line and width always shrinks.
 **Discrete Math:** Optimization, Monotonicity
 **REVIEW 2026-08-01:** User — left and right pointers moving inward to find next largest height, re-check global max as you go. Refined — same as stored; advance the shorter pointer until a taller candidate is found, re-check max.
+**REVIEW 2026-08-02:** User — L/R pointers, move shorter height inward, track running area. Refined — matches stored approach.
+
 
 ## LC167 — Two Sum II (Input Array Is Sorted)
 **URL:** https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
