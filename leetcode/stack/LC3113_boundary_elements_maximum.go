@@ -14,40 +14,69 @@ func main() {
 }
 
 /*
-Given an array of positive integers nums, return the number of subarrays
-where the first and last elements of the subarray are equal to the largest
-element in the subarray.
+LC3113 Count Subarrays Where First and Last Elements Equal the Maximum
+(see ladder.md - the generalized 6-step ladder).
 
-duplicates in O(n)/O(n) dupe -> indices
-for each dupe:
-	pairwise scan for elem > boundaries O(n^3)
+Problem: given an array of positive integers, count subarrays where the first
+and last elements are equal to the largest element in the subarray.
 
-sliding window: O(n^2)/O(1)
-	1:i <- 0..len(nums)
-	j <- i+1
-	if nums[j] < nums[i] advance j
-	if nums[j] = nums[1] increment count
-	else goto 1
+Rung 1 - ENUMERATE (ground truth):
+  all O(n^2) subarrays; check s[0] == s[last] == max(s). Correctness anchor only.
 
-Monotonic stack??
-pop if next is larger...
+Rung 2 - NAME THE OBJECT:
+  count of witness pairs (i, j), i < j, with nums[i] == nums[j] and
+  max(nums[i..j]) == nums[i]. A COUNTING problem: must finish the pass and keep
+  a per-value count (multiset), never a flag (set).
 
-f(i) = subarrays ending at i that begin with nums[i] and don't contain elems > nums[i] (how to carry state?)
-f(0) =  []{elem}
-f(1) = append nums[1] for all sub in f(0) where nums[1] < sub[first] .... (append but also track if sub[first] == nums[i] -> copy sub as it might continue eg 4,1,2,4,3,4)
-Monotonic stack approach:
-- Maintain a stack decreasing from bottom to top
-- Each stack element is [value, count] — count of valid subarrays ending here with this value as boundary/max
-- For each num:
-  - Pop all elements smaller than num (they can't be max if num is in the subarray)
-  - If stack is empty or top != num: push [num, 1]
-  - If top == num: increment count (extend existing subarrays)
-  - Add count to answer
+Rung 3 - COMPRESS THE SPACE (representation axis):
+  dominance, not distance: (i, j) qualifies iff no STRICTLY greater value lies
+  between them, so a greater element permanently kills every equal-pair that
+  would span it. Representation: a NON-INCREASING monotonic stack of values
+  still "visible" - push num; pop strictly-smaller tops (now dominated); keep
+  equals (they can still pair). Same boundary-decides-dominance move as
+  LC84 largest-rectangle / daily-temperatures.
 
-O(n) time, O(n) space.
+Rung 4 - COLLAPSE TO A STATISTIC (aggregation axis):
+  seen[v] = count of active occurrences of v still in the stack. For each
+  element: seen[num]++; count += seen[num] = 1 (the single) + one valid
+  subarray per prior active occurrence. Each pop decrements seen of the
+  dominated value.
+
+Rung 5 - FIX A COMPUTATION ORDER (time axis):
+  one left-to-right pass; each element enters and leaves the stack once, so the
+  pops amortize to O(n). No early exit: count problems finish the pass.
+
+Rung 6 - PROVE AN INVARIANT:
+  before processing nums[i], the stack is non-increasing and holds exactly the
+  prior values with no strictly-greater element after them, and seen[v] is
+  their count. So every active occurrence of num pairs with nums[i] into a
+  valid subarray, and each valid subarray is counted exactly once, at its right
+  endpoint.
+
+Complexity: O(n) amortized time, O(n) space.
 */
-
 func numberOfSubarrays(nums []int) int {
-	// TODO
-	return 0
+	stack := []int{}
+	var count int
+	seen := map[int]int{}
+	for _, num := range nums {
+		top := len(stack) - 1
+		if top < 0 {
+			stack = append(stack, num)
+		} else if num > stack[top] {
+			i := top
+			for i >= 0 && stack[i] < num {
+				if _, ok := seen[stack[i]]; ok {
+					seen[stack[i]]--
+				}
+				i--
+			}
+			stack = append(stack[0:i+1], num)
+		} else {
+			stack = append(stack, num)
+		}
+		seen[num]++
+		count += seen[num]
+	}
+	return count
 }
