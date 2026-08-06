@@ -74,6 +74,7 @@
 **Pattern:** Binary Search
 **Key insight:** Rotation guarantees one half is always sorted. Use that to decide which half to discard.
 **Discrete Math:** Binary search, Invariant (sortedness of at least one half), Total order
+**REVIEW 2026-08-06:** User — if nums[mid] > nums[right], rotation is in right half; then if target < nums[right], binary search right half else left. Refined — the value-split rule in that branch is actually valid: when nums[mid] > nums[right], the halves separate by VALUE (every right-half element ≤ nums[right] < every left-half element), so comparing target to nums[right] picks the side correctly. But incomplete: (1) missing the other branch — nums[mid] < nums[right] means the right half [mid..right] is sorted, so go right iff nums[mid] ≤ target ≤ nums[right], else left; (2) use target ≤ nums[right] (equality lives in the right half). O(log n), O(1) space; one half is always sorted (the load-bearing invariant).
 
 ## LC73 — Set Matrix Zeroes
 **URL:** https://leetcode.com/problems/set-matrix-zeroes/
@@ -195,6 +196,7 @@
 **Pattern:** Sliding Window / Hash Map
 **Key insight:** Map stores last seen index of each character. Jump left directly past the duplicate, no incremental shrink.
 **Discrete Math:** Sliding window, Invariant (window has all unique chars), Map (last seen index)
+**REVIEW 2026-08-06:** User — sliding window with freq map; when right hits a char with count > 1, move left until its count drops to 1. Refined — correct and O(n) amortized (each char advances left once). The shrink terminates because the duplicate's count is exactly 2 when right hits it; dropping below 1 is impossible mid-loop. Leaner twin: store the last-seen INDEX per char and jump left = max(left, seen[c]+1) — single pass, no inner while, still O(n); window invariant is "all chars unique", answer = max(right-left+1).
 
 ## LC208 — Implement Trie
 **URL:** https://leetcode.com/problems/implement-trie/
@@ -990,6 +992,7 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Pattern:** Sorting + Two Pointers
 **Key insight:** Same skeleton as 3Sum but replace "sum == 0" with "track min absolute difference." Two-pointer direction always moves sum toward target.
 **Discrete Math:** Sorting/Total order, Invariant (two-pointer convergence), L₁ distance (minimization to target)
+**REVIEW 2026-08-06:** User — for each i, two pointers; move inward from right if > target, from left if < target; O(n²). Refined — direction logic correct, but the comparison is on the SUM (nums[i]+nums[L]+nums[R] vs target), not the pointer value: sum > target → R-- (sum shrinks), sum < target → L++ (sum grows). Prerequisites: sort first; track best via min |sum − target|; early-exit return on exact match (diff 0). O(n²) time, O(1) space.
 
 ## LC3377 — Digit Operations to Make Two Integers Equal
 **URL:** https://leetcode.com/problems/digit-operations-to-make-two-integers-equal/
@@ -1221,6 +1224,7 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Key insight:** A dummy head eliminates the empty-head edge cases — every node, including the first, is attached via `cur.Next` uniformly. The "splice runs" trick is valid but must re-attach orphaned tails; the two-pointer is simpler to verify. Merging two sorted lists is the combine step of merge sort.
 **Discrete Math:** Merge as the combine step of divide-and-conquer (merge sort), merge of two sorted sequences = linear extension of a poset
 **REVIEW 2026-08-01:** User — compare heads to pick the returned head; while one is smaller, move its pointer forward, point its prev to the other list; repeat until one list exhausted, then repoint prev to the leftover. Refined — matches stored splice approach; cleaner is dummy head + two-pointer (attach smaller of l1/l2, advance, attach leftover at end, return dummy.Next). O(n+m).
+**REVIEW 2026-08-06:** User — advance list1/list2 while less than the other, repoint prev to the other list, repeat; at end prev attaches to the list with elements left. Refined — consistent with the stored splice approach; skeleton correct, and the end-of-loop remainder attach is the load-bearing step (orphaned tails must be re-attached). One precision: in the two-pointer form it's a single-head comparison per step (not a run — the next node of the same list can exceed the other head); the "while less" phrasing only matches the run-splice variant. Dummy head still avoids the empty-head special case. O(n+m) time, O(1) space.
 
 ## Review Session — Jul 31, 2026
 
@@ -1304,3 +1308,16 @@ cols = { 1→[2], 2→[1,2,3], 3→[2] }
 **Pattern:** BST / Two Pointers (inorder) / Hash Set (DFS)
 **Key insight:** A pair-sum search on a tree needs history — you can't decide from the current node alone. The BST structure only helps by making inorder sorted (two-pointer); otherwise it's identical to Two Sum on the value multiset.
 **Discrete Math:** Sorted sequence from BST inorder traversal = linearization of tree; two-pointer correctness from monotonicity
+
+## LC2596 — Check Knight Tour Configuration
+**URL:** https://leetcode.com/problems/check-knight-tour-configuration/
+**User approach:** Solved with 6-rung ladder comments. Compress the n×n grid by visit order: position array `orderedMoves[step] = (row,col)`, anchor `grid[0][0] == 0`, then AND-fold the consecutive delta checks (a true knight move iff |dr|+|dc| == 3, both ≥ 1). Exhaustion, no fixpoint.
+**Refined approach:** Matches. One-shot meet (AND-fold / GLB) over the position array — the same work as a walk check on the move graph. Early-exit on the first bad pair (witness of invalidity). O(n²) time and space.
+**Time:** O(n²), O(n²) space
+**Pattern:** Graph / Matrix / Simulation (ordered traversal)
+**Key insight:** The grid's distinct range [0, n²-1] makes visit order a permutation — invert it (value → cell) to linearize the 2D board into an ordered move sequence. The move graph is fixed-degree (2..8 knight neighbors); validity is just "is the given order a walk", aggregated by meet, dual to reachability's join.
+**Discrete Math:** Lattice: product {0,1}^(n²-1) of pair-checks, validity = top element (1,...,1) ⟺ AND-fold = 1; meet (GLB), not join (LUB); no fixpoint iteration — exhaustion over fully-given data.
+**REVIEW 2026-08-06:** User — position-array inversion + AND-fold of delta checks, anchored at grid[0][0]==0. Refined — correct and matches the canonical solution; knight move condition |dr|,|dc| == {1,2} ⟺ dr²+dc² == 5; early-exit on first violated pair keeps it O(n²) worst case, typically much faster. Lattice framing: the AND-fold is a meet, not a join — reachability is the join (union closure, needs iteration); verification is a one-shot meet over given facts.
+**Pattern:** Graph / Matrix / Simulation (ordered traversal)
+**Key insight:** The grid's distinct range [0, n²-1] makes visit order a permutation — invert it (value → cell) to linearize the 2D board into an ordered move sequence. The move graph is fixed-degree (2..8 knight neighbors); validity is just "is the given order a walk", aggregated by meet, dual to reachability's join.
+**Discrete Math:** Lattice: product {0,1}^(n²-1) of pair-checks, validity = top element (1,...,1) ⟺ AND-fold = 1; meet (GLB), not join (LUB); no fixpoint iteration — exhaustion over fully-given data.

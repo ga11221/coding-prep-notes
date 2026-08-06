@@ -12,24 +12,31 @@ def parse_entries():
     with open(LOG) as f:
         content = f.read()
 
-    entries = re.findall(
-        r'## LC(\d+) — (.+?)\n'
-        r'\*\*User approach:\*\* (.+?)\n'
-        r'\*\*Refined approach:\*\* (.+?)\n'
-        r'\*\*Time:\*\* (.+?)\n'
-        r'\*\*Pattern:\*\* (.+?)\n'
-        r'\*\*Key insight:\*\* (.+?)\n'
-        r'\*\*Discrete Math:\*\* (.+?)(?:\n|$)',
-        content, re.DOTALL
-    )
+    blocks = re.split(r'\n(?=## LC\d+ — )', content)
 
     result = []
-    for e in entries:
+    seen = set()
+    for block in blocks:
+        header = re.match(r'## LC(\d+) — (.+)', block)
+        if not header:
+            continue
+        pid = int(header.group(1))
+        pattern = re.search(r'\*\*Pattern:\*\* (.+)', block)
+        insight = re.search(r'\*\*Key insight:\*\* (.+)', block)
+        if not pattern or not insight:
+            continue
+        if pid in seen:
+            for e in result:
+                if e["id"] == pid:
+                    e["review_dates"] += re.findall(r'\*\*REVIEW (\d{4}-\d{2}-\d{2}):\*\*', block)
+            continue
+        seen.add(pid)
         result.append({
-            "id": int(e[0]),
-            "title": e[1].strip(),
-            "pattern": e[5].strip(),
-            "insight": e[6].strip()
+            "id": pid,
+            "title": header.group(2).strip(),
+            "pattern": pattern.group(1).strip(),
+            "insight": insight.group(1).strip(),
+            "review_dates": re.findall(r'\*\*REVIEW (\d{4}-\d{2}-\d{2}):\*\*', block)
         })
     return result
 
@@ -98,6 +105,25 @@ def mark_done(pid):
         save_schedule(sched)
         print(f"LC{pid} marked reviewed for {today}")
 
+def rebuild_schedule(entries, stagger=False):
+    base = datetime(2026, 7, 29)
+    sched = {}
+    for i, e in enumerate(sorted(entries, key=lambda x: x["id"])):
+        pid = str(e["id"])
+        offset = timedelta(days=i % 7) if stagger else timedelta(0)
+        created = base + offset
+        sched[pid] = {
+            "id": e["id"],
+            "title": e["title"],
+            "pattern": e["pattern"],
+            "insight": e["insight"],
+            "created": created.strftime("%Y-%m-%d"),
+            "reviews": [(created + timedelta(days=d)).strftime("%Y-%m-%d") for d in INTERVALS],
+            "done": sorted(set(e["review_dates"]))
+        }
+    save_schedule(sched)
+    return sched
+
 def stats(sched):
     today = datetime.now().strftime("%Y-%m-%d")
     total = len(sched)
@@ -117,7 +143,8 @@ def stats(sched):
             done_reviews.add((e["id"], d))
     print(f"Total reviews scheduled: {len(all_reviews)}")
     print(f"Total reviews completed: {len(done_reviews)}")
-    print(f"Completion rate: {len(done_reviews)/len(all_reviews)*100:.0f}%" if all_reviews else "N/A")
+    on_schedule = len(done_reviews & all_reviews)
+    print(f"On-schedule completion: {on_schedule}/{len(all_reviews)} ({on_schedule/len(all_reviews)*100:.0f}%)" if all_reviews else "N/A")
 
 if __name__ == "__main__":
     import sys
@@ -142,7 +169,11 @@ if __name__ == "__main__":
         elif sys.argv[1] == "reinit":
             sched = init_schedule(entries, sched)
             print(f"Re-initialized. {len(sched)} problems.")
+        elif sys.argv[1] == "rebuild":
+            stagger = len(sys.argv) > 2 and sys.argv[2] == "stagger"
+            sched = rebuild_schedule(entries, stagger=stagger)
+            print(f"Rebuilt schedule from log. {len(sched)} problems." + (" (staggered)" if stagger else ""))
         else:
-            print("Commands: (no args) = show due, done <id>, stats, reinit")
+            print("Commands: (no args) = show due, done <id>, stats, reinit, rebuild")
     else:
         show_due(sched)
