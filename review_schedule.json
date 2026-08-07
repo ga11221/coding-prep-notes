@@ -2980,5 +2980,20 @@
     "done": [
       "2026-08-06"
     ]
+  },
+  "LC:1566": {
+    "topic": "LC",
+    "id": "1566",
+    "title": "Detect Pattern of Length M Repeated K or More Times",
+    "detail": "",
+    "created": "2026-08-07",
+    "reviews": [
+      "2026-08-08",
+      "2026-08-10",
+      "2026-08-14",
+      "2026-08-21",
+      "2026-09-06"
+    ],
+    "done": []
   }
 }
