@@ -513,3 +513,25 @@ Clients route writes to another leader (app/load balancer failover). Other leade
 **Q — Ch 5: Strict vs sloppy quorum + hinted handoff?** ✅
 - User: "strict needs all leaders to agree, sloppy does not; hinted handoff — replica tracks downed leader state, keeps log current until it returns" — partially off
 - Mine: Strict = w+r>n over the **n designated** replicas for the key. Sloppy = any **w healthy** nodes (incl. non-designated) when designated ones are down — trades consistency for availability. Hinted handoff: surrogate node replays to the real designated node on return. Distinction is *which nodes* agree, not how many.
+
+## Review — 2026-08-06 (5 items)
+
+**Q — Ch 11: event time vs processing time?** ✅
+- User: "event time is app-specific (when producer logged the event); processing time is when the broker/coordinator pushes the event; they need not be equal, esp. with clock skew; the gap is processing lag"
+- Mine: Event time = when the event actually occurred (producer-set). Processing time = when the stream system observes/records it. Gap = **processing delay**. Late-arriving events = event time much older than processing time — windows must handle them via watermarks.
+
+**Q — Ch 3: LSM vs B-tree read tradeoff?** ✅ (partial)
+- User: "B-trees more read-performant — log n traversal index→leaf; LSM may require full SSTable scans back through historical files for cold data; reads degrade for LSM after write bursts; compaction removes duplicates and merges values, bringing cold data toward the front; without indexes B-tree reads can degrade after write bursts"
+- Mine: Correct on B-tree O(log n) page-descent (constant height, ~3-4 disk reads for millions of keys) and LSM cold reads scanning back through older SSTables. **Missed the named mechanism: Bloom filters** — per-SSTable, "definitely no / maybe yes," skip files that can't contain the key (read cost ∝ #SSTables, grows as data grows). "B-tree reads degrade after write bursts w/o index" is off: no index = full scan regardless; with index, reads stay fixed O(log n) — in-place page rewrites aren't a read-time cost.
+
+**Q — Ch 3: B-tree vs LSM, read-heavy + nightly ETL?** ✅
+- User: "B-trees — reads are more performant; nightly ETL is off-peak; page splits and rewrites don't affect peak reads"
+- Mine: Correct, verdict explicit. B-tree wins: predictable O(log n) reads; batch-write amplification (page splits, whole-page rewrites) lands off-peak, doesn't touch peak reads. LSM risk: heavy compaction from the batch can storm into peak hours + older-SSTable reads stay slow.
+
+**Q — Ch 5: Consistent prefix reads?** ✅
+- User: "consistent prefix reads use version vectors in multi-leader and leaderless to determine what changes are causally linked; timestamps do not establish causal links between records, even if ordered correctly"
+- Mine: Correct on both: version vectors track per-key causality; timestamps = total order, no causal edges. Concrete failure mode: reader switching between followers at different lag levels sees answer before question. Single-leader fix: replicas apply writes in the same sequence.
+
+**Q — Ch 5: Multi-leader LWW tradeoff?** ✅ (partial)
+- User: "two writes to same key replicate at different times; if reads interleave with writes, two possible values; ultimately LWW overwrites — losing intermediate updates; single-leader conflicting writes can fail/rollback"
+- Mine: Correct on LWW silently dropping the loser (intermediate updates lost) and single-leader rejecting conflicts. Slight frame shift: "reads see two values" is replication-lag/RYW, not the write-write conflict. Core: both writes **succeed locally** at their DCs (no coordination), conflict surfaces only on replication; LWW keeps highest timestamp. Single-leader = one write point, second write blocks/fails — zero conflicts, trades write latency.
