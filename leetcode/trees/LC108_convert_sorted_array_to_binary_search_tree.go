@@ -158,16 +158,20 @@ Rung 1 - ENUMERATE (ground truth):
 
 	the ground truth is any BST over the n distinct keys whose inorder
 	traversal equals nums and whose every node has subtree heights differing
-	by <= 1. Many such trees exist (the problem accepts multiple outputs);
-	we need to produce one, so the enumeration is over valid root choices,
-	and any middle pick is a valid one.
+	by <= 1. There are Catalan-many such BSTs; the height-balanced predicate
+	filters them. The candidate is a whole tree, not a root choice - how a
+	tree is decomposed is rung 3's business, not rung 1's.
 
 Rung 2 - NAME THE OBJECT:
 
-	existence/construction question: build ONE height-balanced BST for nums.
-	The object is the recursive decomposition in which a sorted segment
-	[lo..hi] maps to a node, its left subtree to the smaller keys, its right
-	subtree to the larger keys.
+	question type: CONSTRUCT - build ONE height-balanced BST for nums. The
+	answer is a single tree drawn from rung 1's valid set. There IS an
+	aggregation axis, but it is the FREE/CONSTRUCTOR one: the aggregate is
+	the object itself, combined by the NODE constructor (a segment's tree =
+	NODE(root, left tree, right tree)); it does NOT collapse to a scalar,
+	and it must be associative (monoid structure) to compose. Note: the HOW
+	of construction - the recursive decomposition into segments - does NOT
+	belong here; that is the rung 3 leap.
 
 Rung 3 - COMPRESS THE SPACE (representation axis):
 
