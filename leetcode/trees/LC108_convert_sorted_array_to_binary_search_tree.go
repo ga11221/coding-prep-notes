@@ -145,3 +145,73 @@ func lowerMid(start, end int) int {
 func upperMid(start, end int) int {
 	return (end-start+1)/2 + start
 }
+
+/*
+6-rung ladder + correctness (see ladder.md - the generalized 6-step ladder).
+
+Approach: build(nums, lo, hi) makes the middle element of the sorted segment
+[lo..hi] the root of the segment's subtree, then recurses on the left half
+[lo..mid-1] and right half [mid+1..hi]. One uniform rule (mid = lo + (hi-lo)/2)
+is used everywhere - no per-side bookkeeping needed.
+
+Rung 1 - ENUMERATE (ground truth):
+
+	the ground truth is any BST over the n distinct keys whose inorder
+	traversal equals nums and whose every node has subtree heights differing
+	by <= 1. Many such trees exist (the problem accepts multiple outputs);
+	we need to produce one, so the enumeration is over valid root choices,
+	and any middle pick is a valid one.
+
+Rung 2 - NAME THE OBJECT:
+
+	existence/construction question: build ONE height-balanced BST for nums.
+	The object is the recursive decomposition in which a sorted segment
+	[lo..hi] maps to a node, its left subtree to the smaller keys, its right
+	subtree to the larger keys.
+
+Rung 3 - COMPRESS THE SPACE (representation axis):
+
+	the strict ordering of nums is the ordering device: for any root chosen
+	from the segment, the BST property forces exactly the keys on one side
+	of the root into the left subtree and the rest into the right subtree.
+	The segment [lo..hi] IS the candidate set in compact form - no per-node
+	validation needed, the sorted order is the losslessness certificate
+	(the left half holds precisely the keys smaller than the root, the right
+	half precisely the larger ones, disjoint and exhaustive).
+
+Rung 4 - COLLAPSE TO A STATISTIC (aggregation axis):
+
+	per subtree, the statistic is its HEIGHT. Balance requires |hL - hR| <= 1
+	at every node. Picking mid = lo + (hi-lo)/2 makes the two halves differ
+	in size by at most 1, and since the rule is applied recursively to both
+	halves, every subtree is balanced by induction - height is O(log n).
+
+Rung 5 - FIX A COMPUTATION ORDER (time axis):
+
+	pre-order: place the root of a segment, then build its left subtree, then
+	its right. The recursion consumes each element exactly once and never
+	revisits it -> O(n) time, O(log n) stack depth. Ordering by segment
+	length gives the top-down mid-first placement.
+
+Rung 6 - PROVE AN INVARIANT:
+
+	invariant: build(nums, lo, hi) returns a height-balanced BST whose inorder
+	traversal is exactly nums[lo..hi].
+	Soundness (no false positives): the returned tree is a valid BST - its
+	inorder is nums, which is strictly increasing, so the BST ordering holds -
+	and it is height-balanced by Rung 4's size argument, inductively. The
+	output therefore always satisfies the required property.
+	Completeness (no false negatives): the recursion partitions the segment
+	into root + left segment + right segment, disjoint and exhaustive, with
+	base case lo > hi. Hence every element nums[i] is placed in exactly one
+	node - none can be dropped (the historical failure mode) and none can be
+	duplicated. Termination: each recursive call operates on a strictly
+	smaller segment (mid is strictly inside for lo < hi), so the depth is
+	O(log n) and the tree is complete in the sense of covering all n keys.
+	Correctness follows by induction on the segment length.
+	The lower/upper middle choice is cosmetic: either pick still yields two
+	halves differing by <= 1 element, so both are height-balanced and both
+	accepted.
+
+Complexity: O(n) time, O(log n) stack space (excluding the output tree).
+*/
