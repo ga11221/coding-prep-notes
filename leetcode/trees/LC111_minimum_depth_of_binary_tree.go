@@ -122,10 +122,18 @@ Rung 2 - NAME THE OBJECT:
 	root-to-leaf path. Semiring: (min, +) - aggregate the best path length,
 	transition is +1 per edge. No early exit (you must establish the min, so
 	the whole tree is processed). (Header: "min(leftHeight, rightHeight)" is
-	the right aggregation; "prune longer paths" is NOT what this algorithm
-	does - it fully explores both branches. Real pruning would be BFS's
-	first-leaf-found-at-depth-d, or branch-and-bound; the post-order version
-	prunes nothing.)
+	the right aggregation, but "prune longer paths" misdescribes the
+	algorithm. Skipping a nil child is NOT pruning: a path must end at a real
+	leaf, so through the nil side there are no paths at all - there is
+	nothing to explore and nothing to skip. It is the DEFINITIONAL handling
+	of a non-existent branch, and in this code it is structurally required:
+	_minDepth has no nil base case, so the single-child checks are mandatory,
+	not optional savings. Calling it pruning would be actively dangerous -
+	it would suggest you may skip an EXISTING branch, which is the
+	completeness bug (missing the shortest path hidden under a longer one).
+	Real pruning for this problem is BFS stopping at the first leaf found, or
+	branch-and-bound with a running best; the post-order version prunes
+	nothing and must explore every real branch in full.)
 
 Rung 3 - COMPRESS THE SPACE (representation axis):
 
@@ -184,8 +192,10 @@ Diff vs the header comments (rung by rung):
 - Rung 1: conflates nodes with the true candidates (root-to-leaf paths).
   Harmless for the recursion, but the ground truth is a min over paths.
 - Rung 2: right aggregation (min), but "prune longer paths" misdescribes the
-  algorithm - post-order prunes nothing; the only real pruning variant is
-  BFS stopping at the first leaf.
+  algorithm. Skipping a nil child is not pruning (nothing exists on that
+  side) - it is the definitional handling of a non-existent branch and is
+  structurally required, since _minDepth has no nil base case. Only BFS
+  stopping at the first leaf is genuine pruning.
 - Rung 3: the compression is subtree -> scalar, NOT "into log n" (a skew tree
   is O(n) deep); the losslessness claim is correct but only via the
   single-child rule.
