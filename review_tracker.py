@@ -44,6 +44,19 @@ def add(topic, item_id, title, detail, created=None):
     save(sched)
     print(f"Added: {key}")
 
+def _last_done(entry, today):
+    done = [d for d in entry.get("done", []) if d <= today]
+    return max(done) if done else None
+
+def _missed(entry, today):
+    """Scheduled reviews (<= today) not covered by the most recent review.
+
+    One review clears all prior missed slots: only dates after the last done
+    date count as missed.
+    """
+    last = _last_done(entry, today)
+    return sum(1 for d in entry["reviews"] if d <= today and (last is None or d > last))
+
 def due(sched=None):
     if sched is None:
         sched = load()
@@ -53,6 +66,50 @@ def due(sched=None):
         if today in entry["reviews"] and today not in entry["done"]:
             items.append((key, entry))
     return sorted(items, key=lambda x: x[1]["topic"] + str(x[1]["id"]))
+
+def overdue(sched=None, limit=None):
+    """Items with scheduled review slots (<= today) not covered by done.
+
+    A review covers all missed slots up to its date (see mark_done).
+    """
+    if sched is None:
+        sched = load()
+    today = datetime.now().strftime("%Y-%m-%d")
+    items = []
+    for key, entry in sched.items():
+        missed = _missed(entry, today)
+        if missed > 0:
+            last = [d for d in entry["reviews"] if d <= today][-1]
+            items.append((missed, key, entry, last))
+    items.sort(key=lambda x: (-x[0], x[3]))
+    if limit:
+        items = items[:limit]
+    return items
+
+def show_overdue(limit=None):
+    all_items = overdue(limit=None)
+    total_missed = sum(i[0] for i in all_items)
+    items = all_items if limit is None else all_items[:limit]
+    today = datetime.now().strftime("%Y-%m-%d")
+    print(f"=== Overdue backlog (total {len(all_items)} items, {total_missed} missed slots) ===")
+    print(f"Showing {len(items)}. Re-run with a count to see more (e.g. 'overdue 30').\n")
+
+    if not items:
+        print("Nothing overdue. You're caught up!\n")
+        return
+
+    by_topic = {}
+    for missed, key, entry, last in items:
+        by_topic.setdefault(entry["topic"], []).append((missed, key, entry, last))
+
+    for topic in sorted(by_topic):
+        entries = by_topic[topic]
+        print(f"[{topic}] ({len(entries)})")
+        for missed, key, entry, last in entries:
+            print(f"  {entry['id']} — {entry['title']}   (missed {missed}, last scheduled {last})")
+        print()
+
+    print("Process: review an item, then: done <topic> <id>. One review clears its missed slots.")
 
 def show_due():
     items = due()
@@ -83,12 +140,17 @@ def mark_done(topic, item_id):
     sched = load()
     key = f"{topic}:{item_id}"
     today = datetime.now().strftime("%Y-%m-%d")
-    if key in sched and today in sched[key]["reviews"]:
-        sched[key]["done"].append(today)
-        save(sched)
-        print(f"Marked done: {key}")
-    else:
-        print(f"Not found or not due today: {key}")
+    if key not in sched:
+        print(f"Not found: {key}")
+        return
+    entry = sched[key]
+    if _missed(entry, today) == 0 and today not in entry["reviews"]:
+        print(f"Not due or overdue: {key}")
+        return
+    if today not in entry["done"]:
+        entry["done"].append(today)
+    save(sched)
+    print(f"Marked done: {key}")
 
 def stats():
     sched = load()
@@ -103,11 +165,15 @@ def stats():
     print("=== Review Stats ===\n")
     for topic, count in sorted(by_topic.items()):
         due_today = sum(1 for k, e in sched.items() if e["topic"] == topic and today in e["reviews"] and today not in e["done"])
-        print(f"{topic}: {count} items, {due_today} due today")
+        ov = sum(1 for k, e in sched.items() if e["topic"] == topic and _missed(e, today) > 0)
+        print(f"{topic}: {count} items, {due_today} due today, {ov} overdue")
 
     all_rev = sum(len(e["reviews"]) for e in sched.values())
     done_rev = sum(len(e["done"]) for e in sched.values())
+    ov_total = sum(1 for e in sched.values() if _missed(e, today) > 0)
+    missed_total = sum(_missed(e, today) for e in sched.values())
     print(f"\nTotal: {total} items, {all_rev} reviews scheduled, {done_rev} completed")
+    print(f"Overdue: {ov_total} items, {missed_total} missed slots")
     if all_rev:
         print(f"Completion rate: {done_rev/all_rev*100:.0f}%")
 
@@ -186,6 +252,32 @@ def reinit_lc():
         count += 1
     print(f"Imported {count} LC problems")
 
+def repair():
+    """Sort/dedupe review dates and drop any scheduled before creation.
+
+    Fixes entries corrupted by manual editing (out-of-order review lists and
+    review dates predating the item's creation date).
+    """
+    sched = load()
+    changed = 0
+    for key, entry in sched.items():
+        created = entry["created"]
+        rev = entry["reviews"]
+        fixed = sorted(set(d for d in rev if d >= created))
+        if fixed != rev:
+            print(f"FIX {key}: {rev} -> {fixed}")
+            entry["reviews"] = fixed
+            changed += 1
+        done = entry.get("done", [])
+        dfixed = sorted(set(done))
+        if dfixed != done:
+            print(f"FIX done {key}: {done} -> {dfixed}")
+            entry["done"] = dfixed
+            changed += 1
+    if changed:
+        save(sched)
+    print(f"Repaired {changed} entries")
+
 if __name__ == "__main__":
     import sys
 
@@ -195,6 +287,11 @@ if __name__ == "__main__":
         mark_done(sys.argv[2], sys.argv[3])
     elif sys.argv[1] == "stats":
         stats()
+    elif sys.argv[1] == "overdue":
+        n = int(sys.argv[2]) if len(sys.argv) >= 3 else None
+        show_overdue(limit=n)
+    elif sys.argv[1] == "repair":
+        repair()
     elif sys.argv[1] == "reinit-lc":
         reinit_lc()
     elif sys.argv[1] == "add" and len(sys.argv) >= 5:
@@ -210,6 +307,8 @@ if __name__ == "__main__":
         print("  stats              Show stats")
         print("  list               List all topics")
         print("  list <topic>       List items in a topic")
-        print("  done <topic> <id>  Mark item reviewed (e.g. done LC 1438)")
+        print("  overdue [N]        Show top N most-overdue items (default 10)")
+        print("  done <topic> <id>  Mark item reviewed (works for overdue too)")
+        print("  repair             Fix corrupted review dates (sort/dedupe/drop <created)")
         print("  reinit-lc          (Re)import all LC problems from log")
         print("  add <topic> <id> <title> [detail]  Add custom review item")
