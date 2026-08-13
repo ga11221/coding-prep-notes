@@ -391,3 +391,26 @@ the intuition for what recursion does at runtime.
     - What the accumulator carries (or what gets composed on return)
     - The branching factor at each level
     - Total number of leaves (= number of distinct outputs)
+
+## Pattern Recognition Cheat Sheet
+
+Before deriving a recurrence, classify the problem (2 min max):
+
+| Pattern | Key signal | Template |
+|---|---|---|
+| **Grouping** | "group X by Y" / "all X that share Y" | sort or count → map key |
+| **Two-pointer** | sorted array, find pair/triplet | left/right, shrink from ends |
+| **Sliding window** | contiguous subarray/substring | expand right, shrink left |
+| **Prefix sum** | subarray sum / cumulative sum | prefix map, complement lookup |
+| **BFS/DFS** | shortest path / connected components | queue/stack, visited set |
+| **DP — knapsack** | "select items, maximize/minimize" | dp[i][w] = max(dp[i-1][w], dp[i-1][w-wt]+val) |
+| **DP — sequence** | "longest/shortest subsequence" | dp[i] depends on dp[i-1], dp[i-2], etc. |
+| **Greedy** | "minimum operations" / locally optimal = global | sort by heuristic, iterate |
+
+### Training the 2-min scan
+
+At the start of every problem:
+1. Read the problem (2 min)
+2. Classify: grouping? sequence? optimization? search?
+3. Name the template before writing any code
+4. If you can't classify in 2 min, you're overthinking — pick the closest pattern and verify
